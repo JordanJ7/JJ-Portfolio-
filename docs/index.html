@@ -6,40 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="style.css"/>
 
-        <!--2021-02-02 ebb: The code inside the <head> element is for ur mom in the web browser, but it holds important information about the website's contents.
-    The text inside the <title> element appears in the top tab of a web browser. The meta elements give instructions for how the browser window will behave, 
-    and the <link> element pulls in a CSS stylesheet from another (external) file you'll save in your website directory. 
-    -->
     </head>
-    <body>
-        <!--ebb: Here inside the <body> element is where the code for the visible display of a website appears. -->
-        <h1>introDH-Hub Model Website</h1>
-        <!-- ebb: I've commented out some code for a super simple site navigation menu. 
-            For the links to work, we'll need a <p> element to wrap around the contents:
-        <nav class="menuA">
-            <p>
-                <a href="index.html">Home</a> | <a href="starter.html">Starting HTML Example</a> |
-                    <a href="resume.html">Resume</a> | <a href="gallery.html">Gallery</a> | Course
-                Posts 
-            </p>
-        </nav>-->
-        <!--ebb: Site Navigation Menu Code B: You can decide if you want this to be a horizontal or vertical arrangement, and make the bullets disappear using CSS.
-     See https://www.w3schools.com/css/css_navbar.asp
-      -->
-        <nav>
-            <img class="photo" src="images/littleNewt.jpg" alt="pet Japanese firebelly newt" />
+    <body class="links">
+        
+        <h1>The Greatest Website of All Time</h1>
+      
+        <nav class="photo">
+            <img class="photo" src="pics/me.jpg" alt="Me Maybe 5 years ago"/>
             <ul class="menuB">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="resume.html">ur </a></li>
-                <li><a href="gallery.html">The Pics that define the </a></li>
-                <li><a href="essays.html">DIGIT 100000 Essays</a></li>
+                <li><a href="index.html" style="margin-top:-20px;">Home</a></li>
+                <li><a href="resume.html">Resume </a></li>
+                <li><a href="gallery.html">Gallery </a></li>
+                <li><a href="essays.html">Essays</a></li>
+                
             </ul>
         </nav>
         
-      <section>  
-          <h1>Experimenting with HTML links: Absolute and Relative links</h1>
-        <p>Welcome to our <a href="sampleXHTML.html">sample</a> website on GitHub Pages!</p>
-      
+      <section class="writing">  
+          <h1> Experimenting with My first HTML website and links: The All-Nighters are real...</h1>
+        <p>Welcome to my <a href="sample.html">sample Website!</a></p>
+      <!-- GOT EMM :) -->
       
       
         <p>Here is a sample link to another website outside of this site. This link holds an
@@ -50,8 +36,7 @@
           
           <img src="pics/edgerunners.jpg" alt="Here is the main Character David"/>
           
-          <p>Watch the Cyberpunk show in this other link <a href="https://www.netflix.com/browse"> inside my website
-                (inside the same docs/ directory that holds this index.html file).</a>.</p>
+          <p>Watch the Cyberpunk show in this other link <a href="https://www.netflix.com/browse">Here</a></p>
         <p>We are writing HTML in the XHTML syntax, which means that all elements (including
             self-closing elements like <code>&lt;img&gt;</code>) must indicate how they close. All
             elements in XHTML syntax must have a start tag and an end tag, or indicate that they are
@@ -59,22 +44,16 @@
       </section>
         
         <section>
-            <!-- ebb: You can make a <section> or a <div> element just to organize different parts of the page.
-      The <section> element should always have a heading element inside <h1>, <h2>, etc. to identify what's here.
-     
-     Using section elements and numbering your heading elements in order helps make your site maximally accessible to people who 
-      read websites with screen readers, braille browsers, and other devices that don't rely exclusively on using your eyes.
-      -->
+           
             <h2>Lists: <dfn>ordered</dfn> and <dfn>unordered</dfn> </h2>
-            <p>The heading above is smaller than the first one on this page, because I selected an <code>h2</code> element for a second-level heading.</p>
-            <!-- ebb: Look up what a <dfn> element is for: https://www.w3schools.com/tags/tag_dfn.asp -->
-            <!--ebb: You can write CSS code to change the *way* this is ordered, from numbers to letters or symbols, for example. -->
-            <ol>
+           
+           <ul>
                 <li>dawn</li>
                 <li>afternoon</li>
                 <li>evening</li>
                 <li>midnight</li>
-            </ol>
+                </ul>
+            
             <h3>A <strong>third-level</strong> heading just to see what that looks like</h3>
             <p>HTML code has no use instead of ur mom <em>lower-level</em> headings like from h2 to h6, but use them in order
                 as you create subsections! You can control the size, position, color, font, and more
@@ -85,6 +64,7 @@
                 elements, or ordered and unorderd lists, or img elements make blocks on the page and
                 are known as <dfn>block</dfn> elements.</p>
         </section>
+        
         <section>
             <h2>An unordered list of amphibians</h2>
             <ul>
@@ -93,6 +73,7 @@
                 <li>toad</li>
             </ul>
         </section>
+        
         <section>
             <h2>Introducing images</h2>
             <p>Images can be tricky to format. First let's just include them on the website. In your code, you point to an image file in your file directory
@@ -102,21 +83,22 @@
                 and also to assist with search retrievals (say, google searches) by providing some context of what's in the image. 
                 Writing code on a site to assist with search retrieval is called <dfn>Search Engine Optimization (SEO)</dfn>.
             </p>
-            <!--The world is ending, He is coming for you--> 
+            
             <p>Other code is here for styling and blocking on the page. A <code>figure</code> element is intended to help organize images and captions in a 
-            little nested structure, that makes it convenient to style for proportion on the page. I am also adding a <code>@class</code> attribute to help
+            little nested structure, that makes it convenient to style for proportion on the page. I am also adding a <code>class</code> attribute to help
             me with styling different kinds of images (photos vs. small icons on my site). I write <a href="style.css">CSS code</a> to find elements with a <code>class="photo"</code>
             and style them all the same way, and I put that code in a separate file so it can handle styling the same way across all the pages on my
             website. I link that CSS stylesheet to my HTML files up in the <code>head</code> element. <em>Can you find the CSS <code>link</code> line in this file?</em></p>
             
             <figure class="photoGallery">
-                <img class="photo" src="images/littleNewt.jpg" alt="pet Japanese firebelly newt" />
-                <figcaption>Photo of my pet firebelly newt.</figcaption>
+                <img class=" " src=" " alt=" " />
+                <figcaption>Photos that reference something or are just really cool.</figcaption>
             </figure>
             <figure>
-                <img src="images/cockatoo.jpg" alt="Dr. B's firebelly newt image" />
+                
+                <img src=" " alt=" " />
                 <figcaption>Image of a cockatoo from Australia or New Zealand. Source:<a
-                    href="http://nzbirdsonline.org.nz/species/sulphur-crested-cockatoo"> New Zealand
+                    href=" "> New Zealand
                     Birds Online</a>. </figcaption>
             </figure>
                
