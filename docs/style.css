@@ -2,10 +2,6 @@
 body {color: Gray;
 background-color: Cornsilk;
 font-family: TimesNewRoman, Times, sans-serif; }
-/* CSS inheritance rules indicate that all elements inside the body will inherit the color and font-family properties that I set here on this BIG container element */
-
-/*body section section { background-image: linear-gradient(red, orange, yellow, green, blue, indigo, violet); padding:2em;}
-body section {background-image: url("images/littleNewt.jpg"); padding:2em;}*/
 
 p {padding:1em; line-height:2em;}
 
@@ -18,12 +14,6 @@ body section.writing {
     flex-direction:row; 
     /*justify-content:space-around;*/
 }
-
-section.photo figure {
-    flex:2;
-    padding: 1vw;
-/*    background-color:purple;
-*/}
 
 section.writing div.analysis {
       flex:1; 
@@ -42,6 +32,7 @@ body section.gallery {
     margin:auto; 
     display:flex;
     flex-direction:row;
+    
     }
 
 section.gallery figure {flex: 1; margin:auto; padding-top: 1vw; padding-bottom: 1vw; }
@@ -52,61 +43,41 @@ figcaption {font-style: italic; font-size: smaller;}
  * .photo { }
  *  */
 
-ol {list-style-type: lower-alpha;
-padding: 5em;
-    
-}
+  section.navbar {background-color:cornsilk;
+display:flex;}
 
-/* unvisited link */
-a:link {
-  color: red;
-}
 
-a:visited {
-  color: #006600;
-}
+ nav {
 
-/* mouse over link */
-a:hover {
-  color: orange;
-}
-
-/* selected link */
-a:active {
-  color: blue;
-}
-
- nav {background-color:#a6a6ed;
- display:flex;
- 
+ flex:6;
+  display:flex;
+  flex-direction:column;
  }
 
- nav > img.photo {
-max-width:200px;
-     flex:1;
- }
  
- nav > ul.menuB {
+ 
+ nav > ul.menuB {background-color:#a6a6ed;
  list-style-type: none;
-flex:9;
-  
+flex:5;
+display:flex; 
+
 }
+nav > p.nav {flex:15;}
+
 
 
 nav ul.menuB li {
   display:inline;
   font-size: 1.5vw; /*padding:2vw;*/
-  padding-left:1vw;
-  padding-right:1vw;
-  padding-top:5vw;
-  padding-bottom:10vw;
+  padding-left:2vw;
+  padding-right:2vw;
+
+
 
 
 }
 
 nav#menu {padding:2vw; }
  
-.button { border:2px; border-style:solid; border-color:blue; padding:2vw; background-color:#E6E6FA; color:yellow; width:10%; display:inline;
- border-radius: 20px;
- }
+
  
