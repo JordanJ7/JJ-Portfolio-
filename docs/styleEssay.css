@@ -1,11 +1,9 @@
 /* This is a comment in CSS. */
-body {color: Gray;
-background-color: Cornsilk;
-font-family: TimesNewRoman, Times, sans-serif; }
-/* CSS inheritance rules indicate that all elements inside the body will inherit the color and font-family properties that I set here on this BIG container element */
+ body {
+        background-color: #f5f5f5;
+        color: #333;
+        font-family: sans-serif; }
 
-/*body section section { background-image: linear-gradient(red, orange, yellow, green, blue, indigo, violet); padding:2em;}
-body section {background-image: url("images/littleNewt.jpg"); padding:2em;}*/
 
 p {padding:1em; line-height:2em;}
 
@@ -16,7 +14,7 @@ body section.writing {
 
     display:flex;
     flex-direction:row; 
-    /*justify-content:space-around;*/
+    
 }
 
 section.writing figure {
@@ -48,18 +46,16 @@ section.gallery figure {flex: 1; margin:auto; padding-top: 1vw; padding-bottom: 
 figcaption {font-style: italic; font-size: smaller;}
 
 img.photo {max-width:500px; width:80%}
-/* If I want to style ANY element with the class of "photo" I could just write 
- * .photo { }
- *  */
+
 
 ol {list-style-type: lower-alpha;
 padding: 5em;
     
 }
 
-/* unvisited link */
+
 a:link {
-  color: red;
+  color: Green;
 }
 
 a:visited {
@@ -73,7 +69,7 @@ a:hover {
 
 /* selected link */
 a:active {
-  color: blue;
+  color: #f5f5f5;
 }
 
  nav {background-color:#a6a6ed;
@@ -95,7 +91,7 @@ flex:9;
 
 nav ul.menuB li {
   display:inline;
-  font-size: 1.5vw; /*padding:2vw;*/
+  font-size: 1.5vw; 
   padding-left:1vw;
   padding-right:1vw;
   padding-top:5vw;
