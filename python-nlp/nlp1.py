@@ -3,13 +3,13 @@
 # play with spaCy
 # If necessary at Git Bash or terminal do: pip3 install spacy
 
-#import spacy
+import spacy
 # Need line 8 the first time: Then comment it out after the first time you run it:
 #nlp = spacy.cli.download("en_core_web_sm")
-#nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_sm')
 
-avatarSpeeches = open('avatarSpeeches.txt', 'r', encoding='utf8')
-words = avatarSpeeches.read()
+ChatGPT2 = open('ChatGPT2.txt', 'r', encoding='utf8')
+words = ChatGPT2.read()
 wordstrings = str(words)
 print(wordstrings)
 
@@ -19,10 +19,10 @@ print(wordstrings)
 #     print(count, ": ", w)
 
 # start playing with spaCy and nlp:
-avatarWords = nlp(wordstrings)
-for token in avatarWords:
-    # if token.pos_ == "VERB":
-    print(token.text, "---->", token.pos_, ":::::", token.lemma_)
+ChatGPT2 = nlp(wordstrings)
+for token in ChatGPT2:
+    if token.pos_ == "VERB":
+        print(token, "---->", token.pos_, ":::::", token.lemma_)
 
 # On windows ctrl / comments out blocks.
 # On mac command / comments out blocks
