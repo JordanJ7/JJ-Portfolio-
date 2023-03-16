@@ -1,0 +1,26 @@
+Stage 1
+1. It can be distngusised by looking at their XML tags. They are labeled as <ACT> and <SCENE> tags. 
+
+2. to find just the acts you can use /PLAY/ACT 
+
+3.The path for just the scenes aare /PLAY/ACT/SCENE
+
+4. The path for just the scenes in Act II is /PLAY/ACT[@title='ACT II']/SCENE
+
+Stage 2
+5.The expression to find all the stage directions is //STAGEDIR
+
+6.The expression to find the stage directions for Act 3 are /PLAY/ACT[@title='ACT III']//STAGEDIR
+
+7.The expression to find all of the stage directions that are nested inside a speech are /sp/STAGEDIR There are 111 stage directions inside lines.  number 
+
+8.The expression to find all the stage directions that are nested inside a speech and outside of the lines within a speech is //sp/STAGEDIR
+
+9.The element that holds stage directions is when they are inside speech or line in the <SCENE> tag. 
+
+10.The expression to find to find all stafe directions that are NOT inside a speech or line is //SCENE/STAGEDIR There are 75 stage direction that are not inside a speech or a line. 
+
+11. The expression to find all the speeches and isolate the 'who attributes is /PLAY/ACT/SCENE/SPEECH/@who
+
+12.The expression to find all the speaches spoken by Prospero is /PLAY/ACT/SCENE/SPEECH[@who='Prospero'] There ar e66 speeches by Propero. 
+
