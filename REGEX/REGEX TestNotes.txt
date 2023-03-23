@@ -2,12 +2,12 @@ REGEX Test
 
 1. 
 
-1a.
-1b.
+1a.With Dot matches off it finds any two consectutive newline character. The pattern is then closed the lines with the <sp></sp> tag. With dot macthes selected it replaces every line with the tag. 
+1b. The number refer to the capture groups. The 1 capture is reffered to the first capture group that is replaced by the same sequence of character enclosed in <sp> tags. The 2 refers to the second capture group which is not modified and is added back to replace the text.We need to use these expressions to replace certain amounts of large text with a certain expressions.
 1c.
 
-2.
+2.In the Find section put \(([^)]|(\n(?!\n)))*\). In the replace field put <stage>\0</stage>. This replaces the matched text with the same tags. The 
 
-3.
+3. The expression to Find the speakers is ^([A-Z][A-Z ]*?):\s. The replacement expression is <speaker>\1</speaker>. This replaces the matches with the same texxt but enclosed in the tags. The dot mathces all setting does not change anything.
 
 4.

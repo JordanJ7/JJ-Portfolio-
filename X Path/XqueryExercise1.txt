@@ -1,0 +1,50 @@
+
+
+1. Find all of the main titles of each of the 42 Shakespeare plays in the collection, by stepping down the descendant axis from the collection.
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffPlays := collection('/db/apps/shakespeare/data/')
+let $titles := $falstaffPlays[descendant::author[contains(., "")]]//titleStmt/title
+return $titles
+
+2. Modify your XPath above to return just the text of the titles, without the tags. You can do that by using text() or data() or string() .
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffPlays := collection('/db/apps/shakespeare/data/')
+let $titles := $falstaffPlays[descendant::author[contains(., "")]]//titleStmt/title/text()
+return $titles
+
+3. Write an XPath expression that isolates the root element TEI of each play. 
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffPlays := collection('/db/apps/shakespeare/data/')
+return $falstaffPlays[(.//speaker[@n='Falstaff']) and (descendant::title[@type='play'])]
+
+4. Write an expression using a predicate [ ] on the TEI element to help you locate four plays that hold a speaker named Falstaff. Which plays are they? Record your XPath expression. Writing the predicate requires that you specify how to look down the tree from the TEI element, and not from top of the collection. Hint: This involves using a dot . or using the name of the descendant:: axis. (Notice the difference when you do not specify these things.)
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffPlays := collection('/db/apps/shakespeare/data/')
+return $falstaffPlays//TEI[(.//speaker[@n='Falstaff']) and (descendant::titleStmt/title[@type='play'])]
+
+5. Modify your expression to return only the main titles of those four plays, and record your expression. Notice where the title elements are recorded in the document. Hint: You will need to modify our expression to return not the whole TEI elements, but to step down the tree and return the element holding the main title of the play. (Note: In an XPath expression, you can step down the tree after your predicate filter on the TEI element.)
+
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffPlays := collection('/db/apps/shakespeare/data/')
+let $playsWithFalstaff := $falstaffPlays[(.//speaker[@n='Falstaff']) and (descendant::title[@type='play'])]
+return $playsWithFalstaff//title[@type='main']/text()
+
+6. If you add text() or string() to the previous statement, the resulting output will be the same. It is a sequence of strings representing the main titles of the four plays that feature the character Falstaff. Though the way in which the sequence of strings is constructed differs between the two functions.
+
+7.Falstaff is one of the characters who turns up in multiple Shakespeare plays. So how often does Falstaff speak in this whole Shakespeare collection? Write a new XPath expression to return all of the speeches spoken by Falstaff. Then modify your expression to use the count() function and return only the numerical count.
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffSpeeches := //sp[@who='Falstaff']
+return (
+  $falstaffSpeeches,
+  count($falstaffSpeeches)
+)
+
+
