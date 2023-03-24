@@ -1,0 +1,51 @@
+Xquery Exercise 3 
+
+1. It returned 93 items. With each song shown and no tags
+
+xquery version "3.1";
+let $disneySongs := collection('/db/disneySongs/')/*
+for $d in $disneySongs
+for $song in $d//metadata
+return $song/title/text()
+
+2. This gave me back 93 items again but it counts the lines in each song. 
+
+xquery version "3.1";
+let $disneySongs := collection('/db/disneySongs/')/*
+for $d in $disneySongs
+for $song in $d//song
+return count($song//ln)
+
+3. Again gave me 93 items but gave me numbers that showed but showed me how long the texts are based on the amount of text. 
+xquery version "3.1";
+let $disneySongs := collection('/db/disneySongs/')/*
+for $d in $disneySongs
+for $song in $d//song
+return string-length(string($song))
+
+4. This gave 93 items again but the ouput has it is descending order.
+
+xquery version "3.1";
+let $disneySongs := collection('/db/disneySongs/')/*
+for $d in $disneySongs
+for $song in $d//song
+let $length := string-length(string($song))
+order by $length descending
+return $length
+
+5. This gave 93 items and returned the line count and string length 
+
+xquery version "3.1";
+let $disneySongs := collection('/db/disneySongs/')/*
+for $d in $disneySongs
+for $song in $d//song
+let $title := string($song/metadata/title)
+let $lines := count($song//ln)
+let $length := string-length(string($song))
+order by $length descending
+return concat($title, ' - Line count: ', $lines, ' - String length: ', $length)
+
+6. 
+
+
+

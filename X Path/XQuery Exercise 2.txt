@@ -1,0 +1,99 @@
+XQuery Exercise 2 
+
+1. It gave me 31054 results. This counted every speaker tag throughout the collection. 
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+let $all-speakers := $plays//speaker
+
+return $all-speakers
+
+This version just gave me the number of items that was  given not the actual items themselves. 
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+let $all-speakers := $plays//speaker
+
+return $all-speakers => count()
+
+1c. This returned just the speakers without any tags surrounding it. 
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+let $all-speakers := $plays//speaker
+let $unique-speakers := distinct-values($all-speakers)
+
+return $unique-speakers
+
+1d. This returned 966 items.
+
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+let $all-speakers := $plays//speaker
+let $unique-speakers := distinct-values($all-speakers)
+
+return count($unique-speakers)
+
+1e. 
+
+1c2. This gives 42 items instead of 43 items.
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+
+for $p in $plays
+let $speakers := $p//speaker/@xml:id
+let $distinct_speakers := distinct-values($speakers)
+let $num_speakers := count($distinct_speakers)
+return concat($p//titleStmt/title[@type='main'], ': ', $num_speakers, ' distinct speakers') 
+
+
+1d2. it came up as 0 items
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+
+for $p in $plays
+let $speakers := $p//speaker/@xml:id
+let $distinct_speakers := distinct-values($speakers)
+let $num_speakers := count($distinct_speakers)
+where $num_speakers > 50
+return concat($p//titleStmt/title[@type='main'], ': ', $num_speakers, ' distinct speakers')
+
+
+2a. Returned the titles without the tags 
+
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $falstaffPlays := collection('/db/apps/shakespeare/data/')
+
+let $titles := $falstaffPlays[descendant::author[contains(.,"")]]//titleStmt/title/text()
+return $titles 
+
+2b. It returned the base URIs with 84 items. 
+
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+
+for $p in $plays
+let $speakers := $p//speaker/@xml:id
+let $distinct_speakers := distinct-values($speakers)
+let $num_speakers := count($distinct_speakers)
+return (string-join($p//titleStmt/title[@type='main'], ''), base-uri($p))
+
+2c. here it returned 42 items 
+
+xquery version "3.1";
+declare default element namespace "http://www.tei-c.org/ns/1.0";
+let $plays := collection('/db/apps/shakespeare/data/')//TEI
+
+for $p in $plays
+let $speakers := $p//speaker/@xml:id
+let $distinct_speakers := distinct-values($speakers)
+let $num_speakers := count($distinct_speakers)
+return concat("Title: ", string-join($p//titleStmt/title[@type='main'], ''), "; Count: ", $num_speakers, "; Filepath: ", base-uri($p))
+
+
+
+
