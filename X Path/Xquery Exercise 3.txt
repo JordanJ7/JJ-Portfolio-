@@ -45,7 +45,7 @@ let $length := string-length(string($song))
 order by $length descending
 return concat($title, ' - Line count: ', $lines, ' - String length: ', $length)
 
-6. 
+6. Im having trouble to start this question. 
 
 
 

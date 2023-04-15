@@ -1,0 +1,149 @@
+xQuery Exercise 4 
+
+
+1. 
+
+Example one 
+
+xquery version "3.1";
+let $disneySongs := collection("/db/disneySongs/")/*
+let $songCount :=
+    for $d in $disneySongs 
+    let $songLength := $d//song ! string-length()
+    return $songLength
+let $maxCount := $songCount => max()
+let $minCount := $songCount => min()
+for $d in $disneySongs 
+    let $dTitle := $d //metadata/title 
+    let $dLength := $d//song ! string-length()
+    where $dLength = $maxCount or $dLength = $minCount 
+    return 
+    <table>
+        {$d}
+    </table>
+    
+
+Example 2
+
+xquery version "3.1";
+let $disneySongs := collection("/db/disneySongs/")/*
+let $songCount :=
+    for $d in $disneySongs 
+    let $songLength := $d//song ! string-length()
+    return $songLength
+let $maxCount := $songCount => max()
+let $minCount := $songCount => min()
+for $d in $disneySongs 
+    let $dTitle := $d //metadata/title 
+    let $dLength := $d//song ! string-length()
+    where $dLength = $maxCount or $dLength = $minCount 
+    return 
+    <tr>
+        <td> {$dTitle}</td>
+        <td></td>
+    </tr>
+
+
+Example 3
+
+xquery version "3.1";
+<table>
+{
+let $disneySongs := collection("/db/disneySongs/")/*
+let $songCount :=
+    for $d in $disneySongs 
+    let $songLength := $d//song ! string-length()
+    return $songLength
+let $maxCount := $songCount => max()
+let $minCount := $songCount => min()
+for $d in $disneySongs 
+    let $dTitle := $d //metadata/title 
+    let $dLength := $d//song ! string-length()
+    where $dLength = $maxCount or $dLength = $minCount 
+    return 
+    <tr>
+        <td> {$dTitle ! string()}</td>
+        <td>{$songCount}</td>
+    </tr>  
+ 
+} 
+    
+</table>
+
+Example 4 
+
+xquery version "3.1";
+<table>
+{
+let $disneySongs := collection("/db/disneySongs/")/*
+let $songCount :=
+    for $d in $disneySongs 
+    let $songLength := $d//song ! string-length()
+    return $songLength
+let $maxCount := $songCount => max()
+let $minCount := $songCount => min()
+for $d in $disneySongs 
+    let $dTitle := $d //metadata/title 
+    let $dLength := $d//song ! string-length()
+    where $dLength = $maxCount or $dLength = $minCount 
+    return 
+    <tr>
+        <td> {$dTitle ! string()}</td>
+        <td>{$dLength}</td>
+    </tr>
+
+} 
+    
+</table>
+
+Example 5
+
+xquery version "3.1";
+<html>
+<head>
+    <title> Disney Song Max and Min Lengths </title> 
+</head>
+<body> 
+    <h1> Info about Disney Song Lengths </h1>
+<table>
+{
+let $disneySongs := collection("/db/disneySongs/")/*
+let $songCount :=
+    for $d in $disneySongs 
+    let $songLength := $d//song ! string-length()
+    return $songLength
+let $maxCount := $songCount => max()
+let $minCount := $songCount => min()
+for $d in $disneySongs 
+    let $dTitle := $d //metadata/title 
+    let $dLength := $d//song ! string-length()
+    where $dLength = $maxCount or $dLength = $minCount 
+    return 
+    <tr>
+        <td> {$dTitle ! string()}</td>
+        <td>{$dLength}</td>
+    </tr>
+
+} 
+    
+</table> 
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
