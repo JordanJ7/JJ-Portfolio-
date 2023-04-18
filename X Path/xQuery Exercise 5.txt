@@ -1,0 +1,43 @@
+xQuery Exercise 5
+
+xquery version "3.1";
+
+declare variable $ThisFileContent:=
+
+<html> 
+<head>
+    <title> Blues Clues </title> 
+</head>
+<body> 
+    <h1> Info about Blues Songs Lengths </h1>
+    <table>
+        {
+            let $blues := collection('/db/blues')
+            let $songCount :=
+                for $d in $blues
+                let $songlength := $d//song ! string-length()
+                return $songlength
+            let $maxCount := max($songCount)
+            let $minCount := min($songCount)
+            for $d in $blues 
+            let $dTitle := $d//metadata/title 
+            let $dLength := $d//song ! string-length()
+            where $dLength = $maxCount or $dLength = $minCount
+            return 
+            <tr> 
+                <td>{$dTitle ! string()}</td>
+                <td> {$dLength}</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>;
+
+let $filename := "bluesSongLengthTable.html"
+let $filepath := "/db/2023-Class-Examples/sampleStudent/"
+let $doc-db-url := xmldb:store($filepath, $filename, $ThisFileContent, "html")
+return
+(: output at https://newtfire.org:8338/exist/rest/db/2023-Class-Examples/sampleStudent/bluesSongLengthTable.html :)
+$doc-db-url
+
+I got it to putput once but changed something and couldnt figure what I changed to break it. 
