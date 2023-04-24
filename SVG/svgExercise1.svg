@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-    <desc>Alot of Shapes and Sizes</desc>
-    <g alignment-baseline="baseline">
-        
-        <circle cx="100" cy="200" r="50" fill ="orange"/>
-        
-        <circle cx="200" cy="200" r="50" fill ="pink"/>
-        
-       
-        
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+    <!-- X-axis -->
+    <line x1="50" y1="250" x2="350" y2="250" style="stroke:black;stroke-width:2" />
+    <!-- Y-axis -->
+    <line x1="50" y1="250" x2="50" y2="50" style="stroke:black;stroke-width:2" />
+    <!-- Title -->
+    <text x="50%" y="30" text-anchor="middle" font-size="18">Relative Size in Square Miles of Three Pacific Islands</text>
+    
+    <g>
+        <!-- Bar - Tahiti -->
+        <rect x="100" y="200" width="40" height="50" style="fill:#FFD700" />
+        <text x="100" y="270" text-anchor="middle" font-size="14">Tahiti</text>
+        <text x="120" y="190" text-anchor="middle" font-size="14">404 sq mi</text>
+    </g>
+  
+    <g>
+        <!-- Bar - Raiatea -->
+        <rect x="200" y="185" width="40" height="65" style="fill:#FFC0CB" />
+        <text x="200" y="270" text-anchor="middle" font-size="14">Raiatea</text>
+        <text x="220" y="180" text-anchor="middle" font-size="14">65 sq mi</text>
+    </g>
+    
+    <g>
+        <!-- Bar - Tongatapu -->
+        <rect x="300" y="185" width="40" height="65" style="fill:#00008B" />
+        <text x="300" y="270" text-anchor="middle" font-size="14">Tongatapu</text>
+        <text x="320" y="180" text-anchor="middle" font-size="14">100 sq mi</text>
     </g>
 </svg>
+
