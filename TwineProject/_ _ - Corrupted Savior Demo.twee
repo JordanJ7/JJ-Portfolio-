@@ -1,0 +1,675 @@
+:: StoryTitle
+" " - Corrupted Savior Demo
+
+
+:: StoryData
+{
+  "ifid": "539A5F45-D076-4744-85BE-B1FAC332DE1C",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Journey Start",
+  "tag-colors": {
+    "footer": "none",
+    "Corruption": "red",
+    "Saviors-Journey": "orange",
+    "hero's-Journey": "blue",
+    "Start-": "purple"
+  },
+  "zoom": 0.6
+}
+
+
+:: A Word\  {"position":"900,900","size":"100,100"}
+The words above the passage help the viewer know what to feel or have a sense of surrounding. 
+
+
+:: Blacksmith [Start-] {"position":"1700,400","size":"100,100"}
+<div class= "statsbox"> Sword | Shield | Leave </div> <div class= "flex-container">
+<div class="box">
+
+
+The blacksmith is hammering away at his forge when you arrive.
+"What brings you here, knight?" he asks.
+"I'm searching for the Enchanted weapon," you reply.
+The blacksmith scratches his beard. "I've heard rumors of such a weapon, but I don't know where it is. However, I can help you on your journey by forging you a new weapon. What would you like?"
+
+
+[[A sword->Village Square 2]]
+[[A shield->Village Square 2]]
+[[Leave->Village Square]]
+
+/div>
+</div>
+
+
+:: Copy Passage {"position":"900,1100","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+
+[[Run away->Square]]
+
+
+</div>
+</div>
+
+
+
+:: Corruption [Corruption] {"position":"1400,1500","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+THIS IS UNFINISHED
+
+The arrow flies throught the air nailing righr into the side of the creature. It wails in pain throwing itself on its hind feet.  You rush its side while its disctracted. 
+
+[[RETURN->Journey]]
+[[Rush its side->Corruption 2]]
+
+</div>
+</div>
+
+
+:: Corruption 2 [Corruption] {"position":"1300,1700","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+Rushing its side you fire a few more arrows aiming all over the body and torso. After 
+
+
+[[Press forward->Corruption 3]]
+
+</div>
+</div>
+
+
+:: Corruption 3 [Corruption] {"position":"1200,1900","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+You are obssesed with finding this Spear you will do anything to find this crown. 
+
+
+[[Press forward->Corruption 4]]
+
+</div>
+</div>
+
+
+:: Corruption 4 [Corruption] {"position":"1100,2100","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+You are obssesed with finding this Spear you will do anything to find this crown. 
+
+
+[[Press forward->Corruption 5]]
+
+</div>
+</div>
+
+
+:: Corruption 5 [Corruption] {"position":"1000,2300","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+You are obssesed with finding this Spear you will do anything to find this crown. 
+
+
+[[Press forward->Corruption 6]]
+
+</div>
+</div>
+
+
+:: Corruption 6 [Corruption] {"position":"900,2500","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+You are obssesed with finding this Spear you will do anything to find this crown. 
+
+
+[[Press forward->Corruption 7]]
+
+</div>
+</div>
+
+
+:: Corruption 7 [Corruption] {"position":"800,2700","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+You are obssesed with finding this Spear you will do anything to find this crown. 
+
+
+[[Press forward->Corruption 8]]
+
+</div>
+</div>
+
+
+:: Corruption 8 [Corruption] {"position":"700,2900","size":"100,100"}
+
+
+
+:: Failed Button {"position":"900,1000","size":"100,100"}
+Volume: <<volume>>
+Inventory: <<button "View">>
+<<script>>
+	Dialog.setup("Your Inventory");
+	Dialog.wiki(Story.get("Inventory").processText());
+	Dialog.open();
+	<</script>>
+<</button>>
+<<if $key.has('key')>> Key: <<button "View">>
+<<script>>
+	Dialog.setup("");
+	Dialog.wiki(Story.get("Key").processText());
+	Dialog.open();
+	<</script>>
+<</button>>
+<</if>>
+
+<<if $Fire is true>>
+	<<if (!$("#timer").hasClass("timergreen"))>>
+  
+    <<elseif (!$("#timer").hasClass("timeramber"))>>
+ 
+    <<else>>
+    	
+	<</if>>
+<</if>>
+
+
+
+
+:: Hero [hero's-Journey] {"position":"1600,1300","size":"100,100"}
+<div class= "statsbox"> Sweat | Journey | Kingdom </div> <div class= "flex-container">
+<div class="box">
+
+
+
+"Very well," says the Lemonhead. "Off you shall go on your adventures you be. Good luck on your journey young one!"
+
+
+[[Continue on the Journey->Journey]]
+
+</div>
+</div>
+
+
+
+
+:: Journey [hero's-Journey] {"position":"1600,1500","size":"100,100"}
+<div class= "statsbox"> Forest | Enemy? | Rocks </div> <div class= "flex-container">
+<div class="box">
+
+You make your way to the caves and of the Centaur village. During your journey to the cave you pruchased a bow and arrow from a road merchant.... You are greeted with wall of rock and boulders that seem to be able to be moved but not with your current strength or awareness. Off to your left you hear a rustling in the woods and notice a large creature standing behind a tree. You draw your bow and aim towards its rear that is peaking from the side of the tree. 
+
+
+[[Fire at the rear of the creature->Corruption]]
+[[Miss intentinally to scare it away->Journey 2.5]]
+[[Ignore the creature->Journey 2]]
+
+</div>
+</div>
+
+
+:: Journey 2 [hero's-Journey] {"position":"1600,1700","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+
+Before continuing on you hear strange noises and rustling in the bushes but ignore it and carry on. 
+
+
+[[Keep walking->Journey 3]]
+
+</div>
+</div>
+
+
+:: Journey 2.5 [Saviors-Journey] {"position":"1800,1500","size":"100,100"}
+<div class= "statsbox"> Bad | Death | Scared </div> <div class= "flex-container">
+<div class="box">
+
+You fire the arrow directly at the tree impailing it. This startles the creature and scurries away crossing over your path to the other set of trees galloping into the distance. It appeared to be a centaur. 
+
+[[Press On->Journey 2]]
+[[Yell at it to "come back!!"->Journey 3.5]]
+
+</div>
+</div>
+
+
+
+:: Journey 3 [hero's-Journey] {"position":"1600,1900","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing </div> <div class= "flex-container">
+<div class="box">
+
+You push deeper into the forest towards the mountain, hoping to find something of value. Suddenly, you are ambushed by a group of goblins! You draw your sword and prepare to fight.
+
+
+[[Fight->Journey 4]]
+[[Run away->Journey]]
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+:: Journey 3.5 [Saviors-Journey] {"position":"1900,1700","size":"100,100"}
+<div class= "statsbox"> Nice? | Scared | Large  </div> <div class= "flex-container">
+<div class="box">
+
+
+The centaur stops in its tracks and looks back and glances at you. Its facial features remind you of the bar tender you were just talking to at the tavern today but with amore natural and calm expression, like its in control. The centaur walks slowly back toward you with caution. Slowly lowering your bow and holstering it onto your back....The centaur is a few meters away from you now. Its size seem to be double yours wiht broad shoulders and strong legs or hoofs??. It nods at you and points in a direction towards the side of the mountain without a pathway. You glance over in that direction, the centaur gallops away into the woods. 
+
+[[Continue the regular path->Journey 4]]
+[[Head in the unknown direction ->Journey 4.5]]
+
+
+</div>
+</div>
+
+
+:: Journey 4 [hero's-Journey] {"position":"1600,2100","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing | Death? </div> <div class= "flex-container">
+<div class="box">
+
+The goblins are fierce, but you are able to defeat them with luck and a little bit of fighting skill. As you catch your breath, you notice a glint of metal in the bushes. You investigate and find a Talisman with a fire engraving on the side.
+
+[[Take the talisman and move on->Journey 5]]
+
+
+
+
+</div>
+</div>
+
+
+:: Journey 4.5 [Saviors-Journey] {"position":"2000,1900","size":"100,100"}
+<div class= "statsbox"> Cold | Feet | Hurt </div> <div class= "flex-container">
+<div class="box">
+
+
+You walk toward the direction the centaur montioned towards. There is a small human sized crack in the rock with light on the other side. 
+
+
+[[Crawl In->Journey 5.5]]
+[[Back to Original Path->Journey 2]]
+
+</div>
+</div>
+
+
+
+
+
+:: Journey 5 [hero's-Journey] {"position":"1600,2300","size":"100,100"}
+<div class= "statsbox"> Calm | Down | Heart </div> <div class= "flex-container">
+<div class="box">
+
+
+After taking the Talisman, you notice you are lost due to the ambush in the woods. yous tart strolling around aimlessly until you come across an old abandoned castle nested in the side of the mountain. As you explore, you realize the Talsiman fits a slot on the door to the castle. You enter the secret chamber and find a map leading to the location of the Enchanted Spear.
+
+
+[[Follow the map->Journey 6]]
+
+
+</div>
+</div>
+
+
+
+
+
+:: Journey 5.5 [Saviors-Journey] {"position":"2100,2100","size":"100,100"}
+<div class= "statsbox"> Shit | I'm | Stuck </div> <div class= "flex-container">
+<div class="box">
+
+Crawling through your leg gets stuck on a piece of rock and you can't move forward. 
+
+[[Twist your leg out and suffer damage to your calf->Journey 6.5]]
+
+
+
+</div>
+</div>
+
+
+:: Journey 6 [hero's-Journey] {"position":"1600,2500","size":"100,100"}
+<div class= "statsbox"> Fear | Heart | Racing | Death? | Fire!! </div> <div class= "flex-container">
+<div class="box">
+
+
+Following the map, you arrive at a deeper into the castle. You traverse  dangerous terrain until you finally come across the Enchanted Spear lodged into the side of rock. Dozens of charred black  As you attempt to pull it out, a large yellow scaled dragon appears frm the ceiling forcing you to back away from the spear. 
+
+[[Continue->Journey 7]]
+
+
+</div>
+</div>
+
+
+
+
+
+:: Journey 6.5 [Saviors-Journey] {"position":"2200,2300","size":"100,100"}
+<div class= "statsbox"> Tired | Excrucitiating |  </div> <div class= "flex-container">
+<div class="box">
+
+You get your leg twisited out but the rock cuts into your skin. You have to find something to patch it or you may die.
+
+
+
+[[Leave and go back to the village resulting in the end of the adventure.->The End 2]]
+
+
+</div>
+</div>
+
+
+:: Journey 7 [hero's-Journey] {"position":"1600,2700","size":"100,100"}
+<div class= "statsbox"> Fear | Fire | Death </div> <div class= "flex-container">
+<div class="box">
+
+
+Following the map, you travel deeper into the castle. You traversed dangerous terrain until you finally came across the Enchanted Spear lodged into the side of rock. Dozens of charred black skeletons are surounding the spear.  As you attempt to pull it out, a large yellow scaled dragon appears frm the ceiling forcing you to back away from the spear. 
+
+[[Continue->Journey 8]]
+
+
+</div>
+</div>
+
+
+:: Journey 8 [hero's-Journey] {"position":"1600,2900","size":"100,100"}
+<div class= "statsbox"> Death | Death | Death </div> <div class= "flex-container">
+<div class="box">
+
+
+The dragon hurls large fire ball at you. You block onw with your weapon but melted it in the process. There is nothign else to fight this dragon with. You take your last few quiet moments as the dragon hurls one last fire ball at you.
+
+[[Continue->Journey 9]]
+
+
+</div>
+</div>
+
+
+:: Journey 8.5 [Saviors-Journey] {"position":"2400,2700","size":"100,100"}
+<div class= "statsbox"> Pain | Fire | Death? </div> <div class= "flex-container">
+<div class="box">
+
+You are faced with the cottage ablazed wood falling all over the place. You sit otuside and build the courage to go inside. Bracing yourself you rush in screaming "JAMES!! JAMES!!" Running intot the bedroom you seen James on the ground passed out. you throw him over your soulder and slowly walk towards the front door, soot and burned wood falling around you. Finally reaching the front door your injured leg gave out, making you fall to the floor. You launch James outside away from danger. 
+
+
+[[Continue->Journey End]]
+
+
+</div>
+</div>
+
+
+:: Journey 9 [hero's-Journey] {"position":"1600,3100","size":"100,100"}
+<div class= "statsbox"> Fire | Power | End  </div> <div class= "flex-container">
+<div class="box">
+
+
+Flames engulfing all around, you fall tot the ground reaching your hand foward. This feeling as like you've been here before....
+
+You sit there engulfed in flames, but nothing burns, nothings hurts?  You raise your head and stand tall. Looking all over you as flames begin to fall. "The talisman!?!" you thought. It's glowing bright red and pulsating energy that seems to block the fire. The dragon turned around after firing the fire ball not expecting you to be alive. You sneak towards the spear just unuder the dragon. 
+
+With al you might you pull the spear out and thrust it into thte dragon's heart effectively killing it. You are victorious finally reaching the end our your journey and being decalared the ruler of the kingdom
+
+
+--THE END--
+
+[[Hero's End->Journey 9]]
+[[Restart ->Journey Start]]
+
+</div>
+</div>
+
+
+:: Journey End [Saviors-Journey] {"position":"2500,2900","size":"100,100"}
+<div class= "statsbox"> ERROR | ERROR | NOTHING </div> <div class= "flex-container">
+<div class="box">
+
+You struggle with getting back up your leg its a swollen mess of blood and bone at this moment and you have no energy left. Trying to crawl away a large wooden beam falls from the ceiling landing just below your knee. You scream with unimaginable pain "AAAHHHHHHH!!!!!". With your last energy you try scream for help but there is no one around to hear you. Reaching your arm foward you notice a figure outside the cottage. With a large horselike back and human torso it looks alomst familiar. In its hands is a glowing spear. The creature stabs James in the chest effectively killing him. Your eyes start blinking slower and slower "Am I dying? Is this really it? Not even a Hero's death......."
+
+
+--The End--
+
+
+[[Revenge?->Journey Start]]
+[[Rest?->Journey Start]]
+
+</div>
+</div>
+
+
+:: Journey Start [Start-] {"position":"2300,800","size":"100,100"}
+<div class= "statsbox"> Start | Adventure </div> <div class= "flex-container">
+<div class="box">
+
+Journey of the Corrupted Savior
+
+You are a brave adventurer, tasked with finding the legendary Enchanted Spear that  contains paracausal power to bring peace to the kingdom. The kingdom has been in chaos since the death of the King. Whoever wields this Enchanted Spear will be recognized as the rightful ruler of the kingdom. 
+
+
+[[Embark->Village Square]]
+
+</div>
+</div>
+
+
+
+:: Mountains [hero's-Journey Start-] {"position":"1900,1300","size":"100,100"}
+<div class= "statsbox">Crazy | Lemon | Man? </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
+The mountains are treacherous, but you make your way to the Lemonhead's cave. The Lemonhead greets you warmly and offers you a cup of Lemon herb tea. 
+"I've heard of the Enchanted Spear," he says. "It's said to be guarded by a powerful tribe of centaurs in the caves beyond the mountains. However, there is a catch. The centaurs will only surrender the weapon to a strong hero that will be facing their strongest warrior. Do you have what it takes? 
+
+
+[[I am a true hero->Hero]]
+
+
+</div>
+</div>
+
+
+
+
+:: Tavern [Start-] {"position":"1900,1100","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
+The tavern is full of patrons, drinking and laughing. You approach the barkeep and ask him about the Enchanted weapon.
+"Ah, the Enchanted spear" he whispers. "I've heard tales of it, but I don't know its whereabouts. However, I can offer you some advice. You should seek out the wise Lemonhead who lives in the mountains. He might know something."
+
+
+[[Go to the mountains->Mountains]]
+[[Leave->Village Square 3]]
+
+</div>
+</div>
+
+
+:: The End [Start-] {"position":"1600,1000","size":"100,100"}
+<div class= "statsbox"> Exist | Finished?  </div> <div class= "flex-container">
+<div class="box">
+
+
+As soon as you enter you are greeted with a large hostile bear that eats you whole. It seems that pathway was not safe to travel. 
+
+--THE END--
+
+[[Restart->Journey Start]]
+
+
+</div>
+</div>
+
+
+:: The End 2 [Saviors-Journey] {"position":"2300,2500","size":"100,100"}
+<div class= "statsbox"> Pain | Scared | Fire | Bad  </div> <div class= "flex-container">
+<div class="box">
+
+You return the way you came hobbling down the mountain. You wrap your leg in your cottage back at the villag and lay down to rest....
+
+Late in the middle of the night you hear screaming outside and wake up startled. Your leg shoots with pain. You get up slowly and walk to your front door. Swinging it wide open you see a fireball shoot through sky over towards you neighbor James's cottage. You rush over to his house to try and assist him. 
+
+
+[[Run to James's Cottage.->Journey 8.5]]
+
+
+</div>
+</div>
+
+
+:: The Forest [Start-] {"position":"1600,800","size":"100,100"}
+<div class= "statsbox"> Forest | Ambush | Scary  <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
+The forest is dark and foreboding. As you drone closer and closer to the entrance of the Forest you seem to be getting pulled into it like someone or something wants you to eat you whole. 
+
+
+[[Go back to the Village Square->Village Square]]
+[[Enter->The End]]
+
+</div>
+</div>
+
+
+
+:: Village Square [Start-] {"position":"1500,600","size":"100,100"}
+<div class= "statsbox"> People | Hot | Spear  </div> <div class= "flex-container">
+<div class="box">
+
+
+Your quest begins in the village square, where you can talk to the villagers and gather information on the whereabouts of the weapon. 
+
+
+[[Talk to the blacksmith->Blacksmith]]
+[[Visit the tavern->Tavern]]
+[[Explore the forest->The Forest]]
+
+</div>
+</div>
+
+
+:: Village Square 2 [Start-] {"position":"1700,600","size":"100,100"}
+<div class= "statsbox"> Bakery | Fire | Caution  </div> <div class= "flex-container">
+<div class="box">
+
+
+
+The day is going by fast and you haven't found any information as to the whereabouts of the weapon but you gained a new weapon to help you on your journey. You might want to check other places in the village for information. 
+
+[[Visit the tavern->Tavern]]
+[[Explore the forest->The Forest]]
+
+
+</div>
+</div>
+
+
+:: Village Square 3 [Start-] {"position":"1900,600","size":"100,100"}
+<div class= "statsbox"> Sunset | Speed | Sword </div> <div class= "flex-container">
+<div class="box">
+
+
+
+The day is going by fast and you haven't found any information as to the whereabouts of the weapon but you gained some information as to where to go to help you on your journey. You might want to check other places in the village for information.
+
+[[Talk to the blacksmith->Blacksmith]]
+
+
+</div>
+</div>
+
+
+:: StoryStylesheet [stylesheet]
+
+body {
+  font-size: 18pt;
+  font-family: monospace;
+  text-align: left;
+  color: rgba(240, 240, 240, 1);
+  background: black;
+  background-size: cover;
+}
+
+.statsbox{
+  width: 325px;
+  height: auto;
+  padding: 15px;
+  background: rgba(80, 80, 80, .4);
+  font-size: 14px;
+  font-family: monospace;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.box {
+  width: 800px;
+  height: auto;
+  padding: 15px;
+  background: rgba(75, 75, 75, .6);
+  border: 10px solid rgba(3, 1, 1, .3);
+}
+
+
+body {
+  background-image: url('https://cdn.discordapp.com/attachments/1087808890349031584/1087809164178358392/image.png');
+  background-size: cover;
+  background-position: center;
+}
+
+
+#Mountains {
+    background: url('https://cdn.discordapp.com/attachments/1087803518217371790/1087808890093174884/image.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+
+a{
+  color: rgb(250, 100, 100);
+  text-decoration:none;
+}
+a:hover {
+ color: rgb(255, 150, 150);
+  text-decoration: underline;
+}
+a:active {
+  color: rgb(255, 200, 200);
+  text-decoration:none;
+}
