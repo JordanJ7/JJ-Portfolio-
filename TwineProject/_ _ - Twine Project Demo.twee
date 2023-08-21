@@ -15,7 +15,7 @@
 }
 
 
-:: Blacksmith {"position":"1650,375","size":"100,100"}
+:: Blacksmith {"position":"1700,400","size":"100,100"}
 <div class= "statsbox"> Links</div> <div class= "flex-container">
 <div class="box">  
 
@@ -34,17 +34,145 @@ The blacksmith scratches his beard. "I've heard rumors of such a weapon, but I d
 </div>
 
 
-:: Corruption {"position":"2275,1250","size":"100,100"}
+:: Corruption {"position":"2100,1300","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+You are obssesed with finding this crown you will do anything to find this crown. 
+
+
+</div>
+</div>
+
+
+:: Hero {"position":"1200,1300","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
 
 
 
-:: Hero {"position":"1175,1275","size":"100,100"}
 "Very well," says the LemonHead. "I will give you a magical talisman that will protect you from the dragon's flames. Good luck on your journey young one!"
-You make your way to the caves and confront the dragon. With the help of the talisman, you are able to defeat the dragon and claim the Enchanted Sword. You return to the kingdom as a hero, and peace is restored at last.
+
+
+[[Continue on yoru Journey->Journey]]
+
+</div>
+</div>
 
 
 
-:: Journey Start {"position":"2425,775","size":"100,100"}
+
+:: Journey {"position":"1200,1500","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+You make your way to the caves and of the Centaur village. During your journey to the cave you pruchased a boy and arrow from a road merchant.... You are greeted with wall of rock and boulders that seem to be able to be moved but not with your current strength or awareness. Off to your left you hear a rustling in the woods and  notice a large creature standing behind a tree. You draw your bow and aim towards its rear that is peaking from the side of the tree. 
+
+
+[[Fire at the rear of the creature->Journey 2]]
+[[Miss intentinally to scare it away->Journey 2.5]]
+
+
+</div>
+</div>
+
+
+:: Journey 2 {"position":"1200,1700","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
+[[Run away->Journey 3]]
+[[Run away->Journey 3]]
+
+</div>
+</div>
+
+
+:: Journey 2\  {"position":"475,2275","size":"100,100"}
+[[Continue|ch1_090]]
+
+
+:: Journey 2.5 {"position":"1400,1500","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+You fire the arrow directly at the tree impailing it. You are then met with a centaur. The creature scurries away crossing over your path to the other set of trees galloping into the distance. 
+
+[[Press On->Journey 2]]
+[[Yell at it to "come back!!"->Journey 3.5]]
+
+</div>
+</div>
+
+
+
+:: Journey 3 {"position":"1200,1900","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+</div>
+</div>
+
+
+[[Run away->Journey 4]]
+
+
+
+:: Journey 3.5 {"position":"1600,1700","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+The centaur stops in its tracks and looks back and glances at you. Its facial features remind you of the bar tender you were just talking to at the tavern today but with amore natural and calm expression, like its in control. The centaur walks slowly back toward you with caution. You slowly lower you bow and holster it onto your back. The centuar is a few meters away from you now. Its size seem to be double yours. It nods at you and points in a direction towards the side of the mountain without a pathway. You glance over in that direction as you the centaur gallops away into the woods. 
+
+[[Continue the regular path->Journey 4]]
+[[Head in the unknown direction ->Journey 4.5]]
+
+
+</div>
+</div>
+
+
+:: Journey 4 {"position":"1200,2100","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
+[[Run away->Journey 5]]
+
+
+</div>
+</div>
+
+
+:: Journey 4.5 {"position":"1800,1900","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
+[[Run away->Square]]
+
+
+</div>
+</div>
+
+
+:: Journey 5 {"position":"1200,2300","size":"100,100"}
+
+
+
+:: Journey Start {"position":"2300,800","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
 The Quest for the Enchanted Sword
 
 You are a brave knight, tasked with finding the legendary Enchanted weapon that contains contains paracausal  power to bring peace to the kingdom. The kingdom has been in chaos since the death of the King.  Whoever wields the Enchanted weapon will be recognized as the rightful ruler of the kingdom. 
@@ -52,9 +180,16 @@ You are a brave knight, tasked with finding the legendary Enchanted weapon that 
 
 [[Embark->Village Square]]
 
+</div>
+</div>
 
-:: Mountains {"position":"1750,1250","size":"100,100"}
---Mountains--
+
+
+:: Mountains {"position":"1700,1300","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
 
 The mountains are treacherous, but you make your way to the Lemonhead's cave. The hermit greets you warmly and offers you a cup of green herb. 
 "I've heard of the Enchanted Weapon," he says. "It's said to be guarded by a powerful tribe of centaurs in the caves beyond the mountains. However, there is a catch. The centaurs will only surrender the weapon to a strong hero that will be facing theri strongest warrior. Do you have what it takes? Unless... There is one other way but it is  a more dangerous and bloody way. 
@@ -63,20 +198,38 @@ The mountains are treacherous, but you make your way to the Lemonhead's cave. Th
 [[I am a true hero->Hero]]
 
 
+</div>
+</div>
 
 
 
 
+:: Square {"position":"900,1000","size":"100,100"}
 
-:: Standard Passage {"position":"1125,800","size":"100,100"}
+
+
+:: Standard Passage {"position":"900,825","size":"100,100"}
 <div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
 <div class="box">
 
+
+
+
+[[Run away->Square]]
+
+
 </div>
 </div>
 
 
-:: Tavern {"position":"1900,1025","size":"100,100"}
+
+:: Tavern {"position":"1900,1100","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
+
 The tavern is full of patrons, drinking and laughing. You approach the barkeep and ask him about the Enchanted weapon.
 "Ah, the Enchanted weapon!" he exclaims. "I've heard tales of it, but I don't know where it is. However, I can offer you some advice. You should seek out the wise LemonHead who lives in the mountains. He might know something."
 
@@ -84,8 +237,15 @@ The tavern is full of patrons, drinking and laughing. You approach the barkeep a
 [[Go to the mountains->Mountains]]
 [[Leave->Village Square 3]]
 
+</div>
+</div>
 
-:: The End {"position":"1575,1025","size":"100,100"}
+
+:: The End {"position":"1600,1000","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
 As soon as you enter you are greeted with a large hostile bear that eats you whole. It seems that pathway was not safe to travel. 
 
 --THE END--
@@ -93,15 +253,28 @@ As soon as you enter you are greeted with a large hostile bear that eats you who
 [[Restart->Journey Start]]
 
 
-:: The Forest {"position":"1575,900","size":"100,100"}
+</div>
+</div>
+
+
+:: The Forest {"position":"1600,800","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
+
 The forest is dark and foreboding. As you drone closer and closer to the entrance of the Forest you seem to be getting pulled into it like someone or something wants you to eat you whole. 
 
 
 [[Go back to the Village Square->Village Square]]
 [[Enter->The End]]
 
+</div>
+</div>
 
-:: Village Square {"position":"1450,625","size":"100,100"}
+
+
+:: Village Square {"position":"1500,600","size":"100,100"}
 <div class= "statsbox"> Untitled Space Adventure v0.2 </div> <div class= "flex-container">
 <div class="box">  
 
@@ -113,8 +286,11 @@ Your quest begins in the village square, where you can talk to the villagers and
 [[Visit the tavern->Tavern]]
 [[Explore the forest->The Forest]]
 
+</div>
+</div>
 
-:: Village Square 2 {"position":"1650,625","size":"100,100"}
+
+:: Village Square 2 {"position":"1700,600","size":"100,100"}
 <div class= "statsbox"> Untitled Space Adventure v0.2 </div> <div class= "flex-container">
 <div class="box">  
 
@@ -125,78 +301,81 @@ The day is going by fast and you haven't found any information as to the whereab
 [[Explore the forest->The Forest]]
 
 
-:: Village Square 3 {"position":"1850,625","size":"100,100"}
+</div>
+</div>
+
+
+:: Village Square 3 {"position":"1900,600","size":"100,100"}
+<div class= "statsbox"> LOCAL | SYSTEM  | Fuel <<print $fuel>> </div> <div class= "flex-container">
+<div class="box">
+
+
 The day is going by fast and you haven't found some information as to the whereabouts of the weapon but you gained some information as to where to go to help you on your journey. You want to check other places in the village for information.
 
 [[Talk to the blacksmith->Blacksmith]]
 
 
-:: ch1_070 {"position":"1175,1500","size":"100,100"}
-[[Push off|ch1_080]]
-[[Ride it out|ch1_081]]
+</div>
+</div>
 
 
-:: ch1_080 {"position":"1075,1675","size":"100,100"}
+:: ch1_081 {"position":"675,2275","size":"100,100"}
 [[Continue|ch1_090]]
 
 
-:: ch1_081 {"position":"1275,1675","size":"100,100"}
-[[Continue|ch1_090]]
-
-
-:: ch1_090 {"position":"1150,1800","size":"100,100"}
+:: ch1_090 {"position":"550,2400","size":"100,100"}
 [[Swim for the boat|ch1_100]]
 [[Swim for shore|ch1_101]]
 
 
-:: ch1_100 {"position":"1075,1950","size":"100,100"}
+:: ch1_100 {"position":"475,2550","size":"100,100"}
 [[Continue|ch1_110]]
 
 
-:: ch1_101 {"position":"1225,1950","size":"100,100"}
+:: ch1_101 {"position":"625,2550","size":"100,100"}
 [[Continue|ch1_110]]
 
 
-:: ch1_110 {"position":"1150,2100","size":"100,100"}
+:: ch1_110 {"position":"550,2700","size":"100,100"}
 [[Save the boat|ch1_120]]
 [[Save Caleb|ch1_130]]
 
 
-:: ch1_120 {"position":"1050,2225","size":"100,100"}
+:: ch1_120 {"position":"450,2825","size":"100,100"}
 [[Grab the anchor|ch1_129]]
 (set: $savedBoat to 1)
 
 
-:: ch1_129 {"position":"900,2325","size":"100,100"}
+:: ch1_129 {"position":"300,2925","size":"100,100"}
 [[Continue|ch1_140]]
 
 
-:: ch1_130 {"position":"1225,2225","size":"100,100"}
+:: ch1_130 {"position":"625,2825","size":"100,100"}
 [[Swim for shore|ch1_150]]
 (set: $savedBoat to 0)
 
 
-:: ch1_140 {"position":"1075,2375","size":"100,100"}
+:: ch1_140 {"position":"475,2975","size":"100,100"}
 [[Look for Caleb|ch1_160]]
 
 
-:: ch1_150 {"position":"1225,2375","size":"100,100"}
+:: ch1_150 {"position":"625,2975","size":"100,100"}
 [[Continue|ch1_170]]
 
 
-:: ch1_160 {"position":"1075,2525","size":"100,100"}
+:: ch1_160 {"position":"475,3125","size":"100,100"}
 [[Continue|ch2_005]]
 
 
-:: ch1_170 {"position":"1225,2525","size":"100,100"}
+:: ch1_170 {"position":"625,3125","size":"100,100"}
 [[Continue|ch2_005]]
 
 
-:: ch2_005 {"position":"2275,1500","size":"100,100"}
+:: ch2_005 {"position":"2500,2450","size":"100,100"}
 [[Chapter 2|ch2_010]]
 
 
-:: ch2_010 {"position":"2275,1650","size":"100,100"}
+:: ch2_010 {"position":"2500,2600","size":"100,100"}
 (if: $savedBoat is 1)[[[Look for Caleb|ch2_020]]]
 (else:)[[[Continue|ch2_040]]]
 
@@ -211,43 +390,43 @@ The day is going by fast and you haven't found some information as to the wherea
 (set: $wavedToCamera to 0)
 
 
-:: ch2_020 {"position":"2125,1775","size":"100,100"}
+:: ch2_020 {"position":"2350,2725","size":"100,100"}
 .
 
 [[Look for Caleb|ch2_030]]
 
 
-:: ch2_030 {"position":"2150,1950","size":"100,100"}
+:: ch2_030 {"position":"2375,2900","size":"100,100"}
 (display: "beachOptions")
 
 
-:: ch2_040 {"position":"2425,1750","size":"100,100"}
+:: ch2_040 {"position":"2650,2700","size":"100,100"}
 [[Swim for shore|ch2_050]]
 
 
-:: ch2_050 {"position":"2425,1925","size":"100,100"}
+:: ch2_050 {"position":"2650,2875","size":"100,100"}
 (display: "beachOptions")
 
 
-:: ch2_150 {"position":"2300,2100","size":"100,100"}
+:: ch2_150 {"position":"2525,3050","size":"100,100"}
 (if: $toldCaleb is 1)[[[Break padlock|ch2_170]]]\
 (else:)[[[Break padlock|ch2_171]]]
 [[Don't break padlock|ch2_160]]
 
 
-:: ch2_160 {"position":"2425,2225","size":"100,100"}
+:: ch2_160 {"position":"2650,3175","size":"100,100"}
 (set: $returnOptions to "[[Back to beach|backToBeach]]")
 $returnOptions
 (display: "exploreOptions")
 
 
-:: ch2_170 {"position":"2350,2400","size":"100,100"}
+:: ch2_170 {"position":"2575,3350","size":"100,100"}
 (set: $returnOptions to "[[Back to beach|backToBeach]]")
 $returnOptions
 (display: "exploreOptions")
 
 
-:: ch2_171 {"position":"2225,2725","size":"100,100"}
+:: ch2_171 {"position":"2450,3675","size":"100,100"}
 (set: $returnOptions to "[[Back to beach|backToBeach]]")
 $returnOptions
 (display: "exploreOptions")
