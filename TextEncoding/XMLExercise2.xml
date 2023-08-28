@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <title>Leaves</title>
+    <author>Lloyd Schwartz</author>
+    <stanza verse="1">
+        <li num="1">Every <month>October</month> it becomes important, no, necessary</li>
+        <li num="2"> to see the <life><death><life>leaves</life></death></life> turning, to be
+            surrounded</li>
+        <li num="3">by <death>leaves</death> turning; it's not just the symbolism,</li>
+        <li num="4">to confront in the <leaves>death</leaves> of the year your
+                        <leaves><life><leaves>death</leaves></life></leaves>,</li>
+        <li num="5">one blazing farewell appearance, though the irony</li>
+        <li num="6">isn't lost on you that nature is most seductive</li>
+        <li num="7"> when it's about to die, flaunting the dazzle of its</li>
+        <li num="8">incipient exit, an ending that at least so far</li>
+        <li num="9">the effects of human progress (pollution, acid rain)</li>
+        <li num="10">have not yet <emo>frightened</emo> you enough to make you</li>
+        <li num="11">believe is real; that is, you know this ending is a deception</li>
+        <li num="12">because of course nature is always renewing itself—</li>
+        <li num="13">the <death/><life><death>trees</death></life> don't die, they just pretend,</li>
+        <li num="14">go out in style, and return in style: a new style.</li>
+    </stanza>
+
+    <!--Death comes with life and life comes with death. Leaves comes and death and leaves come with life. 
+-->
+    <!--    I was having fun with the tags. I wanted to include nestings that had relatiosn to reach other so if you serach up death things with life will come up. 
+-->
+
+    <stanza verse="2">
+        <li num="15">Is it deliberate how far they make you go</li>
+        <li num="16"> especially if you live in the city to get far</li>
+        <li num="17">enough away from home to see not just trees</li>
+        <li num="18"> but only d<death><life><death>trees</death></life></death>? The boring highways,
+            roadsigns, high speeds,</li>
+        <li num="19">10-axle trucks passing you as if they were</li>
+        <li num="20">in an even greater hurry than you to look at <death><life>leaves</life></death>:</li>
+        <li num="21">so you drive in terror for literal hours and it looks</li>
+        <li num="22">like <life>rain</life>, or <life>snow</life>, but it's probably just
+            <life>clouds</life></li>
+        <li num="23">(too cloudy to see any color?) and you wonder,</li>
+        <li num="24"> given the poverty of your memory, which road had</li>
+        <li num="25">the most color last year, but it doesn't matter since</li>
+        <li num="26"> you're probably too late anyway, or too early—</li>
+        <li num="27">whichever road you take will be the wrong one</li>
+        <li num="28">and you've probably come all this way for nothing.</li>
+    </stanza>
+
+
+    <stanza verse="3">
+        <li num="29">You'll be driving along depressed when suddenly</li>
+        <li num="30">a cloud will move and the <death><power>sun</power></death> will muscle through</li>
+        <li num="31">and ignite the hills. It may not last. Probably</li>
+        <li num="32">won't last. But for a moment the whole world comes to.</li>
+        <li num="33">Wakes up. Proves it lives. It lives—</li>
+        <li num="34"><color>red</color>, <color>yellow</color>, <color>orange</color>, <color>brown</color>,
+                <color>russet</color>, <color>ocher</color>, <color>vermilion</color>,</li>
+        <li num="35"><color>gold</color>. Flame and rust. <life>Flame</life> and rust,</li>
+        <li num="36"> the permutations of <reborn>burning</reborn>. You're on <death>fire</death>.</li>
+        <li num="37"> Your eyes are on <death>fire</death>. It won't last, you don't want it to last.</li>
+        <li num="38"> You can't stand any more.<!--panic--> But you don't want it to stop.</li>
+        <li num="39">It's what you've come for. It's what you'll come back for.</li>
+        <li num="40">It won't stay with you, but you'll remember that it felt like nothing else you've felt
+            or something you've felt that also didn't last.</li>
+    </stanza>
+
+</root>
