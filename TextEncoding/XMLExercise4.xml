@@ -2,7 +2,9 @@
 <root>
     <title>BALLAD OF BOOKER T.</title>
 <author>by Langston Hughes</author>
-<line num="1">Booker T.</line>
+    <!--In this poem, the narrator tries to reconcile the reputation of Booker T. 
+    Washington as collaborator with white racists with the time period and place.-->
+<line>Booker T.</line>
     <line num="1">Was a practical man.</line>
     <line num="2">He said, Till the soil</line>
     <line num="3">And learn from the land.</line>
@@ -34,7 +36,9 @@
     <line num="27">Before he can walk<xtnd>—</xtnd></line>
     <line num="28">And in Alabama in '85</line>
     <line num="29">A joker was lucky</line>
-
+    <!--In line 29 he reminds the reader that the South late in 
+    nineteenth century was a dangerous place for an African American to protest racial segregation 
+    or appear to question white supremacy.-->
     <line num="30">But Booker T.</line>
     <line num="31">Was nobody's fool:</line>
     <line num="32">You may carve a dream</line>
@@ -57,8 +61,8 @@
     <line num="46">Where you are.</line>
     
 <author>LANGSTON HUGHES</author>
-    
-Final Draft,
+<!--Here he signs-->
+    Final Draft,
 <location>Hollow Hills Farm,
 Monterey, California,</location>
     
