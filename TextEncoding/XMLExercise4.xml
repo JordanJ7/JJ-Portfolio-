@@ -8,6 +8,7 @@
     <line num="1">Was a practical man.</line>
     <line num="2">He said, Till the soil</line>
     <line num="3">And learn from the land.</line>
+    <stamp color="red">Red Stamp from library of Congress</stamp>
     <line num="4">Let down your bucket</line>
     <line num="5">Where you are.</line>
 <!--   Line 4 and 5 come from Washington's famous 1895 speech in Atlanta, Georgia, at the Cotton States and International Exposition.
@@ -54,16 +55,20 @@
     <line num="39">Education and Outreach Division</line>
     <line num="40">Practical man,</line>
     <line num="41">He said, Train your head,</line>
-    <line num="42">Your heart, and your hand.</line>
+    <line num="42">Your heart, <underlined>and your hand</underlined>.</line>
     <line num="43">Your fate is here</line>
     <line num="44">And not afar,</line>
     <line num="45">So let down your bucket</line>
     <line num="46">Where you are.</line>
     
-<author>LANGSTON HUGHES</author>
+<footing><signature name="LANGSTON HUGHES">LANGSTON HUGHES</signature>
+ 
 <!--Here he signs-->
     Final Draft,
 <location>Hollow Hills Farm,
 Monterey, California,</location>
-    
-<date>June 1, 1941.</date></root>
+    <date>June 1, 1941.</date>
+</footing>
+</root>
+
+
