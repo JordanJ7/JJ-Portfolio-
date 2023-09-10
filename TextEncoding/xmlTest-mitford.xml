@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<front>
+    <sourceInfo><line>MARY RUSSELL MITFORD</line> 
+        <line>Transcript of notebook of Mary Russell Mitford</line>
+        contained in the British Museum (P 24834 : C.60.b.7.)</sourceInfo> <!--I fixed the end tag name to the correct name-->
+    <p>The note-book has a printed title page</p> <p>The Literary Pocket-Book; or, Companion
+        for the lover of Nature &amp; <!--Fixed the ampersand--> Art, 1819</p>. <p>The size of the notebook is 13 x 8
+        cm.</p>
+    <p>Miss Mitford's notes begin on 1 January 1819 and end 11 March 1823.</p>
+    <p>The transcript of which this is a copy is in the possession of the Public Library,
+        Reading, Berks, England. A photostat copy of the MS is also available at that
+        library. Copyright presumably rests with the British Museum.</p>
+    <p n="iv"> <emph rend="underline">July 1955</emph>.
+    
+    </p>
+         <!--All the code above had missing end tag slashes or wrong starting tags.-->
+    
+    <p>
+        <label>
+            RPL Local<lb>Collection</lb> <!--There was a slash in the opening tag.--> 
+            <milestone unit="line"/> Class <add><handShift resp="#black_pen_RCLnb"/>B/TU/MIT</add><lb>  <!--There was a slash in the opening tag.--> 
+            <milestone unit="line"/> Acc. No. <add><handShift resp="#blue_pen_RCLnb"/>L
+                7088</add> </lb>
+            <milestone unit="line"/> Acc. Date <add><handShift resp="#blue_pen_RCLnb"
+            />-</add>
+            <milestone unit="box"/> <!--Missing quotation-->
+        </label>
+    </p>
+        
+</front>
+
+    <body>
+        <div type="entry">
+            <head>
+                <date when="1819-01-01"/>
+            </head>
+            <p>At <placeName>Farley Hill</placeName>--Happy day--
+                <persName ref="#Dickinson_Mrs">Mrs. D</persName>'s singing--  <!--The "persName" and "title elements were not propertly nested-->
+                <title>Where'er you walk</title>--
+                <persName ref="#Dickinson_Charles">Mr. D</persName>'s reading--
+                <title>Count Ugolino</title>.</p>
+        </div>
+    </body>
+    
+</root>
+    
