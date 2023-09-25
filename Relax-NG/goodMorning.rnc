@@ -1,0 +1,35 @@
+default namespace = ""
+
+start =
+  element xml {
+    element source {
+      title,
+      element author { text },
+      element date {
+        attribute when { xsd:integer }
+      }
+    },
+    element poem {
+      title,
+      element lineGroup {
+        element line {
+          attribute n { xsd:integer },
+          (text
+           | element motif { text }
+           | element place {
+               attribute ref { xsd:NCName },
+               text
+             }
+           | element placeName {
+               attribute ref { xsd:NCName },
+               xsd:NCName
+             })+
+        }+
+      }+
+    }
+  }
+title =
+  element title {
+    attribute level { xsd:NCName },
+    text
+  }
