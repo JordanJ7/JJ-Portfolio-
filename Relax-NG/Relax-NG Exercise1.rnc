@@ -21,3 +21,23 @@ ref = attribute ref {xsd:IDREF}
 
 
 
+start = root 
+root =  element root {footing, title, author, line, trans, page, footing} 
+title = element title {text} 
+author = element author {text}
+trans = element trans {text}
+page = element page {text, metainfo}
+metainfo = element metainfo {text}
+footing = element footing {signature, location, date}
+
+signature = element signature {name, text}
+name = attribute name {"LANGSTON HUGHES"}
+location = element location {text}
+date = element date {text}
+
+line = element line {text, num, stamp, xtnd, underlined} 
+num = attribute num {xsd:integer}
+stamp = element stamp {color, text}
+color = attribute color {"red"}
+xtnd = element xtnd {text}
+underlined = element underlined {text}

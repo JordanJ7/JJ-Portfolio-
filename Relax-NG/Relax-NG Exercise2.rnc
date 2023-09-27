@@ -1,0 +1,19 @@
+# Define the root element
+start = element root {
+  element title { text },
+  element author { text },
+  element line { text, attribute num { xsd:integer } },
+  element stamp {
+    attribute color { xsd:string }
+  },
+  element xtnd { text },  # Optional xtnd element
+  element trans { text },
+  element page { text },
+  element metainfo { text },
+  element footing {
+    element signature { text },
+    element location { text },
+    element date { text }
+  }
+}
+

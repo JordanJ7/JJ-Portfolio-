@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../Relax-NG/Relax-NG%20Exercise2.rnc" type="application/relax-ng-compact-syntax"?>
 <root>
     <title>BALLAD OF BOOKER T.</title>
 <author>by Langston Hughes</author>
