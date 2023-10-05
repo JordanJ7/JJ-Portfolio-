@@ -1,0 +1,88 @@
+# DIGIT 110 RELAX NG TEST INSTRUCTIONS:  
+# * Save these test files according to our standard file naming conventions for Canvas submissions.
+# * Make the schema well-formed and document with  # comments where you made change(s). 
+# * Then, associate the schema with the XML file we have provided for the exam.
+# * Next, correct the schema code so that it validates the XML (happy green oXygen for both documents) and document briefly with # comments what you changed and why.
+#  **NOTE**: DO NOT CHANGE the markup in the XML file, except to add your schema line!
+#
+# TIPS: 
+# There are 16 critical errors in this Relax-NG schema that will make oXygen's error-checking box RED. Only a few of them will appear at first in the Relax NG. 
+# More will be revealed when you associate the schema with the XML file.
+# Your goal is to correct each of these errors, making changes ONLY in this schema file.
+# When attribute values in the XML represent a datatype, apply a datatype in this schema for full credit. 
+
+# First, correct the schema file so it "turns green" in oXygen. IMPORTANT: Write a comment to document each correction.
+# Then, associate your corrected  schema with the XML (and remove the original schema line). 
+# At that point the other validation errors will become evident in the XML file.)
+# Remember to split your oXygen screen (Window -> Tile Editors Vertically), and carefully examine the XML to see how 
+# the elements are written. 
+# DO NOT CHANGE THE MARKUP IN THE XML FILE. Make ALL corrections in the Relax NG Schema to make the XML valid according to the schema.
+# Save the schema and use the red checkmark in oXygen to check the validation as you go.
+#
+# **NOTE**: Because this is an exam, you are expected to complete this assignment _individually_ 
+# without discussion or help from other students. Any such collaboration will be considered to be plagiarism under the penalties stated on the syllabus.
+# *  GITHUB: While you may ask basic questions on the class Slack, GitHub or by email, the instructor's responses will
+# be correspondingly minimal: that is, I will not be telling you the complete answers. Similarly, for any
+# questions about take-home exams on GitHub, students _must not_ reply to each other.
+#
+# SUBMITTING YOUR EXAM:
+# When you are finished, upload BOTH the schema and the XML file to Canvas using the posted upload point for this exam. 
+# You may zip the files to submit them just as you have done for homework assignments.
+start = xml
+xml = element xml {heading, body}
+heading = element heading {title, byline, listNames}
+title = element title {text} #supposed to have text isstead of empty
+byline = element byline {author, pubTitle?, date, text?}
+author = element author {text} 
+pubTitle = element pubTitle {text | date} 
+listNames = element listNames {(person | org | tech)+} #I replaced the + with parentheses. 
+person = element person {
+  attribute role { "investigator" | "navigator" | "pilot" | "search" | "flight" | "research" | "news" },
+  name?,
+  id?,
+  text? #copied the role element to add the name, id and text.
+}
+ #I added name
+org = element org { id, name, source?} #I added source at the end and a ?
+tech = element tech { id, name, source} 
+
+#role = element role {"investigator" | "navigator" | "pilot" | "search" | "flight" | "research" | "news"}
+id = attribute id {xsd:ID} #There were question marks instead of the string value
+
+name = element name {text}
+source = element source {url, empty}
+url = attribute url {xsd:anyURI}
+
+body = element body {(intro | section)+}
+intro = element intro {p+}
+section = element section {(subtitle?, p+, date*)*} #Needed and ?, +, with, * *, and deleted place 
+subtitle = element subtitle {(text? , mention) | (text, mention?)} #There was no subtitle element so I added one
+p = element p {(place | timelapse | date | mention | radioFreq | message | text)*} #added message and * and palce onto the endand beginning
+radioFreq = element radioFreq {text}
+timelapse = element timelapse {attribute dur { xsd:string },text}  #added an xsd:string
+
+
+dur = element dur {text} #There was no dur element so I added one
+date = element date {
+  attribute when {xsd:string}?,attribute from {xsd:string}?, attribute to {xsd:string}?, (text | empty)*}# Add "from" and "to" attributes
+
+to = element to { text } #There was no to element so I added one
+from = element from { text }#There was no from element so I added one
+when = element when {text, date}#There was no when element so I added one
+place = element place {text}
+mention = element mention {(ref, text?)} #Added paraentheses and ?
+ref = attribute ref {xsd:IDREF}
+message = element message {text}
+type= attribute type {text}
+
+
+
+
+
+
+
+
+
+
+
+
