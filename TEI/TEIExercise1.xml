@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>March 12, 1909</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>"Molly on snowshoes that Mr.Weir got. Pretty picture is it not?!" </p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>"COPYRIGHT 1908, BY FRIENDSHIP CALENDER CO. NEW BRITAIN, CONN."</p>
+         </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+      <body>
+         <p>There is a picture of molly that is decribed as having snow boots on while wearing a skirt, gloves and snow hat. the main passage is written in what appears to be pencil and the signature is in red pen. The "M" in the date of the drawing is written special and is also in the color red. </p>
+      </body>
+  </text>
+   
+   
+   
+   
+   
+   
+   
+</TEI>
