@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>"March 17, 1909 wednesday St. patrick's Day</title>
+         </titleStmt>
+         <publicationStmt>
+            <p rend= "print and black ink"><quote>"St.Patrick was a useful Saint he frightenend all the snakes away- <emph>I wish he'd try his art on smoke around the Hammermill some day!</emph>"</quote></p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>The passage is written in black pen while there is note at the bottom of the paper that is in red pen ink.</p>
+         </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+      <body>
+         <p>All across the page there is three <emph rend = "4 clovers and 1 snake">leaf clovers and two snakes drawn in.</emph> The bottom right corner of the paper features a factory of some sorts that might be the hammerhill.</p>
+         <quote rend= "red ink and cursive">"The Hammermill really .....! </quote>
+      </body>
+  </text>
+</TEI>
