@@ -1,0 +1,28 @@
+1a. //div[@type="historical_people"] (its returned 1 item) 
+ 
+2a. //div[@type="historical_people"]/* (this returned two items "histOrgs" and "histPersons")
+
+2b. //div[@type="fictional_and_archetypal"]/* (this returned 4 items "archOrgs" "archPersons" "fictOrgs" and "fictPersons"
+
+2c.//div[@type="Mitford_Team"] => count() (this returned 1 item)
+
+3a.//list[@sortKey="animals"]/item => count() (this returned with 1 item (67))
+
+3b.//list[@sortKey="animals"]/*[last()] (this returned xml:id"wren_crested")
+
+3c.//list[@sortKey="plants"]/*[5] (this returned one item xml:id="apple_tree")
+
+3d.//list[@sortKey="plants"]/*[position() le 6] (this returned 6 items "acacia, aconite, alder, anemone, apple_tree, and apricot_tree)
+
+4a.//person/occupation[1] (this finds every person mentioned that has a occupation (920 item)) 
+
+5a. //person => count() (shows every person mentioned (1503 items))
+
+5b.//person[@sex] (this gave me 1378 items) 
+
+5c. count(//person[@sex]) div count(//person)*100 (this gives me 91.683300066533995) 
+
+5d.//person[@sex="f"] (this gives me 409 items) 
+
+
+

@@ -1,0 +1,20 @@
+1. //body/div[@type="panelGrp"]
+
+2. //div[@type="panelGrp"]/cbml:panel (this returns 58 items) 
+
+3a.//body/div[@type="panelGrp"] => count() (it returns 24 results) 
+3b.//body/div[@type="panelGrp"][2]
+3c. <div type="panelGrp">
+
+4a. //body/div[@characters] => count() (its gives me 0 results but i can find a few across the code)
+
+4b. //@characters (This pulls 53 items) 
+
+5. //cbml:panel[@characters="#narrator"] (this returns 52 items) 
+
+6a. //cbml:panel[floatingText] => count() (this returns 26 item)
+
+6b. count(//cbml:panel[floatingText]) (This again returns 26 items) 
+
+
+
