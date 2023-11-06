@@ -1,0 +1,28 @@
+1a. //cbml:panel/@characters => distinct-values() (This returns 39 items) 
+
+2a. //cbml:panel/@characters ! tokenize(.) (this returns 136 items)
+
+3a. //cbml:panel[@characters ! contains(.,"drkelly")] (this returns 5 items where "drkelly is contained in a character) 
+
+3b. //cbml:panel[@characters ! contains(.,"kaliman")] (this reutnrs 35 items of where "kaliman" is contained in characters)
+
+4a. //cbml:balloon ! normalize-space()!string-length() (this returns 71 items) 
+
+4b.//cbml:balloon[string-length(.) = min(//cbml:balloon/string-length(.))
+
+4c. //cbml:balloon[string-length(.) = max(//cbml:balloon/string-length(.))] (this returns 1 item  
+<cbml:balloon type="speech" who="#kaliman">  
+                 Y POR ESO ESTAMOS AQUÍ. EL  <lb/>
+                 DOCTOR KELLY ME ESCRIBIÓ  <lb/>
+                 PIDIENDO QUE VINIERA A  <lb/>
+                 COMPROBAR SUS EXPERIMEN-  <lb/>
+                 TOS.
+              </cbml:balloon>
+              
+
+5a. //cbml:panel[note[contains(.,'skull')]] (this returns one item stating every character that has skull in it. 
+
+5b.//div[//cbml:balloon[contains(., 'NO')]] (this returns 20 items in which it goes up the tree and looks through it. 
+
+
+
