@@ -1,0 +1,2310 @@
+<?xml version="1.0" encoding="UTF-8"?><!--ebb: commenting out missing schema for the purpose of the XSLT homework exercise
+    <?xml-model href="MontageofADreamDeferred.rnc" type="application/relax-ng-compact-syntax"?>--><xml>
+    <text>
+        <!-- contributor: Amaya Willis -->
+        <pb pNum="218"/>
+        <poem xml:id="p-1">
+            <title/>
+            
+                <stanza>
+                    <lb n="1"/>Leave me and my name
+                    <lb n="2"/>Just like I am!
+                </stanza>
+                <stanza>
+                    <lb n="3"/>Furthermore, rub out
+                    <lb n="4"/>That <format wordType="caps">MRS</format>., too-
+                    <lb n="5"/>I'll have you know
+                    <lb n="6"/>I'm <format wordType="italics">Madam</format> to you!
+                </stanza>
+            
+        </poem>
+        <pb pNum="0"/>
+        <title>
+            <format wordType="caps" margin="leftCenter">MONTAGE OF A DREAM DEFERRED</format>
+        </title>
+        <pb pNum="221"/>
+        <poem xml:id="p-2">
+            <title>Dream Boogie</title>
+
+            
+                <stanza>
+                    <lb n="1"/>Good morning, daddy!
+                    <lb n="2"/>Ain't you heard
+                    <lb n="3"/>The boogie-woogie rumble
+                    <lb n="4"/>Of a dream deferred?
+                </stanza>
+                <stanza>
+                    <lb n="5"/>Listen closely;
+                    <lb n="6"/>You'll hear their feet
+                    <lb n="7"/>Beating out and beating out a-
+                </stanza>
+                <stanza>
+                    <lb n="8"/>
+                        <format wordType="italics" margin="ind1">You think</format>
+                    
+                    <lb n="9"/>
+                        <format wordType="italics" margin="ind1">It's a happy beat?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="10"/>Listen to it closely;
+                    <lb n="11"/>Ain't you heard
+                    <lb n="12"/>something underneath
+                    <lb n="13"/>like a-
+                </stanza>
+                <stanza>
+                    <lb n="14"/>
+                        <format wordType="italics" margin="ind1">What did I say?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="15"/>Sure,
+                    <lb n="16"/>I'm happy!
+                    <lb n="17"/>Take it away!
+                </stanza>
+                <stanza>
+                    <lb n="18"/>
+                        <format wordType="italics" margin="ind1">Hey, pop!</format>
+                    
+                    <lb n="19"/>
+                        <format wordType="italics" margin="ind1">Re-bop!</format>
+                    
+                    <lb n="20"/>
+                        <format wordType="italics" margin="ind1">Mop!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="21"/>
+                        <format wordType="italics" margin="ind1">Y-e-a-h!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="222"/>
+        <poem xml:id="p-3">
+            <title>Parade</title>
+            
+                <stanza>
+                    <lb n="1"/>Seven ladies
+                    <lb n="2"/>and seventeen gentlemen
+                    <lb n="3"/>at the Elks Club Lounge
+                    <lb n="4"/><format wordType="underline">planning planning</format> a
+                        parade:
+                    <lb n="5"/>Grand Marshal in his white suit
+                    <lb n="6"/>will lead it.
+                    <lb n="7"/>Cadilacs with dignitaries
+                    <lb n="8"/>will precede it.
+                    <lb n="9"/>And behind will come
+                    <lb n="10"/>with band and drum
+                    <lb n="11"/>on foot... on foot...
+                    <lb n="12"/>on foot...
+                </stanza>
+                <stanza>
+                    <lb n="13"/>Motorcycle cops,
+                    <lb n="14"/>white,
+                    <lb n="15"/>will speed it
+                    <lb n="16"/>out of sight
+                    <lb n="17"/>if they can;
+                    <lb n="18"/>Solid black,
+                    <lb n="19"/>can't be right.
+                </stanza>
+                <stanza>
+                    <lb n="20"/>Marching... marching...
+                    <lb n="21"/>marching...
+                    <lb n="22"/>noon till night...
+                </stanza>
+                <stanza>
+                    <lb n="23"/>
+                        <format wordType="italics" margin="ind1">I never knew</format>
+                    
+                    <lb n="24"/>
+                        <format wordType="italics" margin="ind1">that many Negroes</format>
+                    
+                    <lb n="25"/><format wordType="italics" margin="ind1"/>were on earth,
+                    <lb n="26"/><format wordType="italics" margin="ind1"/>did you?
+                </stanza>
+                <stanza>
+                    <lb n="27"/>
+                        <format wordType="italics" margin="ind1">I never knew!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="27"/>
+                        <format wordType="caps" margin="ind2">PARADE</format>
+                    
+                </stanza>
+
+                <pb pNum="223"/>
+                <stanza>
+                    <lb n="28"/>
+                        <format margin="ind1">A chance to let</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="29"/>
+                        <format wordType="caps" margin="ind2">PARADE</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="30"/>
+                        <format margin="ind1">the whole world see</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="31"/>
+                        <format wordType="caps" margin="ind2">PARADE</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="32"/>
+                        <format margin="ind1">old black me!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <!-- <margin> AW: something is written here, I can't tell what it says </margin> -->
+        <poem xml:id="p-4">
+            <title>Children's Rhymes</title>
+            
+                <stanza>
+                    <lb n="1"/>When I was a
+                        chile<!--AW: I assume this is spelled this way to make the poem sound better-->
+                        we used to play,
+                    <lb n="2"/>
+                        <q>One-two-buckle my shoe!</q>
+                    
+                    <lb n="3"/>and things like that. But now, Lord,
+                    <lb n="4"/>listen at them little varmints!
+                </stanza>
+                <stanza>
+                    <lb n="5"/>
+                        <format wordType="italics" margin="ind1">By what sends</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind1">the white kids</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">I ain't sent:</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics" margin="ind1">I know I can't</format>
+                    
+                    <lb n="9"/>
+                        <format wordType="italics" margin="ind1">be President.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="10"/>There is two thousand children
+                    <lb n="11"/>in this block, I do believe!
+                </stanza>
+                <stanza>
+                    <lb n="12"/>
+                        <format wordType="italics" margin="ind1">What don't bug</format>
+                    
+                    <lb n="13"/><format wordType="italics" margin="ind1"/>then white kids
+                    <lb n="14"/><format wordType="italics" margin="ind1"/>sure bugs me;
+                    <lb n="15"/><format wordType="italics" margin="ind1"/>We knows everybody
+                    <lb n="16"/><format wordType="italics" margin="ind1"/>ain't free!
+                </stanza>
+                <pb pNum="224"/>
+                <stanza>
+                    <lb n="17"/>Some of these young ones us cert'ly bad-
+                    <lb n="18"/>One batted a hard ball right through my window
+                    <lb n="19"/>and my gold fish et the glass.
+                </stanza>
+                <stanza>
+                    <lb n="20"/>
+                        <format wordType="italics" margin="ind1">What's written down</format>
+                    
+                    <lb n="21"/>
+                        <format wordType="italics" margin="ind1">for white folks</format>
+                    
+                    <lb n="22"/><format wordType="italics" margin="ind1"/>ain't for us
+                        a-tall;
+                    <lb n="23"/>
+                        <format wordType="italics" margin="ind1"/>
+                        <q>Liberty And Justice-</q>
+                    
+                    <lb n="24"/>
+                        <format wordType="italics" margin="ind1"/>
+                        <q>Huh-For All.</q>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="25"/>
+                        <format wordType="italics" margin="ind1">Oop-pop-a-da!</format>
+                    
+                    <lb n="26"/>
+                        <format wordType="italics" margin="ind1">Skee! Daddle-de-do!</format>
+                    
+                    <lb n="27"/>
+                        <format wordType="italics" margin="ind1">Be-bop!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="28"/>
+                        <format margin="ind1">Salt'peanuts!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="29"/>
+                        <format wordType="italics" margin="ind1">De-dop!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-5">
+            <title>Sister</title>
+            
+                <stanza>
+                    <lb n="1"/>That little Negro's married and got a kid.
+                    <lb n="2"/>Why does he keep on foolin' around Marie?
+                    <lb n="3"/>Marie's my sister-not married to me-
+                    <lb n="4"/>But why does he keep on foolin' around Marie?
+                    <lb n="5"/>Why don't she get a boy-friend
+                    <lb n="6"/>I can understand-some decent man?
+                </stanza>
+                <stanza>
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">Did it ever occur to you,
+                            son,</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">the reason Marie runs around with
+                            trash</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">is she wants some cash?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="8"/>Don't decent folks have dough?
+                </stanza>
+                <pb pNum="225"/>
+                <stanza>
+                    <lb n="9"/>
+                        <format wordType="italics" margin="ind1">Unfortunately usually no!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="10"/>Well, anyway, it don't have to be a married man.
+                </stanza>
+                <stanza>
+                    <lb n="11"/>
+                        <format wordType="italics" margin="ind1">Did it ever occur to you,
+                            boy,</format>
+                    
+                    <lb n="12"/>
+                        <format wordType="italics" margin="ind1">that a woman does the best she
+                            can?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="13"/>
+                        <format wordType="italics" margin="ind2">Comment on Stoop</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="14"/>
+                        <format wordType="italics">So does a man.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-6">
+            <title>Preference</title>
+            
+                <stanza>
+                    <lb n="1"/>I likes a woman
+                    <lb n="2"/>six or eight and ten years older'n myself.
+                    <lb n="3"/>I don't fool with these young girls.
+                    <lb n="4"/>Young girl'll say,
+                    <lb n="5"/>
+                        <format wordType="italics" margin="ind1">Daddy, I want so-and-so.</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind1">I needs this, that, and the
+                            other.</format>
+                    
+                    <lb n="7"/>But a old woman'll say,
+                    <lb n="8"/>
+                        <format wordType="italics" margin="ind1">Honey, what does YOU need?</format>
+                    
+                    <!--AW: Can I use the same element within itself? I had been using `<format wordType="caps>` for words in all capital letters, but in this case the word in caps is within an already formatted line.-->
+                    <lb n="9"/>
+                        <format wordType="italics" margin="ind1">I just drawed my money
+                            tonight</format>
+                    
+                    <lb n="10"/>
+                        <format wordType="italics" margin="ind1">and it's all your'n</format>
+                    
+                    <lb n="11"/>That's why I likes a older woman
+                    <lb n="12"/>who can appreciate me:
+                    <lb n="13"/>When she conversations you
+                    <lb n="14"/>it ain't forever, <format wordType="italics">Gimme!</format>
+                </stanza>
+            
+        </poem>
+        <pb pNum="226"/>
+        <poem xml:id="p-7">
+            <title>Necessity</title>
+            
+                <stanza>
+                    <lb n="1"/>Work?
+                    <lb n="2"/>I don't have to work.
+                    <lb n="3"/>I don't have to do nothing
+                    <lb n="4"/>but eat, drink, stay black, and die.
+                    <lb n="5"/>This little old furnished room's
+                    <lb n="6"/>so small I can't whip a cat
+                    <lb n="7"/>without getting fur in my mouth
+                    <lb n="8"/>and my landlady's so old
+                    <lb n="9"/>her features us all run together
+                    <lb n="10"/>and God knows she sure can overcharge-
+                    <lb n="11"/>Which is why I reckon I does
+                    <lb n="12"/>have to work after all.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-8">
+            <title>Question</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format wordType="italics" margin="ind1">Said the lady, Can you do</format>
+                    
+                    <lb n="2"/>
+                        <format wordType="italics" margin="ind1">what my other man can't
+                            do-</format>
+                    
+                    <lb n="3"/>
+                        <format wordType="italics" margin="ind1">That is</format>
+                    
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">love me, daddy-</format>
+                    
+                    <lb n="5"/>
+                        <format wordType="italics" margin="ind1">and feed me, too?</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind2">Figurine</format>
+                    
+                    <lb n="7"/>
+                        <format margin="ind1">De-dop!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="227"/>
+        <poem xml:id="p-9">
+            <title>Buddy</title>
+            
+                <stanza>
+                    <lb n="1"/>That kid's my buddy,
+                    <lb n="2"/>still and yet
+                    <lb n="3"/>I don't see him much.
+                    <lb n="4"/>He works downtown for Twelve a week.
+                    <lb n="5"/>Has to give his mother Ten-
+                    <lb n="6"/>she says he can have
+                    <lb n="7"/>the other Two
+                    <lb n="8"/>to pay his carfare, buy a suit,
+                    <lb n="9"/>coat, shoes,
+                    <lb n="10"/>anything he wants out of it.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-10">
+            <title>Juke Box Love Song</title>
+            
+                <stanza>
+                    <lb n="1"/>I could take the Harlem night
+                    <lb n="2"/>and wrap around you,
+                    <lb n="3"/>Take the neon lights and make a crown,
+                    <lb n="4"/>Take the Lenox Avenue busses,
+                    <lb n="5"/>Taxis, subways,
+                    <lb n="6"/>And for your love song tone their rumble down.
+                    <lb n="7"/>Take Harlem's heartbeat,
+                    <lb n="8"/>Make a drumbeat,
+                    <lb n="9"/>Put it on a record, let it whirl,
+                    <lb n="10"/>And while we listen to it play,
+                    <lb n="11"/>Dance with you till day-
+                    <lb n="12"/>Dance with you, my sweet brown Harlem girl.
+                </stanza>
+            
+        </poem>
+        <pb pNum="228"/>
+        <poem xml:id="p-11">
+            <title>Ultimatum</title>
+            
+                <stanza>
+                    <lb n="1"/>Baby, how come you can't see me
+                    <lb n="2"/>when I'm paying your bills
+                    <lb n="3"/>each and every week?
+                </stanza>
+                <stanza>
+                    <lb n="4"/>If you got somebody else,
+                    <lb n="5"/>tell me-
+                    <lb n="6"/>else I'll cut you off
+                    <lb n="7"/>without your rent,
+                    <lb n="8"/>I mean
+                    <lb n="9"/>without a cent.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-12">
+            <title>Warning</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind1">Daddy,</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind1">don't let your dog</format>
+                    
+                    <lb n="3"/>
+                        <format margin="ind1">curb you!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-13">
+            <title>Croon</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind1">I don't give a damn</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind1">For Alabam'</format>
+                    
+                    <lb n="3"/>
+                        <format margin="ind1">Even if it is my home.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-14">
+            <title>New Yorkers</title>
+            
+                <stanza>
+                    <lb n="1"/>I was born here,
+                    <lb n="2"/>that's no lie, he said,
+                    <lb n="3"/>right here beneath God's sky.
+                </stanza>
+                <pb pNum="229"/>
+                <stanza>
+                    <lb n="4"/>
+                        <format wordType="italics">I wasn't born here, she said,</format>
+                    
+                    <lb n="5"/>
+                        <format wordType="italics">I come-and why?</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics">Where I come from</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics">folks work hard</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">all their lives</format>
+                    
+                    <lb n="9"/>
+                        <format wordType="italics">until they die</format>
+                    
+                    <lb n="10"/>
+                        <format wordType="italics">and never own no parts</format>
+                    
+                    <lb n="11"/>
+                        <format wordType="italics">of earth nor sky</format>
+                    
+                    <lb n="12"/>
+                        <format wordType="italics">So I come up here.</format>
+                    
+                    <lb n="13"/>
+                        <format wordType="italics">Now what've I got?</format>
+                    
+                    <lb n="14"/>
+                        <format wordType="italics" margin="ind1">You!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="15"/>She lifted up her lips
+                    <lb n="16"/>in the dark:
+                    <lb n="17"/>The same old spark!
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-15">
+            <title>Wonder</title>
+            
+                <stanza>
+                    <lb n="1"/>Early blue evening.
+                    <lb n="2"/>Lights ain't come on yet.
+                    <lb n="3"/>
+                        <format wordType="italics" margin="ind1">Looky yonder!</format>
+                    
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">They come on now!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-16">
+            <title>Easy Boogie</title>
+            
+                <stanza>
+                    <lb n="1"/>Down in the bass
+                    <lb n="2"/>That steady beat
+                    <lb n="3"/>Walking walking walking
+                    <lb n="4"/>Like marching feet.
+                </stanza>
+            
+        </poem>
+        <!-- up till 229 -->
+        <!-- contributor: Daniel Hough -->
+        <pb pNum="230"/>
+        <poem xml:id="p-17">
+            <title>Movies</title>
+            
+                <stanza>
+                    <lb n="1"/>The Roosevelt, Renaissance, Gem, Alhambra:
+                    <lb n="2"/>Harlem Laughing in all the wrong places
+                    <lb n="3"/>
+                        <format margin="ind1">at the crocodile tears</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind1">of crocodile art</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">that you know</format>
+                    
+                    <lb n="6"/>
+                        <format margin="ind1">in your heart</format>
+                    
+                    <lb n="7"/>
+                        <format margin="ind1">is crocodile:</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="8"/>
+                        <format margin="ind1">(Hollywood</format>
+                    
+                    <lb n="9"/>
+                        <format margin="ind1">laughs at me,</format>
+                    
+                    <lb n="10"/>
+                        <format margin="ind1">black--</format>
+                    
+                    <lb n="11"/>
+                        <format margin="ind1">so I laugh</format>
+                    
+                    <lb n="12"/>
+                        <format margin="ind1">back.)</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="231"/>
+        <poem xml:id="p-18">
+            <title>Tell Me</title>
+            
+                <stanza>
+                    <lb n="1"/>Why should it be<format wordType="italics">my</format>loneliness,
+                    <lb n="2"/>Why should it be<format wordType="italics">my</format>song,
+                    <lb n="3"/>Why should it be<format wordType="italics">my</format>dream
+                    <lb n="4"/>
+                        <format margin="ind1">deferred</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">overlong?</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-19">
+            <title>Not a Movie</title>
+            
+                <stanza>
+                    <lb n="1"/>Well, they rocked him with road-apples
+                    <lb n="2"/>because he tried to vote
+                    <lb n="3"/>and whipped his head with clubs
+                    <lb n="4"/>and he crawled on his knees to his house
+                    <lb n="5"/>and he got the midnight train
+                    <lb n="6"/>and he crossed that Dixie line
+                    <lb n="7"/>now he's livin'
+                    <lb n="8"/>on a 133rd.
+                </stanza>
+                <stanza>
+                    <lb n="9"/>He didn't stop in Washington
+                    <lb n="10"/>and he didn't stop in Baltimore
+                    <lb n="11"/>neither in Newark on the way.
+                    <lb n="12"/>Six knots was on his head
+                    <lb n="13"/>but, thank God, he wasn'r dead!
+                    <lb n="14"/>And there ain't no Ku Klux
+                    <lb n="15"/>on a 133rd
+                </stanza>
+            
+        </poem>
+        <pb pNum="232"/>
+        <poem xml:id="p-20">
+            <title>Neon Signs</title>
+            
+                <stanza>
+                    <lb n="1"/>WONDER BAR
+                    <lb n="2"/>WISHING WELL
+                    <lb n="3"/>MONTEREY
+                    <lb n="4"/>MINTON'S
+                    <lb n="5"/>(ancient altar of Thelonious)
+                    <lb n="6"/>MANDALAY
+                    <lb n="7"/>Spots where the booted
+                    <lb n="8"/>and unbooted play
+                    <lb n="9"/>SMALL'S
+                    <lb n="10"/>CASBAH
+                </stanza>
+                <pb pNum="233"/>
+                <stanza>
+                    <lb n="11"/>SHALIMAR
+                    <lb n="12"/>Mirror-go-round
+                    <lb n="13"/>where a broken glass
+                    <lb n="14"/>in the early bright
+                    <lb n="15"/>smears re-bop
+                    <lb n="16"/>sound
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-21">
+            <title>Numbers</title>
+            
+                <stanza>
+                    <lb n="1"/>If I ever hit for a dollar
+                    <lb n="2"/>gonna salt every dime away
+                    <lb n="3"/>in the Post Office for a rainy day.
+                </stanza>
+                <stanza>
+                    <lb n="4"/>I ain't gonna
+                    <lb n="5"/>play back a cent.
+                </stanza>
+                <stanza>
+                    <lb n="6"/>(Of course, I might
+                    <lb n="7"/>combinate<format wordType="italics">a little</format>
+                    <lb n="8"/>with my rent.)
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-22">
+            <title>What? So Soon!</title>
+            
+                <stanza>
+                    <lb n="1"/>I believe my old lady's
+                    <lb n="2"/>pregnant again!
+                </stanza>
+                <pb pNum="234"/>
+                <stanza>
+                    <lb n="3"/>Fate must have
+                    <lb n="4"/>some kind of trickeration
+                    <lb n="5"/>to populate the
+                    <lb n="6"/>cullud nation!
+                </stanza>
+                <stanza>
+                    <lb n="7"/>
+                        <format margin="ind1" wordType="italics">Comment against Lamp Post</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">You call it fate?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="9"/>
+                        <format margin="ind1" wordType="italics">Figurette</format>
+                    
+                    <lb n="10"/>
+                        <format wordType="italics">De-daddle-dy!</format>
+                    
+                    <lb n="11"/>
+                        <format wordType="italics">De-dop!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-23">
+            <title>Motto</title>
+            
+                <stanza>
+                    <lb n="1"/>I play it cool
+                    <lb n="2"/>And dig all jive.
+                    <lb n="3"/>That's the reason
+                    <lb n="4"/>I stay alive.
+                </stanza>
+                <stanza>
+                    <lb n="5"/>My motto,
+                    <lb n="6"/>As I live and learn,
+                    <lb n="7"/>
+                        <format margin="ind1">is:</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">Dig and Be Dug</format>
+                    
+                    <lb n="9"/>
+                        <format wordType="italics">In Return</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="235"/>
+        <poem xml:id="p-24">
+            <title>Dead in There</title>
+            
+                <stanza>
+                    <lb n="1"/>Sometimes
+                    <lb n="2"/>A night funeral
+                    <lb n="3"/>Going by
+                    <lb n="4"/>Carries home
+                    <lb n="5"/>A cool bop daddy.
+                </stanza>
+                <stanza>
+                    <lb n="6"/>Hearse and flowers
+                    <lb n="7"/>Guarantee
+                    <lb n="8"/>He'll never hype
+                    <lb n="9"/>Another paddy.
+                </stanza>
+                <stanza>
+                    <lb n="10"/>It's hard to believe,
+                    <lb n="11"/>But dead in there,
+                    <lb n="12"/>He'll never lay a
+                    <lb n="13"/>Hype nowhere!
+                </stanza>
+                <stanza>
+                    <lb n="14"/>He's my ace-boy,
+                    <lb n="15"/>Gone away.
+                    <lb n="16"/>
+                        <format wordType="italics">Wake up and live!</format>
+                    
+                    <lb n="17"/>He used to say.
+                </stanza>
+                <stanza>
+                    <lb n="18"/>Squares
+                    <lb n="19"/>Who couldn't dig him,
+                    <lb n="20"/>Plant him now--
+                    <lb n="21"/>Out where it makes
+                    <lb n="22"/>No diff' no how.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-25">
+            <title>Situation</title>
+            
+                <stanza>
+                    <lb n="1"/>When I rolled three 7's
+                    <lb n="2"/>in a row
+                    <lb n="3"/>I was scared to walk out
+                    <lb n="4"/>with the dough.
+                </stanza>
+            
+        </poem>
+        <pb pNum="236"/>
+        <poem xml:id="p-26">
+            <title>Dancer</title>
+            
+                <stanza>
+                    <lb n="1"/>Two or three things in the past
+                    <lb n="2"/>failed him
+                    <lb n="3"/>that had not failed people
+                    <lb n="4"/>of lesser genius.
+                </stanza>
+                <stanza>
+                    <lb n="5"/>In the first place
+                    <lb n="6"/>he didn't have much sense.
+                    <lb n="7"/>He was no good at making love
+                    <lb n="8"/>and no good at making money.
+                    <lb n="9"/>So he tapped,
+                    <lb n="10"/>
+                        <format margin="ind1">trucked,</format>
+                    
+                    <lb n="11"/>
+                        <format margin="ind1">boogied,</format>
+                    
+                    <lb n="12"/>
+                        <format margin="ind1">sanded,</format>
+                    
+                    <lb n="13"/>
+                        <format margin="ind1">jittered,</format>
+                    
+                    <lb n="14"/>until he made folks say,
+                    <lb n="15"/>
+                        <format margin="ind1" wordType="italics">Looky yonder</format>
+                    
+                    <lb n="16"/>
+                        <format margin="ind1" wordType="italics">at that boy!</format>
+                    
+                    <lb n="15"/>
+                        <format margin="ind1" wordType="italics">Hey!</format>
+                    
+                    <lb n="16"/>But being no good at lovin'--
+                    <lb n="17"/>the girls left him.
+                    <lb n="18"/>(When you're no good for dough they go.)
+                    <lb n="19"/>With no sense, just wonderful feet,
+                    <lb n="20"/>What could possibly be all-reet?
+                    <lb n="21"/>Did he get anywhere? No!
+                </stanza>
+                <stanza>
+                    <lb n="22"/>Even a great dancer
+                    <lb n="23"/>can't C.P.T.
+                    <lb n="24"/>a show.
+                </stanza>
+            
+        </poem>
+        <pb pNum="237"/>
+        <poem xml:id="p-27">
+            <title>Advice</title>
+            
+                <stanza>
+                    <lb n="1"/>Folks, I'm telling you,
+                    <lb n="2"/>birthing is hard
+                    <lb n="3"/>and dying is mean--
+                    <lb n="4"/>so get yourself
+                    <lb n="5"/>a little loving
+                    <lb n="6"/>in between.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-28">
+            <title>Green Memory</title>
+            
+                <stanza>
+                    <lb n="1"/>A wonderful time--the War:
+                    <lb n="2"/>when money rolled in
+                    <lb n="3"/>and blood rolled out.
+                    <lb n="4"/>
+                        <format margin="ind1">But blood</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">was far away</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind1">from here--</format>
+                    
+                    <lb n="5"/>Money was near.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-29">
+            <title>Wine-O</title>
+            
+                <stanza>
+                    <lb n="1"/>Setting in the wine-house
+                    <lb n="2"/>Soaking up a wine-souse
+                    <lb n="3"/>Waiting for tomorrow to come--
+                    <lb n="4"/>Then
+                    <lb n="5"/>Setting in the wine-house
+                    <lb n="6"/>Soaking up a new souse.
+                    <lb n="7"/>Tomorrow...
+                    <lb n="8"/>Oh, hum!
+                </stanza>
+            
+        </poem>
+        <pb pNum="238"/>
+        <poem xml:id="p-30">
+            <title>Relief</title>
+            
+                <stanza>
+                    <lb n="1"/>My heart is aching
+                    <lb n="2"/>for them Poles and Greeks
+                    <lb n="3"/>on relief way across the sea
+                    <lb n="4"/>because I was on relief
+                    <lb n="5"/>once in 1933
+                </stanza>
+                <stanza>
+                    <lb n="6"/>I know what relief can be--
+                    <lb n="7"/>it took me two years to get on WPA.
+                    <lb n="8"/>If the war hadn't come along
+                    <lb n="9"/>I wouldn't be out the barrel yet.
+                    <lb n="10"/>Now, I'm almost back in the barrel again.
+                </stanza>
+                <stanza>
+                    <lb n="11"/>To tell the truth,
+                    <lb n="12"/>if these white folks want to go ahead
+                    <lb n="13"/>and fight another war,
+                    <lb n="14"/>or even two,
+                    <lb n="15"/>the one to stop 'em won't be me.
+                </stanza>
+                <stanza>
+                    <lb n="16"/>Would you?
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-31">
+            <title>Ballad of the Landlord</title>
+            
+                <stanza>
+                    <lb n="1"/>Landlord, landlord,
+                    <lb n="2"/>My roof has sprung a leak.
+                    <lb n="3"/>Don't you 'member I told you about it
+                    <lb n="4"/>Way last week?
+                </stanza>
+                <stanza>
+                    <lb n="5"/>Landlord, landlord
+                    <lb n="6"/>These steps is broken down.
+                    <lb n="7"/>When you come up yourself
+                    <lb n="8"/>It's a wonder you don't fall down
+                </stanza>
+                <pb pNum="239"/>
+                <stanza>
+                    <lb n="9"/>Ten Bucks you say I owe you?
+                    <lb n="10"/>Ten Bucks you say is due?
+                    <lb n="11"/>Well, that's Ten Bucks more'n I'll pay you
+                    <lb n="12"/>Till you fix this house up new.
+                </stanza>
+                <stanza>
+                    <lb n="13"/>What? You gonna get eviction orders?
+                    <lb n="14"/>You gonna cut off my heat?
+                    <lb n="15"/>You gonna take my furniture and
+                    <lb n="16"/>Throw it in the street?
+                </stanza>
+                <stanza>
+                    <lb n="17"/>Um-huh! You talking high and mighty.
+                    <lb n="18"/>Talk on--till you get through.
+                    <lb n="19"/>You ain't gonna be able to say a word
+                    <lb n="20"/>If I land my fist on you.
+                </stanza>
+                <stanza>
+                    <lb n="21"/>
+                        <format wordType="italics">Police! Police!</format>
+                    
+                    <lb n="22"/>
+                        <format wordType="italics">Come get this man!</format>
+                    
+                    <lb n="23"/>
+                        <format wordType="italics">He's trying to ruin the government</format>
+                    
+                    <lb n="24"/>
+                        <format wordType="italics">And overturn the land!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="25"/>Copper's whistle!
+                    <lb n="26"/>Patrol Bell!
+                    <lb n="27"/>Arrest.
+                </stanza>
+                <stanza>
+                    <lb n="28"/>Precinct Station.
+                    <lb n="29"/>Iron cell.
+                    <lb n="30"/>Headlines in press:
+                </stanza>
+                <stanza>
+                    <lb n="31"/>MAN THREATENS LANDLORD
+                    <lb n="32"/>TENANT HELD ON BAIL
+                    <lb n="33"/>JUDGE GIVE NEGRO 90 DAYS IN COUNTY JAIL
+                </stanza>
+            
+        </poem>
+        <pb pNum="240"/>
+        <poem xml:id="p-32">
+            <title>Corner Meeting</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind1">Ladder, flag, and amplifier</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind1">what the soap box</format>
+                    
+                    <lb n="3"/>
+                        <format margin="ind1">used to be</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind1">The speaker catches fire</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">looking at their faces.</format>
+                    
+                    <lb n="6"/>
+                        <format margin="ind1">His words</format>
+                    
+                    <lb n="7"/>
+                        <format margin="ind1">jump down to stand</format>
+                    
+                    <lb n="8"/>
+                        <format margin="ind1">in listeners' places.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-33">
+            <title>Projection</title>
+            
+                <stanza>
+                    <lb n="1"/>On the day when the Savoy
+                    <lb n="2"/>leaps clean over to Seventh Avenue
+                    <lb n="3"/>and starts jitterbugging
+                    <lb n="4"/>with the Renaissance,
+                    <lb n="5"/>on that day when Abyssinia Baptist Church
+                    <lb n="6"/>throws her enormous arms around
+                    <lb n="7"/>St. James Presbyterian
+                    <lb n="8"/>and 409 Edgecombe
+                    <lb n="9"/>stoops to kiss 12 West 133rd,
+                    <lb n="10"/>on that day--
+                    <lb n="11"/>Do, Jesus!
+                    <lb n="12"/>Manhattan Island will whirl
+                    <lb n="13"/>like a Dizzy Gillespie transcription
+                    <lb n="14"/>played by Inez and Timmie.
+                    <lb n="15"/>On that day, Lord,
+                    <lb n="16"/>Sammy Davis and Marian Anderson
+                    <lb n="17"/>will sing a duet
+                    <lb n="18"/>Paul Robeson
+                    <lb n="19"/>will team up with Jackie Mabley
+                    <lb n="20"/>and Father Divine will say in truth,
+                </stanza>
+                <pb pNum="241"/>
+                <stanza>
+                    <lb n="21"/>
+                        <format wordType="italics">Peace!</format>
+                    
+                    <lb n="22"/>
+                        <format wordType="italics">It's truly</format>
+                    
+                    <lb n="23"/>
+                        <format wordType="italics">wonderful!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-34">
+            <title>Flatted Fifths</title>
+            
+                <stanza>
+                    <lb n="1"/>Little cullud boys with beards
+                    <lb n="2"/>re-bop be-bop mop and stop
+                </stanza>
+                <stanza>
+                    <lb n="3"/>Little cullud boys with fears,
+                    <lb n="4"/>frantic, kick their draftee years
+                    <lb n="5"/>into flatted and flatter beers
+                    <lb n="6"/>that at a sudden change become
+                    <lb n="7"/>sparkling Oriental wines
+                    <lb n="8"/>rich and strange
+                    <lb n="9"/>silken bathrobes with gold twines
+                    <lb n="10"/>and Heilbroner, Crawford,
+                    <lb n="11"/>Nat-undreamed-of Lewis combines
+                    <lb n="12"/>in silver thread and diamond notes
+                    <lb n="13"/>on trade-marks inside
+                    <lb n="14"/>Howard coats
+                </stanza>
+                <stanza>
+                    <lb n="15"/>Little cullud boys in berets
+                    <lb n="16"/>
+                        <format margin="ind1" wordType="italics">oop pop-a-da</format>
+                    
+                    <lb n="17"/>horse a fantasy of days
+                    <lb n="18"/>
+                        <format margin="ind1" wordType="italics">ool ya koo</format>
+                    
+                    <lb n="19"/>and dig all plays.
+                </stanza>
+            
+        </poem>
+        <!-- up to 237 -->
+        <!-- contributor: Barbara Cesser -->
+        <pb pNum="242"/>
+        <poem xml:id="p-35">
+            <title>Tomorrow</title>
+            
+                <stanza>
+                    <lb n="1"/>Tomorrow may be
+                    <lb n="2"/>a thousand years off
+                </stanza>
+                <stanza>
+                    <lb n="3"/>
+                        <format wordType="caps">TWO DIMES AND A NICKLE ONLY</format>
+                    
+                    <lb n="4"/>says this particular
+                    <lb n="5"/>cigarette machine 
+                </stanza>
+
+                <stanza>
+                    <lb n="6"/>
+                        <format wordType="italics">Some dawns</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics">wait.</format>
+                    
+                </stanza>
+            
+        </poem>
+
+        <poem xml:id="p-36">
+            <title>Mellow</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind1">Intro the lap</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind1">of black celebrities</format>
+                    
+                    <lb n="3"/>
+                        <format margin="ind1">white girls fall</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind1">like pale plums from a tree</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">beyond a high tension wall</format>
+                    
+                    <lb n="6"/>
+                        <format margin="ind1">which makes it</format>
+                    
+                    <lb n="7"/>
+                        <format margin="ind1">more thrilling.</format>
+                    
+                </stanza>
+            
+        </poem>
+
+        <poem xml:id="p-37">
+            <title>Live and Let Live</title>
+            
+                <stanza>
+                    <lb n="1"/>Maybe it ain't right-
+                    <lb n="2"/>but the people of the night
+                    <lb n="3"/>will give even
+                    <lb n="4"/>a snake
+                    <lb n="5"/>a break.
+                </stanza>
+            
+        </poem>
+
+        <poem xml:id="p-38">
+            <title>Gauge</title>
+            
+                <stanza>
+                    <lb n="1"/>Hemp . . .
+                    <lb n="2"/>A stick . . 
+                    <lb n="3"/>A roach . . 
+                    <lb n="4"/>Straw . . 
+                    <lb n="5"/>more thrilling.
+                </stanza>
+            
+        </poem>
+        <pb pNum="243"/>
+        <poem xml:id="p-39">
+            <title>Bar</title>
+            
+                <stanza>
+                    <lb n="1"/>That whiskey will cook the egg
+                    <lb n="2"/>
+                        <format wordType="italics" margin="ind1">say not so</format>
+                    
+                    <lb n="3"/>
+                        <format wordType="italics" margin="ind1">Maybe the egg</format>
+                    
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">will cook the whiskey.</format>
+                    
+
+                    <lb n="5"/>You ought to know!
+                </stanza>
+            
+        </poem>
+
+        <poem xml:id="p-40">
+            <title>Cafe: 3 A.M.</title>
+            
+                <stanza>
+                    <lb n="1"/>Detectives from the vice squad -
+                    <lb n="2"/>with weary sadistic eyes
+                    <lb n="3"/>spotting fairies.
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">Degenerates</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">Some folks say</format>
+                    
+                    <lb n="6"/>
+                        <format margin="ind1">But God,Nature</format>
+                    
+                    <lb n="7"/>
+                        <format margin="ind1"> or somebody</format>
+                    
+                    <lb n="6"/>
+                        <format margin="ind1">made them that way</format>
+                    
+                </stanza>
+
+                <stanza>
+                    <lb n="8"/>Police lady or Lesbian
+                    <lb n="9"/> over there?
+                    <lb n="10"/>
+                        <format margin="ind1">Where?</format>
+                    
+                </stanza>
+            
+        </poem>
+        <!-- up to 243 -->
+        <!-- contributor: Jacqueline Chan -->
+        <pb pNum="254"/>
+        <pb pNum="254"/>
+        <poem xml:id="p-41">
+            <title> Request </title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind2">Gimme $25.00</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind2">and the change.</format>
+                    
+                    <lb n="3"/>
+                        <format margin="ind2">I'm going</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind2">where the morning</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind2">and the evening</format>
+                    
+                    <lb n="6"/>
+                        <format margin="ind2">won't bother me.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-42">
+            <title>Shame on You</title>
+            
+                <stanza>
+                    <lb n="1"/>If you're great enough
+                    <lb n="2"/>and clever enough
+                    <lb n="3"/>the government might honor you.
+                    <lb n="4"/>But the people will forget --
+                    <lb n="5"/>Except on holidays.
+                </stanza>
+                <stanza>
+                    <lb n="6"/>A movie house in Harlem named after Lincoln,
+                    <lb n="7"/>Nothing at all named after John Brown.
+                </stanza>
+                <pb pNum="255"/>
+                <stanza>
+                    <lb n="8"/>Black people don't remember
+                    <lb n="9"/>any better than white
+                </stanza>
+                <stanza>
+                    <lb n="10"/>If you're not alive and kicking,
+                    <lb n="11"/>
+                        <format wordType="italics">shame on you!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-43">
+            <title> World War II</title>
+            
+                <stanza>
+                    <lb n="1"/>What a grand time was the war!
+                    <lb n="2"/>
+                        <format margin="ind1">Oh, my, my!</format>
+                    
+                    <lb n="3"/>What a grand time was the war!
+                    <lb n="4"/>
+                        <format margin="ind1">My, my, my!</format>
+                    
+                    <lb n="5"/>In wartime we had fun,
+                    <lb n="6"/>Sorry that old war is done!
+                    <lb n="7"/>What a grand time was the war,
+                    <lb n="8"/>
+                        <format margin="ind1">My, my!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="9"/>Echo:
+                    <lb n="10"/>
+                        <format wordType="italics" margin="ind1">Did</format>
+                    
+                    <lb n="11"/>
+                        <format wordType="italics" margin="ind1">Somebody</format>
+                    
+                    <lb n="12"/>
+                        <format wordType="italics" margin="ind1">Die?</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-44">
+            <title>Mystery</title>
+            
+                <stanza>
+                    <lb n="1"/>When a chile gets to be thirteen
+                    <lb n="2"/>and ain't seen Christ yet,
+                    <lb n="3"/>she needs to set on de moaner's bench
+                    <lb n="4"/>night and day.
+                </stanza>
+                <pb pNum="256"/>
+                <stanza>
+                    <lb n="5"/>
+                        <format wordType="italics">Jesus, lover of my soul!</format>
+                    
+                    <lb n="6"/>Hail, Mary, mother of God!
+                    <lb n="7"/>
+                        <format wordType="italics">Let me to thy bosom fly!</format>
+                    
+                    <lb n="8"/>Amen! Hallelujah!
+                </stanza>
+                <stanza>
+                    <lb n="9"/>
+                        <format wordType="italics">Swing low, sweet chariot,</format>
+                    
+                    <lb n="10"/>
+                        <format wordType="italics">Coming for to carry me home.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="11"/>Sunday morning where the rhythm flows,
+                    <lb n="12"/>how old nobody knows --
+                    <lb n="13"/>yet old as mystery,
+                    <lb n="14"/>older than creed,
+                    <lb n="15"/>basic and wondering
+                    <lb n="16"/>and lost as my need.
+                </stanza>
+                <stanza>
+                    <lb n="17"/>
+                        <format wordType="italics" margin="ind1">Eli, eli!</format>
+                    
+                    <lb n="18"/>
+                        <format wordType="italics" margin="ind1">Te deum!</format>
+                    
+                    <lb n="19"/>
+                        <format wordType="italics" margin="ind1">Mahomet!</format>
+                    
+                    <lb n="20"/>
+                        <format wordType="italics" margin="ind1">Christ!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="21"/>Father, Bishop, Effendi, Mother Horne.
+                    <lb n="22"/>Father Drive, a Rabbi black
+                    <lb n="23"/>as black was born
+                    <lb n="24"/>a jack-leg preacher, a PH.D.
+                </stanza>
+                <stanza>
+                    <lb n="25"/>
+                        <format wordType="italics" margin="ind1">The mystery</format>
+                    
+                    <lb n="26"/>
+                        <format wordType="italics" margin="ind1">and the darkness</format>
+                    
+                    <lb n="27"/>
+                        <format wordType="italics" margin="ind1">and the song</format>
+                    
+                    <lb n="28"/>
+                        <format wordType="italics" margin="ind1">and me.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="257"/>
+        <poem xml:id="p-45">
+            <title>Sliver of Sermon</title>
+            
+                <stanza>
+                    <lb n="1"/>When pimps out of loneliness cry:
+                    <lb n="2"/>
+                        <format wordType="italics" margin="ind1">Great God!</format>
+                    
+                    <lb n="3"/>Whores in final weariness say:
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">Great God!</format>
+                    
+                    <lb n="5"/>
+                        <format wordType="italics" margin="ind1">Oh, God!</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind1">My God!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="7"/>
+                        <format margin="ind1">Great</format>
+                    
+                    <lb n="8"/>
+                        <format margin="ind1">God!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-46">
+            <title>Testimonial</title>
+            
+                <stanza>
+                    <lb n="1"/>If I just had a piano,
+                    <lb n="2"/>if I just had a organ,
+                    <lb n="3"/>if I just had a drum,
+                    <lb n="4"/>how I could praise my Lord!
+                </stanza>
+                <stanza>
+                    <lb n="5"/>But I don't need no piano,
+                    <lb n="6"/>
+                        <format margin="ind1">neither organ</format>
+                    
+                    <lb n="7"/>
+                        <format margin="ind1">nor drum</format>
+                    
+                    <lb n="8"/>for to praise my Lord
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-47">
+            <title>Passing</title>
+            
+                <stanza>
+                    <lb n="1"/>On sunny summer Sunday afternoons in Harlem
+                    <lb n="2"/>when the air is one interminable ball game
+                    <lb n="3"/>and grandma cannot get her gospel hymns
+                    <lb n="4"/>from the Saints of God in Christ
+                    <lb n="5"/>on account of the Dodgers on the radio,
+                </stanza>
+                <pb pNum="258"/>
+                <stanza>
+                    <lb n="6"/>on sunny Sunday afternoons
+                    <lb n="7"/>when the kids look all new
+                    <lb n="8"/>and far too clean to stay that way,
+                    <lb n="9"/>and Harlem has its
+                    <lb n="10"/>washed-and-ironed-and-cleaned-best out,
+                    <lb n="11"/>the ones who've crossed the line
+                    <lb n="12"/>to live downtown
+                    <lb n="13"/>miss you,
+                    <lb n="14"/>Harlem of the bitter dream
+                    <lb n="15"/>since their dream has
+                    <lb n="16"/>come true.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-48">
+            <title>Nightmare Boogie</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind1">I had a dream</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind1">and I could see</format>
+                    
+                    <lb n="3"/>
+                        <format margin="ind1">a million faces</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind1">black as me!</format>
+                    
+                    <lb n="5"/>
+                        <format margin="ind1">A nightmare dream:</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind1">Quicker than light</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">All them faces</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics" margin="ind1">Turned dead white|</format>
+                    
+                    <lb n="9"/>
+                        <format margin="ind1">Boogie-woogie,</format>
+                    
+                    <lb n="10"/>
+                        <format margin="ind1">Rolling bass,</format>
+                    
+                    <lb n="11"/>
+                        <format margin="ind1">Whirling treble</format>
+                    
+                    <lb n="12"/>
+                        <format margin="ind1">of cat-gut lace.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="259"/>
+        <poem xml:id="p-49">
+            <title>Sunday by the Combination</title>
+            
+                <stanza>
+                    <lb n="1"/>I feel like dancin', baby,
+                    <lb n="2"/>till the sun goes down.
+                </stanza>
+                <stanza>
+                    <lb n="3"/>But I wonder where
+                    <lb n="4"/>the sunrise
+                    <lb n="5"/>Monday morning's gonna be?
+                </stanza>
+                <stanza>
+                    <lb n="6"/>I feel like dancin'!
+                    <lb n="7"/>Baby, dance with me!
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-50">
+            <title>
+                <format wordType="circled">Casualty</format>
+            </title>
+            
+                <stanza>
+                    <lb n="1"/>He was a soldier in the army,
+                    <lb n="2"/>But he doesn't walk like one.
+                    <lb n="3"/>He walks like his soldiering <format wordType="handwritten">*
+                            <!-- jkc: I don't know what is written here --></format>
+                    <lb n="4"/>Days are done.
+                </stanza>
+                <stanza>
+                    <lb n="5"/>Son! ... Son!
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-51">
+            <title>Night Funeral in Harlem</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format margin="ind1">Night funeral</format>
+                    
+                    <lb n="2"/>
+                        <format margin="ind1">In Harlem:</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="3"/>
+                        <format wordType="italics" margin="ind1">Where did they get</format>
+                    
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">Them two fine cars?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="5"/>Insurance man, he did not pay -- 
+                    <lb n="6"/>His insurance lapsed the other day -- 
+                </stanza>
+                <pb pNum="260"/>
+                <stanza>
+                    <lb n="7"/>Yet they got a satin box
+                    <lb n="8"/>For his head to lay.
+                </stanza>
+                <stanza>
+                    <lb n="9"/>
+                        <format margin="ind1">Night funeral</format>
+                    
+                    <lb n="10"/>
+                        <format margin="ind1">in Harlem:</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="11"/>
+                        <format wordType="italics" margin="ind1">Who was it sent</format>
+                    
+                    <lb n="12"/>
+                        <format wordType="italics" margin="ind1">That wreath of flowers?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="13"/>Them flowers came
+                    <lb n="14"/>from that poor boy's friends- 
+                    <lb n="15"/>They'll want flowers, too,
+                    <lb n="16"/>When they meet their ends.
+                </stanza>
+                <stanza>
+                    <lb n="17"/>
+                        <format margin="ind1">Night funeral</format>
+                    
+                    <lb n="18"/>
+                        <format margin="ind1">in Harlem:</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="19"/>
+                        <format wordType="italics" margin="ind1">Who preached that</format>
+                    
+                    <lb n="20"/>
+                        <format wordType="italics" margin="ind1">Black boy to his grave?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="21"/>Old preacher-man
+                    <lb n="22"/>Preached that boy away-
+                    <lb n="23"/>Charged Five Dollars
+                    <lb n="24"/>His girl friend had to pay.
+                </stanza>
+                <stanza>
+                    <lb n="25"/>
+                        <format margin="ind1">Night funeral</format>
+                    
+                    <lb n="26"/>
+                        <format margin="ind1">in Harlem:</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="27"/>When it was all over
+                    <lb n="28"/>And the lid shut on his head
+                    <lb n="29"/>and the organ had done played
+                    <lb n="30"/>and the last prayers been said
+                    <lb n="31"/>and six pallbearers
+                </stanza>
+                <pb pNum="261"/>
+                <stanza>
+                    <lb n="32"/>Carried him out for dead
+                    <lb n="33"/>And off down Lenox Avenue
+                    <lb n="34"/>That long black hearse done sped,
+                    <lb n="35"/>
+                        <format margin="ind1">The streetlight</format>
+                    
+                    <lb n="36"/>
+                        <format margin="ind1">At his corner</format>
+                    
+                    <lb n="37"/>
+                        <format margin="ind1">Shined just like a tear-</format>
+                    
+                    <lb n="38"/>That boy that they was mournin'
+                    <lb n="39"/>Was so dear, so dear
+                    <lb n="40"/>To them folks that brought the flowers,
+                    <lb n="41"/>To that girl who paid the preacher man-
+                    <lb n="42"/>It was all their tears that made
+                    <lb n="43"/>
+                        <format margin="ind1">That poor boy's</format>
+                    
+                    <lb n="44"/>
+                        <format margin="ind1">Funeral grand.</format>
+                    
+                    <lb n="45"/>
+                        <format margin="ind1">Night funeral</format>
+                    
+                    <lb n="46"/>
+                        <format margin="ind1">In Harlem.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-52">
+            <title>Blues at Dawn</title>
+            
+                <stanza>
+                    <lb n="1"/>I don't dare start thinking in the morning.
+                    <lb n="2"/>I don't dare start thinking in the morning.
+                    <lb n="3"/>
+                        <format margin="ind1">If I thought thoughts in bed,</format>
+                    
+                    <lb n="4"/>
+                        <format margin="ind1">Them thoughts would bust my head-</format>
+                    
+                    <lb n="5"/>So I don't dare start thinking in the morning.
+                </stanza>
+                <stanza>
+                    <lb n="6"/>I don't dare remember in the morning
+                    <lb n="7"/>Don't dare remember in the morning.
+                    <lb n="8"/>
+                        <format margin="ind1">If I recall the day before,</format>
+                    
+                    <lb n="9"/>
+                        <format margin="ind1">I wouldn't get up no more-</format>
+                    
+                    <lb n="10"/>So I don't dare remember in the morning.
+                </stanza>
+            
+        </poem>
+        <pb pNum="262"/>
+        <poem xml:id="p-53">
+            <title>Dime</title>
+            
+                <stanza>
+                    <lb n="1"/>Chile, these steps is hard to climb.
+                </stanza>
+                <stanza>
+                    <lb n="2"/>
+                        <format wordType="italics" margin="ind1">Grandma, lend me a dime.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="3"/>Montage of a dream deferred:
+                </stanza>
+                <stanza>
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">Grandma acts like</format>
+                    
+                    <lb n="5"/>
+                        <format wordType="italics" margin="ind1">She ain't heard.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="6"/>Chile, Granny ain't got no dime.
+                </stanza>
+                <stanza>
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">I might've knowed</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics" margin="ind1">It all the time.</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-54">
+            <title>Argument</title>
+            
+                <stanza>
+                    <lb n="1"/>White is right,
+                    <lb n="2"/>Yellow mellow,
+                    <lb n="3"/>Black, get back!
+                </stanza>
+                <stanza>
+                    <lb n="4"/>
+                        <format wordType="italics" margin="ind1">Do you believe that, Jack?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="5"/>Sure do!
+                </stanza>
+                <stanza>
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind1">Then you're a dope,</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">for which there ain't no
+                            hope.</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics" margin="ind1">Black is fine!</format>
+                    
+                    <lb n="9"/>
+                        <format wordType="italics" margin="ind1">And, God knows,</format>
+                    
+                    <lb n="10"/>
+                        <format wordType="italics" margin="ind1">It's mine!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="263"/>
+        <poem xml:id="p-55">
+            <title>Neighbor</title>
+            
+                <stanza>
+                    <lb n="1"/>Down home
+                    <lb n="2"/>he sets on a stoop
+                    <lb n="3"/>and watches the sun go by.
+                    <lb n="4"/>In Harlem
+                    <lb n="5"/>when his work is done
+                    <lb n="6"/>he sets in a bar with a beer.
+                    <lb n="7"/>He looks taller than he is
+                    <lb n="8"/>and younger than he ain't.
+                    <lb n="9"/>He looks darker than he is, too.
+                    <lb n="10"/>And he's smarter than he looks,
+                </stanza>
+                <stanza>
+                    <lb n="11"/>
+                        <format wordType="italics" margin="ind1">He ain't smart.</format>
+                    
+                    <lb n="12"/>
+                        <format wordType="italics" margin="ind1">That cat's a fool.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="13"/>Now he ain't neither.
+                    <lb n="14"/>He's a good man,
+                    <lb n="15"/>except he talks too much.
+                    <lb n="16"/>In fact, he's a great cat.
+                    <lb n="17"/>But when he drinks,
+                    <lb n="18"/>he drinks fast.
+                </stanza>
+                <stanza>
+                    <lb n="19"/>
+                        <format wordType="italics" margin="ind1">Sometimes</format>
+                    
+                    <lb n="20"/>
+                        <format wordType="italics" margin="ind1">he don't drink.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="21"/>True,
+                    <lb n="22"/>he just
+                    <lb n="23"/>lets his glass
+                    <lb n="24"/>set there.
+                </stanza>
+            
+        </poem>
+        <pb pNum="264"/>
+        <poem xml:id="p-56">
+            <title>Evening Song</title>
+            
+                <stanza>
+                    <lb n="1"/>A woman standing in the doorway
+                    <lb n="2"/>Trying to make her where-with-all:
+                    <lb n="3"/>
+                        <format wordType="italics">Come here, baby, darlin'!</format>
+                    
+                    <lb n="4"/>
+                        <format wordType="italics">Don't you hear me call?</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="5"/>If I was anybody's sister,
+                    <lb n="6"/>I'd tell her, <format wordType="italics">Gimme a place to
+                            sleep.</format>
+                    <lb n="7"/>But I ain't nobody's sister.
+                    <lb n="8"/>I'm just a poor lost sheep.
+                </stanza>
+                <stanza>
+                    <lb n="9"/>Mary, Mary, Mary,
+                    <lb n="10"/>Had a little lamb.
+                    <lb n="11"/>Well, I hope that lamb of Mary's
+                    <lb n="12"/>Don't turn out like I am.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-57">
+            <title>Chord</title>
+            
+                <stanza>
+                    <lb n="1"/>Shadow faces
+                    <lb n="2"/>In the shadow night
+                    <lb n="3"/>Before the early dawn
+                    <lb n="4"/>Bops bright.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-58">
+            <title>Fact</title>
+            
+                <stanza>
+                    <lb n="1"/>There's been an eagle on a nickel,
+                    <lb n="2"/>An eagle on a quarter, too.
+                    <lb n="3"/>But there ain;t no eagle
+                    <lb n="4"/>On a dime.
+                </stanza>
+            
+        </poem>
+        <pb pNum="265"/>
+        <poem xml:id="p-59">
+            <title>Joe Louis</title>
+            
+                <stanza>
+                    <lb n="1"/>They worshipped Joe.
+                    <lb n="2"/>A school teacher
+                    <lb n="3"/>whose hair was gray
+                    <lb n="4"/>said:
+                </stanza>
+                <stanza>
+                    <lb n="5"/>
+                        <format wordType="italics" margin="ind1">Joe has sense enough to
+                            know</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics" margin="ind1">He is a god.</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics" margin="ind1">So many gods don't know.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="8"/>"They say" ... "They say" ... "They say" ...
+                    <lb n="9"/>But the gossips had no
+                    <lb n="10"/>"They say"
+                    <lb n="11"/>to latch onto
+                    <lb n="12"/>for Joe.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-60">
+            <title>Subway Rush Hour</title>
+            
+                <stanza>
+                    <lb n="1"/>Mingled
+                    <lb n="2"/>breath and smell<format wordType="handwritten">*</format>
+                    <lb n="3"/>so close
+                    <lb n="4"/>mingled
+                    <lb n="5"/>black and white
+                    <lb n="6"/>so near
+                    <lb n="7"/>no room for fear
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-61">
+            <title>Brothers</title>
+            
+                <stanza>
+                    <lb n="1"/>We're related-you and I,
+                    <lb n="2"/>You from the West Indies,
+                    <lb n="3"/>I from Kentucky.
+                </stanza>
+                <pb pNum="266"/>
+                <stanza>
+                    <lb n="4"/>Kinsmen- you and I,
+                    <lb n="5"/>You from Africa,
+                    <lb n="6"/>I from the USA.
+                </stanza>
+                <stanza>
+                    <lb n="7"/>Brothers-you and I.
+                </stanza>
+            
+        </poem>
+        <!-- up to 259 -->
+        <!-- contributor: Aidan Olsen -->
+        <pb pNum="266"/>
+        <poem xml:id="p-62">
+            <title>Likewise</title>
+            
+                <stanza>
+                    <lb n="1"/>The Jews:
+                </stanza>
+                <stanza>
+                    <lb n="2"/>Groceries
+                    <lb n="3"/>Suits
+                    <lb n="4"/>Fruits
+                    <lb n="5"/>Watches
+                    <lb n="6"/>Diamond rings
+                    <lb n="7"/>
+                        <format wordType="caps">THE DAILY NEWS</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="8"/>Jews sell me things.
+                    <lb n="9"/>Yom Kippur, no!
+                    <lb n="10"/>Shops all over Harlem
+                    <lb n="11"/>close up tight that night.
+                </stanza>
+                <stanza>
+                    <lb n="11"/>Some folks blame high prices on the Jews.
+                    <lb n="12"/>(Some folks blame too much on Jews.)
+                    <lb n="13"/>But in Harlem they don't answer back,
+                    <lb n="14"/>Just maybe shrug their shoulders,
+                    <lb n="15"/>"What's the use?"
+                    <lb n="16"/>What's the use
+                    <lb n="17"/>in Harlem?
+                    <lb n="18"/>What's the use?
+                    <lb n="19"/>What's the Harlem?
+                    <lb n="20"/>Use in Harlem
+                </stanza>
+                <pb pNum="267"/>
+                <stanza>
+                    <lb n="21"/>
+                        <format wordType="italics">Hey!</format>
+                    
+                    <lb n="22"/>
+                        <format wordType="italics">Baba-re-bop!</format>
+                    
+                    <lb n="23"/>
+                        <format wordType="italics">Mop!</format>
+                    
+                    <lb n="24"/>
+                        <format wordType="italics">On a be-bop kick!</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="25"/>Sometimes I think
+                    <lb n="26"/>Jews have heard
+                    <lb n="27"/>the music of a
+                    <lb n="28"/>dream deferred.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-63">
+            <title>Silver</title>
+            
+                <stanza>
+                    <lb n="1"/>Cheap little rhymes
+                    <lb n="2"/>A cheap little tune
+                    <lb n="3"/>Are sometimes as dangerous
+                    <lb n="4"/>As a sliver of the moon.
+                    <lb n="5"/>A cheap little tune
+                    <lb n="6"/>To cheap little rhymes
+                    <lb n="7"/>Can cut a man's
+                    <lb n="8"/>Throat sometimes.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-64">
+            <title>Hope</title>
+            
+                <stanza>
+                    <lb n="1"/>He rose up on his dying bed
+                    <lb n="2"/>and asked for fish.
+                    <lb n="3"/>His wife looked it up in her dream book
+                    <lb n="4"/>and played it.
+                </stanza>
+            
+        </poem>
+        <pb pNum="268"/>
+        <poem xml:id="p-65">
+            <title>Dream Boogie: Variation</title>
+            
+                <stanza>
+                    <lb n="1"/>Tinkling treble,
+                    <lb n="2"/>Rolling bass,
+                    <lb n="3"/>High noon teeth
+                    <lb n="4"/>In a midnight face,
+                    <lb n="5"/>Great long fingers
+                    <lb n="6"/>On great big hands,
+                    <lb n="7"/>Screaming pedals
+                    <lb n="8"/>Where his twelve-shoe lands,
+                    <lb n="9"/>Looks like his eyes
+                    <lb n="10"/>Are teasing pain,
+                    <lb n="11"/>A few minutes late
+                    <lb n="12"/>For the Freedom Train.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-66">
+            <title>Harlem</title>
+            
+                <stanza>
+                    <lb n="1"/>What happens to a dream deffered?
+                </stanza>
+                <stanza>
+                    <lb n="2"/>Does it dry up
+                    <lb n="3"/>like a raisin in the sun?
+                    <lb n="4"/>Or fester like a sore-
+                    <lb n="5"/>And then run?
+                    <lb n="6"/>Does it stink like rotten meat?
+                    <lb n="7"/>Or crust and sugar over-
+                    <lb n="8"/>like a syrupy sweet?
+                </stanza>
+                <stanza>
+                    <lb n="9"/>Maybe it just sags
+                    <lb n="10"/>like a heavy load.
+                </stanza>
+                <stanza>
+                    <lb n="11"/>
+                        <format wordType="italics">Or does it explode?</format>
+                    
+                </stanza>
+            
+        </poem>
+        <pb pNum="269"/>
+        <poem xml:id="p-67">
+            <title>Good Morning</title>
+            
+                <stanza>
+                    <lb n="1"/>Good morning, daddy!
+                    <lb n="2"/>I was born here, he said,
+                    <lb n="3"/>watched Harlem grow
+                    <lb n="4"/>until colored folks spread
+                    <lb n="5"/>from river to river
+                    <lb n="6"/>across the middle of Manhatten
+                    <lb n="7"/>out of Penn Station
+                    <lb n="8"/>dark tenth of a nation,
+                    <lb n="9"/>planes from Puerto Rico
+                    <lb n="10"/>and holds of boats, chico,
+                    <lb n="11"/>up from Cuba Haiti Jamaica
+                    <lb n="12"/>in buses marked New York
+                    <lb n="13"/>from Georgia Florida Louisiana
+                    <lb n="14"/>to Harlem Brookly the Bronx
+                    <lb n="15"/>but most of all to Harlem
+                    <lb n="16"/>dusky sash across Manhattan
+                    <lb n="17"/>I've seen them come dark
+                </stanza>
+                <stanza>
+                    <lb n="18"/>wondering
+                    <lb n="19"/>wide-eyed
+                    <lb n="20"/>dreaming
+                </stanza>
+                <stanza>
+                    <lb n="21"/>out of Penn Station-
+                    <lb n="22"/>but the trains are late.
+                    <lb n="23"/>The gates open-
+                    <lb n="24"/>but the trains are late.
+                    <lb n="25"/>The gates open-
+                    <lb n="26"/>Yet there're bars
+                    <lb n="27"/>at each gate.
+                </stanza>
+                <stanza>
+                    <lb n="28"/>What happens
+                    <lb n="29"/>to a dream deferred?
+                </stanza>
+                <stanza>
+                    <lb n="30"/>Daddy, ain't you heard?
+                </stanza>
+            
+        </poem>
+        <pb pNum="270"/>
+        <poem xml:id="p-68">
+            <title>Same in Blues</title>
+            
+                <stanza>
+                    <lb n="1"/>I said to my baby,
+                    <lb n="2"/>Baby, take it slow.
+                    <lb n="3"/>I can't, she said, I can't!
+                    <lb n="4"/>I got to go!
+                </stanza>
+                <stanza>
+                    <lb n="5"/>
+                        <format wordType="italics">There's a certain</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics">amount of traveling</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics">in a dream deferred.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="8"/>Lulu said to leonard,
+                    <lb n="9"/>I want a diamond ring.
+                    <lb n="10"/>Leonard said to Lulu,
+                    <lb n="11"/>You won't get a goddamn thing!
+                </stanza>
+                <stanza>
+                    <lb n="12"/>
+                        <format wordType="italics">A certain</format>
+                    
+                    <lb n="13"/>
+                        <format wordType="italics">amount of nothing</format>
+                    
+                    <lb n="14"/>
+                        <format wordType="italics">in a dream deferrred.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="15"/>Daddy, daddy, daddy,
+                    <lb n="16"/>All I want is you.
+                    <lb n="17"/>You can have me, baby-
+                    <lb n="18"/>but my lovin' days is through.
+                </stanza>
+                <stanza>
+                    <lb n="19"/>
+                        <format wordType="italics">A certain</format>
+                    
+                    <lb n="20"/>
+                        <format wordType="italics">amount of impotence</format>
+                    
+                    <lb n="21"/>
+                        <format wordType="italics">in a dream deferrred.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="22"/>Three parties
+                    <lb n="23"/>On my party line-
+                    <lb n="24"/>But that third party,
+                    <lb n="25"/>Lord, ain't mine!
+                </stanza>
+                <pb pNum="271"/>
+                <stanza>
+                    <lb n="26"/>
+                        <format wordType="italics">There's liable</format>
+                    
+                    <lb n="27"/>
+                        <format wordType="italics">to be confusion</format>
+                    
+                    <lb n="28"/>
+                        <format wordType="italics">in a dream deferred.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="29"/>From river to river,
+                    <lb n="30"/>Uptown and Down,
+                    <lb n="31"/>There's liable to be confusion
+                    <lb n="32"/>when a dream gets kicked around.
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-69">
+            <title>Comment on Curb</title>
+            
+                <stanza>
+                    <lb n="1"/>You talk like
+                    <lb n="2"/>They don't kick
+                    <lb n="3"/>dreams around
+                    <lb n="4"/>downtown.
+                </stanza>
+                <stanza>
+                    <lb n="5"/>
+                        <format wordType="italics">I expect they do-</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics">But I'm talking about</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics">Harlem to you!</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-70">
+            <title>Letter</title>
+            
+                <stanza>
+                    <lb n="1"/>
+                        <format wordType="italics">Dear Mama,</format>
+                    
+                    <lb n="2"/>
+                        <format wordType="italics">Time I pay rent and get my food</format>
+                    
+                    <lb n="3"/>
+                        <format wordType="italics">and laundry I don't have much left</format>
+                    
+                    <lb n="4"/>
+                        <format wordType="italics">but here is five dollars for you</format>
+                    
+                    <lb n="5"/>
+                        <format wordType="italics">to show you I still appreciates you.</format>
+                    
+                    <lb n="6"/>
+                        <format wordType="italics">My girl-friend send her love and say</format>
+                    
+                    <lb n="7"/>
+                        <format wordType="italics">she hopes to lay eyes on you sometime in
+                            life.</format>
+                    
+                </stanza>
+
+                <pb pNum="272"/>
+
+                <stanza>
+                    <lb n="8"/>
+                        <format wordType="italics">Mama, it has been raining cats and dogs
+                            up</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">here. Well, that is all so I will close.</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">Your son baby</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">Respectably as ever,</format>
+                    
+                    <lb n="8"/>
+                        <format wordType="italics">Joe</format>
+                    
+                </stanza>
+            
+        </poem>
+        <poem xml:id="p-71">
+            <title>Island</title>
+            
+                <stanza>
+                    <lb n="1"/>Between two rivers,
+                    <lb n="2"/>North of the park,
+                    <lb n="3"/>Like darker rivers
+                    <lb n="4"/>The streets are dark.
+                </stanza>
+                <stanza>
+                    <lb n="5"/>Black and white,
+                    <lb n="6"/>Gold and brown-
+                    <lb n="7"/>Chocolate-custard
+                    <lb n="8"/>Pie of a town.
+                </stanza>
+                <stanza>
+                    <lb n="9"/>
+                        <format wordType="italics">Dream within a dream,</format>
+                    
+                    <lb n="10"/>
+                        <format wordType="italics">Our dream deferred.</format>
+                    
+                </stanza>
+                <stanza>
+                    <lb n="11"/>Good morning, daddy!
+                </stanza>
+                <stanza>
+                    <lb n="12"/>Ain't you heard?
+                </stanza>
+            
+        </poem>
+        <!--AMO: page is un-numbered but IS 273-->
+        <pb pNum="273"/>
+        <title>
+            <format wordType="cap">WORDS LIKE FREEDOM</format>
+        </title>
+        <!-- up to 268 -->
+    </text>
+</xml>
