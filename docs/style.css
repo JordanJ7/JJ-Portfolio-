@@ -52,3 +52,27 @@
     margin-right:auto;
     width: 50% 
 }
+
+.center3 {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    width: 80% 
+    
+    }
+    
+.center4 {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    width: 55% 
+    
+    }
+    
+.center5 {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    width: 20% 
+    
+    }
