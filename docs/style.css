@@ -76,3 +76,10 @@
     width: 20% 
     
     }
+    
+    .center6 {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    width: 30% 
+}
