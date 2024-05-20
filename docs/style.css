@@ -83,3 +83,13 @@
     margin-right:auto;
     width: 30% 
 }
+
+.square {
+    width: 50%;
+    height: 50%;
+   /* border: 1px solid transparent;*/
+    padding: 9%;
+    margin-top: 0%;
+    /*background-color: #FAFAFA;*/
+   /* opacity: 0.5;*/
+}
