@@ -93,3 +93,50 @@
     /*background-color: #FAFAFA;*/
    /* opacity: 0.5;*/
 }
+
+
+
+
+/*body {
+  background-color: #201E2C;
+  padding: 50px;
+  display: flex;
+  justify-content: center; /\* Center horizontally *\/
+  align-items: flex-start;
+  color: #fff;
+  width: 100%; /\* Ensure the body takes full width *\/
+  min-height: 100vh; /\* Ensure the body takes full height *\/*/
+}
+
+.custom-border {
+  background-color: rgba(217, 217, 217, .05);
+  position: relative;
+  border-radius: 16px;
+  padding: 10px;
+  width: 1000px;
+  height: 2500px;
+  margin: 0 20px;
+}
+
+/*.custom-border::before {
+  display: block;
+  content: '';
+  position: absolute;
+  inset: 0px;
+  z-index: 10;
+  border-radius: inherit;
+  padding: 1px;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition-duration: 250ms;
+  transition-duration: 250ms;
+  -webkit-mask-composite: xor;
+  -webkit-mask: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff)) content-box, -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff));
+  -webkit-mask-composite: xor;
+}
+*/
+/* Uncomment if needed
+.custom-border-light::before {
+  background: linear-gradient(156.15deg, rgba(254, 254, 254, 0.18) 5.68%, rgba(152, 152, 152, 0) 107.95%);
+}
+*/
