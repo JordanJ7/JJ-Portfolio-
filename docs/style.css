@@ -1,102 +1,95 @@
+body {
+  background-color: #6a442e;
+  color: #fff8dc;
+  font-family: calibri;
+  padding: 50px;
+  width: 100%; /* Ensure the body takes full width */
+  min-height: 100vh; /* Ensure the body takes full height */
+  border: 20px solid #ffa55c; 
+  padding:20px;  
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin: 0; /* Remove default margin to ensure the border spans the entire page */
+  min-height: 100vh;
+}
 
-      body {
-        background-color: #f5f5f5;
-        color: #333;
-        font-family: sans-serif;
-      }
-      nav {
-        display: flex;
-        justify-content: space-around;
-        background-color: #333;
-        color: white;
-        padding: 20px;
-      }
-      nav a {
-        text-decoration: none;
-        color: white;
-      }
-      .button {
-        display: inline-block;
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
-        border: 1px solid white;
-      }
-      .button:hover {
-        background-color: white;
-        color: #333;
-      }
-      .secondary-button {
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
-        border: 1px solid white;
-      }
-      .secondary-button:hover {
-        background-color: white;
-        color: #333;
-      }
- 
+nav {
+  display: flex;
+  justify-content: center; /* Center the nav content horizontally */
+  align-items: center; /* Center the nav content vertically */
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  margin: 0 auto; /* Center the nav bar itself */
+  width: 90%; /* Optional: adjust width as necessary */
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  margin: 0 10px; /* Optional: add space between nav links */
+}
+
+.button, .secondary-button {
+  display: inline-block;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 1px solid white;
+}
+
+.button:hover, .secondary-button:hover {
+  background-color: white;
+  color: #333;
+}
+
+.center, .center2, .center3, .center4, .center5, .center6 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .center {
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 50% 
+  width: 50%;
 }
 
 .center2 {
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 50% 
+  width: 50%;
 }
 
 .center3 {
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 80% 
-    
-    }
-    
-.center4 {
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 55% 
-    
-    }
-    
-.center5 {
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 20% 
-    
-    }
-    
-    .center6 {
-    display: block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 30% 
+  width: 80%;
 }
+
+.center4 {
+  width: 25%;
+}
+
+.center5 {
+  width: 20%;
+}
+
+.center6 {
+  width: 10%;
+}
+
+.center7 {
+  width: 15%;
+}
+
+.center8 {
+  width: 100%;
+}
+
 
 .square {
-    width: 50%;
-    height: 50%;
-   /* border: 1px solid transparent;*/
-    padding: 9%;
-    margin-top: 0%;
-    /*background-color: #FAFAFA;*/
-   /* opacity: 0.5;*/
+  width: 50%;
+  height: 50%;
+  padding: 9%;
+  margin-top: 0%;
 }
 
-
 .custom-border {
-  background-color: rgba(217, 217, 217, .05);
   position: relative;
   border-radius: 16px;
   padding: 10px;
@@ -105,4 +98,27 @@
   margin: 0 20px;
 }
 
+@font-face {
+  font-family: 'DuneRise';
+  src: url('fonts/Dune_Rise.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
+.dune-title {
+  font-family: 'DuneRise', sans-serif;
+  font-size: 48px; /* Adjust size as needed */
+  color: #333; /* Adjust color as needed */
+}
+
+.dune-title2 {
+  font-family: 'DuneRise', sans-serif;
+  font-size: 20px; /* Adjust size as needed */
+  color: #333; /* Adjust color as needed */
+}
+
+.dune-title3 {
+  font-family: 'DuneRise', sans-serif;
+  font-size: 30px; /* Adjust size as needed */
+  color: #fff8dc; /* Adjust color as needed */
+}
