@@ -1,0 +1,128 @@
+body {
+  background-color: #6a442e;
+  color: #fff8dc;
+  font-family: calibri;
+  padding: 50px;
+  width: 100%; /* Ensure the body takes full width */
+  min-height: 100vh; /* Ensure the body takes full height */
+  border: 20px solid #ffa55c; 
+  padding:20px;  
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin: 0; /* Remove default margin to ensure the border spans the entire page */
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  justify-content: center; /* Center the nav content horizontally */
+  align-items: center; /* Center the nav content vertically */
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  margin: 0 auto; /* Center the nav bar itself */
+  width: 90%; /* Optional: adjust width as necessary */
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  margin: 0 10px; /* Optional: add space between nav links */
+}
+
+.button, .secondary-button {
+  display: inline-block;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 1px solid white;
+}
+
+.button:hover, .secondary-button:hover {
+  background-color: white;
+  color: #333;
+}
+
+.center, .center2, .center3, .center4, .center5, .center6 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  width: 50%;
+}
+
+.center2 {
+  width: 50%;
+}
+
+.center3 {
+  width: 80%;
+}
+
+.center4 {
+  width: 30%;
+}
+
+.center5 {
+  width: 20%;
+}
+
+.center6 {
+  width: 10%;
+}
+
+.center7 {
+  width: 15%;
+}
+
+.center8 {
+  width: 100%;
+}
+
+
+.center9 {
+  width: 90%;
+}
+
+.square {
+  width: 50%;
+  height: 50%;
+  padding: 9%;
+  margin-top: 0%;
+}
+
+.custom-border {
+  position: relative;
+  border-radius: 16px;
+  padding: 10px;
+  width: 1000px;
+  height: 2500px;
+  margin: 0 20px;
+}
+
+@font-face {
+  font-family: 'DuneRise';
+  src: url('fonts/Dune_Rise.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.dune-title {
+  font-family: 'DuneRise', sans-serif;
+  font-size: 48px; /* Adjust size as needed */
+  color: #333; /* Adjust color as needed */
+}
+
+.dune-title2 {
+  font-family: 'DuneRise', sans-serif;
+  font-size: 20px; /* Adjust size as needed */
+  color: #333; /* Adjust color as needed */
+}
+
+.dune-title3 {
+  font-family: 'DuneRise', sans-serif;
+  font-size: 30px; /* Adjust size as needed */
+  color: #fff8dc; /* Adjust color as needed */
+}
