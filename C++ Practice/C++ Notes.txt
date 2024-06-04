@@ -1,0 +1,151 @@
+#include <iostream> <string> 
+using namespace std;
+
+// this is not a comment
+/* this is not a long comment */
+
+int main() {
+  cout << "This uses a tab!"<< "\t  \\ ";
+  cout << "This uses a new line" << "\n";
+  cout << "goodbye World" << "\n\n";
+  
+  int myNum = 15; 
+  myNum = 20; //myNum is now 20
+  cout << myNum << "\n\n";
+   
+  int myNum2;
+  myNum2 = 16;
+  cout << myNum2 << "\n\n"; 
+  
+  /* Below shows other data types */ 
+  
+  double myFloatNum = 5.55; 
+  cout << myFloatNum << "\n\n";
+  
+  char myLetter = 'j';
+  cout << myLetter << "\n\n";
+  
+  bool myBoolean = false;
+  cout << myBoolean << "\n\n";
+  
+  /* Below seperates text and variable */ 
+  
+  int myAge = 20;
+  cout << "I am " << myAge << " years old." << "\n\n"; 
+  
+  /* Below Shows
+  adding variables together 
+  declaring multiple variables 
+  One Value to multiple variables
+  */ 
+  
+  int q = 10;
+  int y = 10; 
+  int sum = q + y;
+  cout << sum << "\n\n";  
+
+  
+  int a = 5, b = 6, c = 50;  
+  cout << a + b + c << "\n\n"; 
+ 
+int j, k, l;
+j = k = l = 50;
+cout << j + k + l << "\n\n";
+
+/* Constants- Won't change existing variables */
+
+const int minutesPerHour = 60;
+const float PI = 3.14;
+
+
+/* User Input 
+
+int x; 
+cout << "Type a number:" << "\n\n"; 
+cin >> x; 
+cout << "Your number is: " << x; 
+
+*/
+  
+  /* Simple Calculator 
+  
+  int x, y;
+  int sum;
+  cout << "Type a number: ";
+  cin >> x;
+  cout << "Type another number: ";
+  cin >> y;
+  sum = x + y;
+  cout << "Sum is: " << sum;
+  
+  */ 
+  
+  /* Numeric Data Types */ 
+  
+  float f1 = 35e3;
+  double d1 =  12E4; 
+  cout << f1 << "\n\n";
+  cout << d1 << "\n\n";
+  
+   /* Boolean Data Types */
+   
+   bool isCodingFun = true; 
+   bool isFishyTasty = false; 
+   cout << isCodingFun << "\n\n"; 
+   cout << isFishyTasty << "\n\n";
+ 
+ /* Character Data Types 
+ 
+   char a = 65, b = 66, c = 67;
+  cout << a<< "\n\n";
+  cout << b << "\n\n";
+  cout << c << "\n\n";
+  
+  */
+  
+  /* String Data Types */ 
+  
+  string greeting = "Nice";
+  cout << greeting << "\n\n"; 
+  
+  /* Operators 
+  
+   =	x = 5	x = 5	
++=	x += 3	x = x + 3	
+-=	x -= 3	x = x - 3	
+*=	x *= 3	x = x * 3	
+/=	x /= 3	x = x / 3	
+%=	x %= 3	x = x % 3	
+&=	x &= 3	x = x & 3	
+|=	x |= 3	x = x | 3	
+^=	x ^= 3	x = x ^ 3	
+>>=	x >>= 3	x = x >> 3	
+<<=  
+
+  */ 
+  
+  int x = 10; 
+  x += 5;
+  cout << x;
+  
+  /* Comparison Operators 
+  
+ ==	Equal to	x == y	
+!=	Not equal	x != y	
+>	Greater than	x > y	
+<	Less than	x < y	
+>=	Greater than or equal to	x >= y	
+<=	Less than or equal to	x <= y
+  
+  */
+  
+  int x = 5; 
+  int y = 3; 
+  cout << (x > y); 
+  
+  
+  return 0;
+}
+
+
+
