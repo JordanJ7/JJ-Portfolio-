@@ -1,4 +1,4 @@
-#include <iostream> <string> 
+#include <iostream> <string> <cmath> 
 using namespace std;
 
 // this is not a comment
@@ -126,7 +126,7 @@ cout << "Your number is: " << x;
   
   int x = 10; 
   x += 5;
-  cout << x;
+  cout << x << "\n\n";
   
   /* Comparison Operators 
   
@@ -136,14 +136,77 @@ cout << "Your number is: " << x;
 <	Less than	x < y	
 >=	Greater than or equal to	x >= y	
 <=	Less than or equal to	x <= y
-  
-  */
-  
+   
   int x = 5; 
   int y = 3; 
   cout << (x > y); 
+  */
+ 
   
+  /* Strings */ 
   
+string firstName = "John ";
+string lastName = "Doe";
+string fullName = firstName + lastName;
+cout << fullName << "\n\n";
+
+/*
+string fullName = firstName.append(lastName);
+*/
+
+  
+/* String Length */ 
+ 
+ 
+  string txt= "This is a very loong sentence with alot of words with meaning and purpose"; 
+  
+  cout << "The Length if this long text is: " << txt.length() << "\n\n";
+  
+  cout << "The Length if this long text is: " << txt.size() <<"\n\n";
+  
+ /* String Access */
+ 
+ string myString = "This is not a string this is a letter"; 
+ cout << myString[1] << "\n\n";
+   
+  /* The at() Function */ 
+   
+  string thatString = "That String"; 
+  cout << thatString.at(0) << "\n\n";
+  cout << thatString.at(1) << "\n\n";
+  cout << thatString.at(thatString.length() - 1) << "\n\n";
+  
+  thatString.at(0) = 'J';
+  cout << thatString << "\n\n"; 
+  
+  /* User Input Strings */ 
+  
+  string firstName2;
+  cout << "Type your first name: ";
+  cin >> firstName2; 
+  cout << "Your Name is: " << firstName2 << "\n\n";
+  
+ /*
+  string fullName;
+  cout << "Type your full name: ";
+  getline (cin, fullName);
+  cout << "Your name is: " << fullName;
+*/ 
+
+/* Math  
+
+cout << sqrt(64);
+cout << round(2.6);
+cout << log(2);
+
+*/
+
+cout << max(10,20) << "\n\n";
+cout << min(10,20) << "\n\n";
+
+
+
+
   return 0;
 }
 
