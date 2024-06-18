@@ -94,6 +94,12 @@ nav a {
   color: #333;
 }
 
+.button:hover, .secondarybutton:hover {
+    background-color: white;
+    color: #333;
+}
+
+
 .center, .center2, .center3, .center4, .center5, .center6 {
   display: block;
   margin-left: auto;
@@ -152,6 +158,7 @@ nav a {
   height: 2500px;
   margin: 0 20px;
 }
+
 
 @font-face {
   font-family: 'DuneRise';
