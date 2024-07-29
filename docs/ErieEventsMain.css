@@ -1,37 +1,39 @@
 body {
   background-color: #6a442e;
   color: #fff8dc;
-  font-family: calibri;
-  padding: 50px;
-  width: 100%; /* Ensure the body takes full width */
-  min-height: 100vh; /* Ensure the body takes full height */
-  border: 20px solid #ffa55c; 
-  padding:20px;  
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  margin: 0; /* Remove default margin to ensure the border spans the entire page */
+  font-family: calibri, sans-serif;
+  margin: 0;
+  padding: 20px;
+  width: 100%;
   min-height: 100vh;
+  box-sizing: border-box;
+  border: 20px solid #ffa55c;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
-
+.content {
+  text-align: center; /* Center text */
+  max-width: 200%; /* Optional: Adjust width as necessary */
+}
 
 nav {
   display: flex;
-  justify-content: center; /* Center the nav content horizontally */
-  align-items: center; /* Center the nav content vertically */
+  justify-content: center;
+  align-items: center;
   background-color: #333;
   color: white;
   padding: 20px;
-  margin: 0 auto; /* Center the nav bar itself */
-  width: 90%; /* Optional: adjust width as necessary */
+  width: 90%; /* Adjust width as necessary */
+  margin: 0 auto;
 }
-
 
 nav a {
   text-decoration: none;
   color: white;
-  margin: 0 10px; /* Optional: add space between nav links */
+  margin: 0 10px;
 }
-
 
 .dropdown {
   float: left;
@@ -79,7 +81,6 @@ nav a {
   display: block;
 }
 
-
 .button, .secondary-button {
   display: inline-block;
   background-color: #333;
@@ -93,12 +94,6 @@ nav a {
   background-color: white;
   color: #333;
 }
-
-.button:hover, .secondarybutton:hover {
-    background-color: white;
-    color: #333;
-}
-
 
 .center, .center2, .center3, .center4, .center5, .center6 {
   display: block;
@@ -138,7 +133,6 @@ nav a {
   width: 100%;
 }
 
-
 .center9 {
   width: 90%;
 }
@@ -149,16 +143,6 @@ nav a {
   padding: 9%;
   margin-top: 0%;
 }
-
-/*.custom-border {
-  position: relative;
-  border-radius: 16px;
-  padding: 10px;
-  width: 1000px;
-  height: 2500px;
-  margin: 0 20px;
-}*/
-
 
 @font-face {
   font-family: 'DuneRise';
@@ -185,66 +169,39 @@ nav a {
   color: #fff8dc; /* Adjust color as needed */
 }
 
-/*  Below is for Erie Events */
-/*body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-}
-
-.slideshow-container {
-    max-width: 1000px;
-    position: relative;
-    margin: auto;
-}
-
-.mySlides {
-    display: none;
-}
-
-.fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
-}
-
-@keyframes fade {
-    from {opacity: .4} 
-    to {opacity: 1}
-}*/
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body, html {
-    height: 100%;
-    font-family: Arial, sans-serif;
+  height: 100%;
+  font-family: Arial, sans-serif;
 }
 
 .background-image {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    background: url('your-image.jpg') center center / cover no-repeat;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: url('your-image.jpg') center center / cover no-repeat;
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Adjust the color and opacity here */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the color and opacity here */
 }
 
 .content {
-    position: relative;
-    z-index: 1;
-    color: white;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 20px;
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 20px;
 }
-
