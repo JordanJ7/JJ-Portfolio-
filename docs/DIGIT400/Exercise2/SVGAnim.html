@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Empty</title>
+    </head>
+    <body> Which Circles are going faster???
+        <div style="display: grid; place-items: center; height: 100vh;">
+        <svg width="200" height="200" viewBox="50 50 200 200">
+            <!--  Red Circle -->
+            <circle cx="180" cy="180" r="50" fill="red" >
+                <animate
+                    attributeName="r"
+                    from="30" to="40" dur=".5s" begin="0s" repeatCount="indefinite"  values="30; 40; 30" 
+                />                      
+            </circle>
+        
+            <!-- Blue Circle -->
+            <circle cx="100" cy="100" r="30" fill="blue">
+                <animate
+                    attributeName="r"
+                    from="30" to="40" dur="1s" begin="0s" repeatCount="indefinite"  values="30; 40; 30" 
+                />
+            </circle>
+            <!-- Green Circle -->
+            <circle cx="100" cy="180" r="50" fill="green" >
+                <animate
+                    attributeName="r"
+                    from="30" to="40" dur=".5s" begin="0s" repeatCount="indefinite"  values="30; 40; 30" 
+                />                      
+            </circle>
+            
+            <!-- Purple Circle -->
+            <circle cx="180" cy="100" r="40" fill="purple">
+                <animate
+                    attributeName="r"
+                    from="30" to="40" dur="1s" begin="0s" repeatCount="indefinite"  values="30; 40; 30" 
+                />
+            </circle>
+            
+            
+            
+            
+        </svg>
+              
+        </div>
+        
+        
+        
+    </body>
+      
+</html>
