@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Site</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #3498db, #2c3e50); /* Gradient background */
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .button, .secondary-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            margin: 5px;
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .secondary-button {
+            background-color: #2c3e50;
+        }
+
+        /* Styling for the SVG */
+        svg {
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            max-height: 800px;
+        }
+
+        /* JavaScript animation box */
+        #movingBox {
+            width: 100px;
+            height: 100px;
+            background-color: #e74c3c;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            animation: moveBox 5s linear infinite;
+        }
+
+        @keyframes moveBox {
+            0% {
+                left: 0;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1 class="center3 dune-title">DIGIT 400 Project with SVG and <a href="https://jordanj7.github.io/NodeJSProject/">JavaScript Animation</a> </h1>
+
+<nav class="dune-title2">
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume </a>
+    <a href="certs.html">Certs & Training</a>
+    <a href="gallery.html">Class Projects </a>
+    <a href="InternBlog.html">Intern Blog</a>
+
+    <div class="dropdown">
+        <button class="dropbtn">Menu
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="Game220Logs.html">Video Game Analysis</a>
+            <a href="mapper.html">Game Logs</a>
+            <a href="DIGIT400Project.html">DIGIT 400 Project</a>
+        </div>
+    </div>
+</nav>
+
+
+<!-- GOT EMM :) -->
+
+<!-- Solar System SVG Animation -->
+<svg viewBox="-400 -400 800 800" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sun -->
+    <circle cx="0" cy="0" r="50" fill="url(#sunGradient)" />
+
+    <!-- Sun Gradient -->
+    <defs>
+        <radialGradient id="sunGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="yellow" />
+            <stop offset="100%" stop-color="orange" />
+        </radialGradient>
+    </defs>
+
+    <!-- Orbits -->
+    <circle cx="0" cy="0" r="100" stroke="white" stroke-opacity="0.5" fill="none" />
+    <circle cx="0" cy="0" r="150" stroke="white" stroke-opacity="0.5" fill="none" />
+    <circle cx="0" cy="0" r="200" stroke="white" stroke-opacity="0.5" fill="none" />
+    <circle cx="0" cy="0" r="250" stroke="white" stroke-opacity="0.5" fill="none" />
+    <circle cx="0" cy="0" r="300" stroke="white" stroke-opacity="0.5" fill="none" />
+    <circle cx="0" cy="0" r="350" stroke="white" stroke-opacity="0.5" fill="none" />
+
+    <!-- Planets -->
+    <!-- Mercury -->
+    <circle cx="100" cy="0" r="8" fill="gray">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="5s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Venus -->
+    <circle cx="-150" cy="0" r="12" fill="goldenrod">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="29s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Earth -->
+    <circle cx="200" cy="0" r="14" fill="blue">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="25s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Mars -->
+    <circle cx="-250" cy="0" r="10" fill="red">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="15s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Saturn -->
+    <circle cx="300" cy="0" r="18" fill="goldenrod">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="50s" repeatCount="indefinite" />
+    </circle>
+
+    <ellipse cx="300" cy="0" rx="28" ry="10" fill="none" stroke="gold" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="50s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Uranus -->
+    <circle cx="-350" cy="0" r="16" fill="lightblue">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="60s" repeatCount="indefinite" />
+    </circle>
+
+    <ellipse cx="-350" cy="0" rx="26" ry="8" fill="none" stroke="lightgray" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="60s" repeatCount="indefinite" />
+    </ellipse>
+</svg>
+
+
+
