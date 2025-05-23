@@ -1,41 +1,133 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Resume</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="style.css"/>
-        
-    </head>
-    <body>
-                
-           
-        
-        <h1 class="center6 dune-title3">Resume</h1>
-        
-        
-        <nav class="dune-title2">
-            <a href="index.html">Home</a>
-            <a href="resume.html">Resume </a>
-            <a href="certs.html">Certs &amp; Training</a>
-            <a href="gallery.html">Class Projects </a>        
-            <a href="InternBlog.html">Intern Blog</a> 
-            
-            <div class="dropdown">
-                <button class="dropbtn">Menu 
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="Game220Logs.html">Video Game Analysis</a>
-                    <a href="mapper.html">Game Logs</a>
-                    <a href="#">NOT ON</a>
-                </div>
-            </div>
-            
-        </nav>
-        
-         <img src="pics/JordanResume.png" alt= "MainPoster" style="width:100%"> </img>
-      
-        
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --primary-blue: #004c6d;
+            --accent-gray: #c0c0c0;
+            --light-gray: #f2f2f2;
+            --text-white: #ffffff;
+            --text-dark: #333333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-blue);
+            color: var(--text-white);
+        }
+        nav {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+        }
+        nav a, .dropdown > a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            transition: background 0.3s;
+            display: block;
+        }
+        nav a:hover, .dropdown > a:hover {
+            background: var(--accent-gray);
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-dark);
+            background: #fff;
+        }
+        .dropdown-content a:hover {
+            background: var(--light-gray);
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        h1 {
+            text-align: center;
+            margin: 5rem 0 1rem;
+            font-size: 2.5rem;
+        }
+        .resume-container {
+            max-width: 800px;
+            margin: 5rem auto 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        .resume-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+        @media(max-width:768px) {
+            nav {
+                flex-direction: column;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+            .resume-container {
+                margin-top: 6rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+
+
+    <div class="dropdown">
+        <a href="#">Undergrad Works</a>
+        <div class="dropdown-content">
+            <a href="certs.html">Certs &amp; Undergraduate Classes</a>
+            <a href="gallery.html">Class Projects</a>
+            <a href="Game220Logs.html">Video Game Analysis</a>
+            <a href="mapper.html">Game Logs</a>
+            <a href="InternBlog.html">Intern Blog</a>
+
+        </div>
+    </div>
+</nav>
+
+<h1>Resume</h1>
+
+<div class="resume-container">
+    <img src="pics/Jordan%20Resume%205-21-25.png" alt="Jordan's Resume">
+</div>
+
+</body>
 </html>

@@ -1,121 +1,260 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Certificates and Training</title>
-        
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="style.css"/>
-        
-        
-        <style>
-   
-    </style>
-    </head>
-    <body>
-        
-        <h1 class="center8 dune-title">Certificates, Achievements & Training</h1>
-        
-        <nav class="dune-title2">
-            <a href="index.html">Home</a>
-            <a href="resume.html">Resume </a>           
-            <a href="gallery.html">Class Projects </a>                    
-            <a href="InternBlog.html">Intern Blog</a>
-            
-            <div class="dropdown">
-                <button class="dropbtn">Menu 
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="Game220Logs.html">Video Game Analysis</a>
-                    <a href="mapper.html">Game Logs</a>
-                    <a href="#">NOT ON</a>
-                </div>
-            </div>
-        </nav>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Certs and Such</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <br><br/>
-     
-     <h2> Classes, Certificates, And Achievments I Have Taken Or Aquired During My 2021-2025 College Career At Penn State Behrend And Beyond That Will Benefit My Career          
-     </h2>
-        
-        <section>
-            
-            <h3>Software I learned Throughout My Undergraduate Classes</h3>
-            <ul>
-                
-                <li>Unreal Engine 5</li>              
-                <li>Blender</li>
-                <li>Adobe Suite</li>
-                <li>Oxygen XML Editor</li>
-                <li>Pro Tools</li>
-                <li>Melodyne</li>
-                <li>Git, GitHub and Git Bash</li>              
-            </ul>
-            
-          
-            
-            <h3>Languages I learned Throughout My Undergraduate Classes</h3>
-            <ul>
-                
-                <li>HTML</li>              
-                <li>CSS</li>
-                <li>Python</li>
-                <li>Git Bash </li>
-                <li>Java Script</li>
-                <li>3 Semesters of Spanish</li>
-                <li>P-Spice</li> 
-                <li>xQuery</li> 
-                <li>Xpath</li> 
-                <li>XML + Regular Expressions</li> 
-            </ul>
-            
-            <br> <br/>
-                        
-        </section>
-        
-     <h2>Fall 2022</h2>
+    <style>
+        :root {
+            --primary-blue: #004c6d;
+            --accent-yellow: #ffffff;
+            --accent-gray: #c0c0c0;
+            --light-gray: #f2f2f2;
+            --text-white: #ffffff;
+            --text-dark: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-blue);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            z-index: 1000;
+        }
+
+        nav a, .dropdown > a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-weight: 600;
+            padding: 0.5rem 0.9rem;
+            margin-left: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav a:hover, .dropdown > a:hover {
+            background: var(--accent-yellow);
+            color: var(--text-dark);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background: #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            border-radius: 6px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.65rem 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--light-gray);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 6rem 0 2rem;
+            font-size: 2.5rem;
+            color: var(--accent-yellow);
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 5rem auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .section-bubble {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.2rem 1.4rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .section-bubble:hover {
+            transform: translateY(-4px);
+        }
+
+        .section-bubble h2 {
+            font-size: 1.35rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.35rem;
+        }
+
+        .section-bubble ul {
+            margin: 0.5rem 0 0 1.1rem;
+        }
+
+        .section-bubble ul li {
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
+        }
+
+        a {
+            color: #66ccff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            color: var(--accent-yellow);
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0.5rem 1rem;
+            }
+            nav a {
+                margin: 0.35rem;
+            }
+            h1 {
+                font-size: 2rem;
+                margin-top: 5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+    <a href="certs.html">Certs &amp; Undergraduate Classes</a>
+    <div class="dropdown">
+        <a href="#">Undergrad Works</a>
+        <div class="dropdown-content">
+            <a href="Game220Logs.html">Video Game Analysis</a>
+            <a href="mapper.html">Game Logs</a>
+            <a href="InternBlog.html">Intern Blog</a>
+            <a href="gallery.html">Class Projects</a>
+        </div>
+    </div>
+</nav>
+
+<h1>Certificates, Achievements & Training</h1>
+
+<section class="grid">
+
+    <div class="section-bubble">
+        <h2>Software Learned</h2>
         <ul>
-            <li>INART 50z: The Science of Music <a href="classestaken/inart50z.html" >Description</a>  </li>
-            <li>ART 168: The Digital Medium <a href="classestaken/art168.html" >Description</a> </li>          
+            <li>Unreal Engine 5</li>
+            <li>Blender</li>
+            <li>Adobe Suite</li>
+            <li>Oxygen XML Editor</li>
+            <li>Pro Tools</li>
+            <li>Melodyne</li>
+            <li>Git, GitHub, Git Bash</li>
         </ul>
-        
+    </div>
+
+    <div class="section-bubble">
+        <h2>Languages Learned</h2>
+        <ul>
+            <li>HTML, CSS, JavaScript, Python</li>
+            <li>3 Semesters of Spanish</li>
+            <li>P-Spice</li>
+            <li>xQuery, Xpath</li>
+            <li>XML + RegEx</li>
+        </ul>
+    </div>
+
+    <div class="section-bubble">
+        <h2>Fall 2022</h2>
+        <ul>
+            <li>INART 50z — <a href="classestaken/inart50z.html">Description</a></li>
+            <li>ART 168 — <a href="classestaken/art168.html">Description</a></li>
+        </ul>
+    </div>
+
+    <div class="section-bubble">
         <h2>Spring 2023</h2>
-        <ul>            
-            <li>INART 258A: Fundamental Digital Audio <a href="classestaken/inart258A.html" >Description</a></li>
-            <li>DIGIT 210: Textanalysis <a href="classestaken/digit210.html" >Description</a></li>
-            <li> Digit 297: Special Topics <a href="classestaken/digit297.html" >Description</a></li>            
-            <li> Game 220: Intro Game Design <a href="classestaken/game220.html" >Description</a></li>
+        <ul>
+            <li>INART 258A — <a href="classestaken/inart258A.html">Description</a></li>
+            <li>DIGIT 210 — <a href="classestaken/digit210.html">Description</a></li>
+            <li>DIGIT 297 — <a href="classestaken/digit297.html">Description</a></li>
+            <li>GAME 220 — <a href="classestaken/game220.html">Description</a></li>
         </ul>
-        
+    </div>
+
+    <div class="section-bubble">
         <h2>Fall 2023</h2>
-        <ul>            
-            <li>COMM 150N: Cinema Art <a href="classestaken/comm150n.html" >Description</a></li>
-            <li>DIGIT 110: Textencoding <a href="classestaken/digit110.html" >Description</a></li>
-            <li> GAME 180N: Art Science of Virtual World Building <a href="classestaken/game180n.html" >Description</a></li>                        
+        <ul>
+            <li>COMM 150N — <a href="classestaken/comm150n.html">Description</a></li>
+            <li>DIGIT 110 — <a href="classestaken/digit110.html">Description</a></li>
+            <li>GAME 180N — <a href="classestaken/game180n.html">Description</a></li>
         </ul>
-        
+    </div>
+
+    <div class="section-bubble">
         <h2>Spring 2024</h2>
-        <ul>            
-            <li>COMM 100N: Mass Media and Society <a href="classestaken/comm100n.html" >Description</a></li>
-            <li>DIGIT 409: Advanced Digital Creations <a href="classestaken/digit409.html" >Description</a></li>
-            <li> GAME 250: Technical Game Development <a href="classestaken/game250.html" >Description</a></li>
-            <li> GAME 460: Videogame Literature Studies <a href="classestaken/game460.html" >Description</a></li>
+        <ul>
+            <li>COMM 100N — <a href="classestaken/comm100n.html">Description</a></li>
+            <li>DIGIT 409 — <a href="classestaken/digit409.html">Description</a></li>
+            <li>GAME 250 — <a href="classestaken/game250.html">Description</a></li>
+            <li>GAME 460 — <a href="classestaken/game460.html">Description</a></li>
         </ul>
-        
+    </div>
+
+    <div class="section-bubble">
         <h2>Fall 2024</h2>
-        <ul>            
-            <li>Art 20: Intro Drawing <a href="classestaken/art20.html" >Description</a></li>
-            <li>DIGIT 400: Digital Prodesign <a href="classestaken/digit400.html" >Description</a></li>
-            <li> GAME 480: Game Development Project  <a href="classestaken/game480.html" >Description</a></li>            
+        <ul>
+            <li>ART 20 — <a href="classestaken/art20.html">Description</a></li>
+            <li>DIGIT 400 — <a href="classestaken/digit400.html">Description</a></li>
+            <li>GAME 480 — <a href="classestaken/game480.html">Description</a></li>
         </ul>
-        
-        
-        <br><br/>
-        <br><br/>
-        <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" 
-            src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br/>This work is licensed under a 
-        <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.
-        
-    </body>
+    </div>
+
+</section>
+
+</body>
 </html>
