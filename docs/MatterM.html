@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matter Monster Showcase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --primary-blue: #004c6d;
+            --accent-gray: #c0c0c0;
+            --light-gray: #f2f2f2;
+            --text-white: #ffffff;
+            --text-dark: #333333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-blue);
+            color: var(--text-white);
+        }
+        nav {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+        }
+        nav a, .dropdown > a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        nav a:hover, .dropdown > a:hover {
+            background: var(--accent-gray);
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .dropdown-content a {
+            padding: 0.5rem 1rem;
+            color: var(--text-dark);
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background: var(--light-gray);
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        h1 {
+            text-align: center;
+            margin: 5rem 0 1rem;
+            font-size: 2.5rem;
+        }
+        .content-container {
+            max-width: 1100px;
+            margin: 6rem auto 2rem;
+            padding: 1rem;
+        }
+        .audio-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .audio-card {
+            flex: 1 1 250px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        audio {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .photo-bubbles, .video-bubbles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .photo-bubbles img, .video-bubbles video {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--text-white);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .photo-bubbles img:hover, .video-bubbles video:hover {
+            transform: scale(1.05);
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal video {
+            max-width: 90%;
+            max-height: 80vh;
+            display: block;
+            margin: auto;
+        }
+        @media(max-width:768px) {
+            nav {
+                flex-direction: column;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+        .poster-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .poster-container img {
+            max-width: 600px;
+            width: 90%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Matter Monsters </h1>
+<h1>Developed By: Spigot Games </h1>
+
+<div class="poster-container">
+    <img src="pics/MatterM/MatterMPosterFinal.png" alt="Jordan's Resume">
+</div>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+    <div class="dropdown">
+        <a href="#">Undergrad Works</a>
+        <div class="dropdown-content">
+            <a href="certs.html">Certs &amp; Undergraduate Classes</a>
+            <a href="gallery.html">Class Projects</a>
+            <a href="Game220Logs.html">Video Game Analysis</a>
+            <a href="mapper.html">Game Logs</a>
+            <a href="InternBlog.html">Intern Blog</a>
+        </div>
+    </div>
+</nav>
+
+<div class="content-container">
+    <h1>Matter Monster Showcase</h1>
+
+    <!-- Audio Grid -->
+    <div class="audio-grid">
+        <div class="audio-card"><h3>Final Boss Lead Up</h3><audio controls><source src="pics/MatterM/FinalBossLeadUp.wav" type="audio/mpeg"></audio></div>
+        <div class="audio-card"><h3>Final Boss Theme</h3><audio controls><source src="pics/MatterM/FinalBossMusic.wav" type="audio/mpeg"></audio></div>
+        <div class="audio-card"><h3>Island 1-3 Theme</h3><audio controls><source src="pics/MatterM/Islands1-3.wav" type="audio/mpeg"></audio></div>
+        <div class="audio-card"><h3>Potter Attack Theme</h3><audio controls><source src="pics/MatterM/PotterAttack.wav" type="audio/mpeg"></audio></div>
+        <div class="audio-card"><h3>Game Over Theme</h3><audio controls><source src="pics/MatterM/GameOverSound.wav" type="audio/mpeg"></audio></div>
+        <div class="audio-card"><h3>Main Menu Theme</h3><audio controls><source src="pics/MatterM/MainMenu%20Music.wav" type="audio/mpeg"></audio></div>
+    </div>
+
+    <!-- Image Bubbles -->
+    <div class="photo-bubbles">
+        <img src="pics/MatterM/MatterMPosterFinal.png" alt="Poster" onclick="openModal(this.src)">
+        <img src="pics/MatterM/MatterMPortal.png" alt="Portal" onclick="openModal(this.src)">
+        <img src="images/screenshot3.jpg" alt="Gameplay 3" onclick="openModal(this.src)">
+    </div>
+
+    <!-- Video Bubbles -->
+    <div class="video-bubbles">
+        <video src="videos/MatterMTrailer.mp4" muted onclick="openVideoModal(this.src)"></video>
+        <video src="videos/MonsterBattle.mp4" muted onclick="openVideoModal(this.src)"></video>
+        <video src="videos/IslandFlythrough.mp4" muted onclick="openVideoModal(this.src)"></video>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div id="imgModal" class="modal">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<!-- Video Modal -->
+<div id="videoModal" class="modal">
+    <span class="modal-close" onclick="closeVideoModal()">&times;</span>
+    <video id="modalVideo" controls></video>
+</div>
+
+<script>
+    function openModal(src) {
+        document.getElementById("imgModal").style.display = "block";
+        document.getElementById("modalImage").src = src;
+    }
+    function closeModal() {
+        document.getElementById("imgModal").style.display = "none";
+    }
+    function openVideoModal(src) {
+        document.getElementById("videoModal").style.display = "block";
+        const video = document.getElementById("modalVideo");
+        video.src = src;
+        video.play();
+    }
+    function closeVideoModal() {
+        const video = document.getElementById("modalVideo");
+        video.pause();
+        video.currentTime = 0;
+        video.src = "";
+        document.getElementById("videoModal").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
