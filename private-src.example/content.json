@@ -1,0 +1,303 @@
+{
+ "_readme": "Example content. Copy this folder to private-src/, replace the media, and edit this file. Folder 'name' values are never shown on the page.",
+ "attribution": "\u2014 Me",
+ "quotes": [
+  "You make ordinary days feel like favorites.",
+  "Home is wherever you are.",
+  "Thank you for every quiet little moment.",
+  "I would choose you in every version of this story."
+ ],
+ "slides": [
+  {
+   "title": "Where it started",
+   "items": [
+    {
+     "kind": "photo",
+     "file": "p01.webp",
+     "caption": "A first photo, with a caption"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "kind": "photo",
+     "file": "p02.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p03.webp"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "kind": "text",
+     "text": "A longer message can live on a slide by itself.\n\nSeparate paragraphs with a blank line."
+    }
+   ]
+  },
+  {
+   "title": "Three at once",
+   "items": [
+    {
+     "kind": "photo",
+     "file": "p04.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p05.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p06.webp"
+    }
+   ]
+  },
+  {
+   "title": "Videos",
+   "items": [
+    {
+     "kind": "video",
+     "file": "v1.mp4",
+     "poster": "v1.jpg",
+     "caption": "With a poster image"
+    },
+    {
+     "kind": "video",
+     "file": "v2.mp4",
+     "poster": "v2.jpg"
+    },
+    {
+     "kind": "video",
+     "file": "v3.mp4"
+    },
+    {
+     "kind": "video",
+     "file": "v4.mp4"
+    }
+   ]
+  },
+  {
+   "title": "Six or more scrolls",
+   "items": [
+    {
+     "kind": "photo",
+     "file": "p07.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p08.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p09.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p10.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p11.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p12.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p13.webp"
+    },
+    {
+     "kind": "photo",
+     "file": "p14.webp"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "kind": "photo",
+     "file": "p15.webp",
+     "caption": "Photo and words together"
+    },
+    {
+     "kind": "text",
+     "text": "Mix photos, videos and text on the same slide."
+    }
+   ]
+  }
+ ],
+ "montage": [],
+ "folders": [
+  {
+   "name": "Folder 1",
+   "bubble": {
+    "title": "One photo",
+    "type": "photos",
+    "items": [
+     {
+      "kind": "photo",
+      "file": "p16.webp"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 2",
+   "bubble": {
+    "title": "Four photos",
+    "type": "photos",
+    "items": [
+     {
+      "kind": "photo",
+      "file": "p17.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p18.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p19.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p20.webp"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 3",
+   "bubble": {
+    "title": "Many photos",
+    "type": "photos",
+    "items": [
+     {
+      "kind": "photo",
+      "file": "p01.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p02.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p03.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p04.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p05.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p06.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p07.webp"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 4",
+   "bubble": {
+    "title": "Videos",
+    "type": "videos",
+    "items": [
+     {
+      "kind": "video",
+      "file": "v1.mp4",
+      "poster": "v1.jpg"
+     },
+     {
+      "kind": "video",
+      "file": "v2.mp4",
+      "poster": "v2.jpg"
+     },
+     {
+      "kind": "video",
+      "file": "v3.mp4"
+     },
+     {
+      "kind": "video",
+      "file": "v4.mp4"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 5",
+   "bubble": {
+    "title": "One video",
+    "type": "videos",
+    "items": [
+     {
+      "kind": "video",
+      "file": "v5.mp4"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 6",
+   "bubble": {
+    "title": "A note",
+    "type": "text",
+    "items": [
+     {
+      "kind": "text",
+      "text": "Some words for the folder.\n\nA second paragraph."
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 7",
+   "bubble": {
+    "title": "A bit of everything",
+    "type": "mixed",
+    "items": [
+     {
+      "kind": "text",
+      "text": "Mixed bubbles can hold anything."
+     },
+     {
+      "kind": "photo",
+      "file": "p08.webp"
+     },
+     {
+      "kind": "photo",
+      "file": "p09.webp"
+     },
+     {
+      "kind": "video",
+      "file": "v2.mp4",
+      "poster": "v2.jpg"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Folder 8",
+   "bubble": {
+    "title": "Portrait photo",
+    "type": "photos",
+    "items": [
+     {
+      "kind": "photo",
+      "file": "p21.webp"
+     }
+    ]
+   }
+  }
+ ]
+}
