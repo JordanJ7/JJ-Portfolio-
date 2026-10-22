@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f4efe4">
+<title>&nbsp;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Plus+Jakarta+Sans:wght@300;400&family=Space+Grotesk:wght@300;400&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="private.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="fgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4f3ff"/><stop offset="1" stop-color="#bddff9"/></linearGradient></defs></svg>
+
+<a id="mareep" href="../" aria-label="Back to the portfolio" title="Back to the portfolio"></a>
+
+<section id="login" class="layer on vis" aria-label="Sign in">
+  <div class="logbox">
+    <div id="hint" aria-live="polite"></div>
+    <div id="prompt" aria-live="polite">My Child&rsquo;s Name</div>
+    <div id="line"><span id="typed"></span><span id="caret" class="caret"></span></div>
+    <div id="count" aria-live="polite"></div>
+    <input id="field" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" aria-label="Type here">
+  </div>
+</section>
+
+<section id="intro" class="layer" role="region" aria-label="Welcome quote">
+  <div class="glow" aria-hidden="true"></div>
+  <button id="skip" type="button">Skip &rarr;</button>
+  <div class="mn"><div class="spark" aria-hidden="true">&#10022;</div><h1 id="q"></h1><div id="attr"></div></div>
+</section>
+
+<section id="show" class="layer" aria-label="Slideshow">
+  <div class="stage" id="stage">
+    <div class="track" id="track"></div>
+    <button class="nav prev gone" type="button" aria-label="Previous slide"></button>
+    <button class="nav next" type="button" aria-label="Next slide"></button>
+  </div>
+  <div class="pager" id="pager">
+    <div class="caps" id="caps"></div>
+    <button class="pp" id="pp" type="button" aria-label="Play slideshow"></button>
+  </div>
+</section>
+
+<section id="more" class="layer" aria-live="polite">
+  <div class="line"><span id="mtxt"></span><span id="mcaret" class="caret"></span></div>
+</section>
+
+<section id="mont" class="layer" aria-hidden="true">
+  <div id="mwrap" style="position:absolute;inset:0"><canvas id="mcv"></canvas><div id="mwhite" style="position:absolute;inset:0;background:#fff;opacity:0"></div></div>
+</section>
+
+<section id="fold" class="layer" aria-label="Folders">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <button id="backBtn" type="button" aria-label="Back to the slideshow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
+  <div id="fgrid"></div>
+</section>
+
+<div id="bub" role="dialog" aria-modal="true" aria-label="Folder contents"></div>
+
+<script src="mareep.js"></script>
+<script src="private.js"></script>
+</body>
+</html>

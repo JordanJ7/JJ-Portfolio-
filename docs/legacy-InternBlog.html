@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intern Blog</title>
+
+    <style>
+        :root {
+            --primary-color: #004c6d;
+            --secondary-color: #333333;
+            --accent-color: #268bd2;
+            --text-color: #fdf6e3;
+            --hover-color: #586e75;
+            --dropdown-bg: #fdf6e3;
+            --dropdown-text: #002b36;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--secondary-color);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+        }
+
+        nav a, .dropdown > button {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 0.5rem 0.9rem;
+            margin-left: 0.5rem;
+            border-radius: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        nav a:hover, .dropdown > button:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background: var(--dropdown-bg);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            border-radius: 6px;
+            overflow: hidden;
+            white-space: nowrap;
+            min-width: 180px;
+            z-index: 999;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.65rem 1rem;
+            color: var(--dropdown-text);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--hover-color);
+            color: var(--text-color);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .content-container {
+            padding: 6rem 2rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .blog-entry {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .blog-entry:hover {
+            background-color: var(--hover-color);
+        }
+
+        .blog-content {
+            display: none;
+            padding-top: 1rem;
+        }
+
+        .blog-entry.active .blog-content {
+            display: block;
+        }
+
+        h1, h2, h4 {
+            color: var(--text-color);
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0.5rem 1rem;
+            }
+
+            nav a, .dropdown > button {
+                margin: 0.35rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-top: 5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+    <a href="certs.html">Certs & Training</a>
+    <a href="gallery.html">Class Projects</a>
+    <a href="InternBlog.html">Intern Blog</a>
+    <div class="dropdown">
+        <button>Menu</button>
+        <div class="dropdown-content">
+            <a href="Game220Logs.html">Video Game Analysis</a>
+            <a href="mapper.html">Game Logs</a>
+            <a href="#">Not On</a>
+        </div>
+    </div>
+</nav>
+
+<div class="content-container">
+    <h2 class="center">This Blog Is Dedicated To My Summer 2024 Internship At ECCCA</h2>
+
+    <div class="blog-entry">
+        <h4>Week of May 13th</h4>
+        <div class="blog-content">
+            <p>This starting week I got introduced to the staff across each job site, including Erie Bayfront Convention Center, Erie Insurance Arena, UPMC Ball Park, Warner Theater, and the Sheraton Hotel. I collaborated with the website manager, social media team, and production manager. We started a big project setting up around 50 cameras at the Sheraton. In downtime, I revived this website, combining school projects and cleaning up pages.</p>
+        </div>
+    </div>
+
+    <div class="blog-entry">
+        <h4>Week of May 20th</h4>
+        <div class="blog-content">
+            <p>Got to know the Sheraton team better. Hung about 20 cameras. I updated my website’s color scheme to a clean, classic color palette and scheduled a meeting with Erica about younger audience engagement and anime expo/pokemon tournament ideas.</p>
+        </div>
+    </div>
+
+    <div class="blog-entry">
+        <h4>Week of August 5th</h4>
+        <div class="blog-content">
+            <p>My final reflection week — learned a ton about office workflow, project collaboration, cybersecurity, web limitations, and content creation with Adobe Suite. Developed real appreciation for how supportive and fast-paced professional environments can be. Great relationships made and valuable lessons learned for post-grad work life.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const entries = document.querySelectorAll('.blog-entry');
+    entries.forEach(entry => {
+        entry.addEventListener('click', () => {
+            entry.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+
+</html>
