@@ -74,14 +74,21 @@ function select(i){
 function setOpen(v){box.classList.toggle('open',v);stage.setAttribute('aria-pressed',v?'true':'false');}
 function step(d){setOpen(true);select(cur+d);}
 
-/* pointer: tilt follows the mouse (one update per frame), swipe changes disc, tap opens/closes */
-var sx=0,moved=false,raf=0,pend=.5;
+/* pointer: tilt eases toward the mouse (one update per frame), swipe changes disc, tap opens/closes */
+var sx=0,moved=false,raf=0,pend=.5,mx=.5,mlast=0;
+function ease(now){
+  var dt=Math.min(.05,(now-(mlast||now))/1000||.016);mlast=now;
+  mx+=(pend-mx)*(1-Math.exp(-dt*12));
+  if(Math.abs(pend-mx)<.0005)mx=pend;
+  stage.style.setProperty('--mx',mx.toFixed(4));
+  if(mx!==pend)raf=requestAnimationFrame(ease);else{raf=0;mlast=0;}
+}
 stage.addEventListener('pointerdown',function(e){sx=e.clientX;moved=false;});
 stage.addEventListener('pointermove',function(e){
   if(Math.abs(e.clientX-sx)>8)moved=true;
   if(e.pointerType!=='mouse')return;
   var r=stage.getBoundingClientRect();pend=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
-  if(!raf)raf=requestAnimationFrame(function(){raf=0;stage.style.setProperty('--mx',pend.toFixed(3));});
+  if(!raf)raf=requestAnimationFrame(ease);
 });
 stage.addEventListener('pointerup',function(e){
   var dx=e.clientX-sx;
@@ -172,7 +179,7 @@ var Mareep=(function(){
       ctx.clearRect(0,0,fw,fh);ctx.drawImage(hc,0,0,hw,hh,0,0,fw,fh);
     }
     var last=0,raf=0;
-    function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<32)return;last=now;draw(now);}
+    function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<28)return;last=now;draw(now);}
     function start(){if(!raf){draw(performance.now());raf=requestAnimationFrame(loop);}}
     if(window.IntersectionObserver)new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;}).observe(cv);
     var api={
