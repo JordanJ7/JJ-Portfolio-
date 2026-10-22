@@ -66,7 +66,7 @@ var Mareep=(function(){
       ctx.clearRect(0,0,fw,fh);ctx.drawImage(hc,0,0,hw,hh,0,0,fw,fh);
     }
     var last=0,raf=0;
-    function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<32)return;last=now;draw(now);}
+    function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<28)return;last=now;draw(now);}
     function start(){if(!raf){draw(performance.now());raf=requestAnimationFrame(loop);}}
     if(window.IntersectionObserver)new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;}).observe(cv);
     var api={

@@ -74,14 +74,21 @@ function select(i){
 function setOpen(v){box.classList.toggle('open',v);stage.setAttribute('aria-pressed',v?'true':'false');}
 function step(d){setOpen(true);select(cur+d);}
 
-/* pointer: tilt follows the mouse (one update per frame), swipe changes disc, tap opens/closes */
-var sx=0,moved=false,raf=0,pend=.5;
+/* pointer: tilt eases toward the mouse (one update per frame), swipe changes disc, tap opens/closes */
+var sx=0,moved=false,raf=0,pend=.5,mx=.5,mlast=0;
+function ease(now){
+  var dt=Math.min(.05,(now-(mlast||now))/1000||.016);mlast=now;
+  mx+=(pend-mx)*(1-Math.exp(-dt*12));
+  if(Math.abs(pend-mx)<.0005)mx=pend;
+  stage.style.setProperty('--mx',mx.toFixed(4));
+  if(mx!==pend)raf=requestAnimationFrame(ease);else{raf=0;mlast=0;}
+}
 stage.addEventListener('pointerdown',function(e){sx=e.clientX;moved=false;});
 stage.addEventListener('pointermove',function(e){
   if(Math.abs(e.clientX-sx)>8)moved=true;
   if(e.pointerType!=='mouse')return;
   var r=stage.getBoundingClientRect();pend=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
-  if(!raf)raf=requestAnimationFrame(function(){raf=0;stage.style.setProperty('--mx',pend.toFixed(3));});
+  if(!raf)raf=requestAnimationFrame(ease);
 });
 stage.addEventListener('pointerup',function(e){
   var dx=e.clientX-sx;
@@ -172,7 +179,7 @@ var Mareep=(function(){
       ctx.clearRect(0,0,fw,fh);ctx.drawImage(hc,0,0,hw,hh,0,0,fw,fh);
     }
     var last=0,raf=0;
-    function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<32)return;last=now;draw(now);}
+    function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<28)return;last=now;draw(now);}
     function start(){if(!raf){draw(performance.now());raf=requestAnimationFrame(loop);}}
     if(window.IntersectionObserver)new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;}).observe(cv);
     var api={
@@ -248,30 +255,31 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
     return o;}
   function job(org,dates,role,bul){return '<div class="job"><div class="row"><b>'+org+'</b><span>'+dates+'</span></div>'+(role?'<div class="role">'+role+'</div>':'')+'<ul>'+bul.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';}
   function pageResume(){
-    return '<div class="pg"><div class="btns"><button type="button" onclick="window.print()">Print or save as PDF</button><a href="#/certifications">See certifications</a></div>'+
-    '<div class="paper"><h1>Jordan James</h1><p class="contactline">Erie, PA &middot; saojmj123456@gmail.com &middot; linkedin.com/in/jordan-james07 &middot; <a href="#/flx-edits">Edits</a></p>'+
-    '<h2>Summary</h2><ul><li>Digital Media, Arts &amp; Technology graduate experienced in IT support, network hardware installation, and 3D/game design.</li><li>Google-certified (Coursera) in AI engineering and prompting, building AI-powered applications with Google AI Studio and Claude Code.</li></ul>'+
+    return '<div class="pg"><div class="btns"><a href="assets/Jordan-James-Resume.pdf" download>Download PDF</a><button type="button" onclick="window.print()">Print</button><a href="#/certifications">See certifications</a></div>'+
+    '<div class="paper"><h1>Jordan James</h1><p class="contactline">Erie, PA &middot; <a href="mailto:saojmj123456@gmail.com">saojmj123456@gmail.com</a> &middot; <a href="https://www.linkedin.com/in/jordan-james07/" target="_blank" rel="noopener">linkedin.com/in/jordan-james07</a> &middot; <a href="#/flx-edits">Edits</a></p>'+
+    '<h2>Summary</h2><ul><li>Digital Media, Arts &amp; Technology graduate experienced in IT support, network hardware installation, and 3D/game design.</li><li>Google-certified (Coursera) in AI engineering and prompting, building AI-powered apps with Claude Code.</li></ul>'+
     '<h2>Education &amp; certifications</h2>'+
     job('The Pennsylvania State University, Erie, PA','May 2025','Bachelor of Arts, Digital Media, Arts &amp; Technology. Minor: Game Development',[])+
-    job('Erie County Technical School, Erie, PA','August 2018 &ndash; May 2020','Focus: Computer Networking',[])+
-    '<ul><li>Coursera: AI Engineering and Prompting (Google Gemini, Google AI Studio). Completed. <a href="#/certifications">All credentials</a></li><li>Sony Pictures Animation &amp; Imageworks: This Is Animation, Yellowbrick Program. Completed June 2025.</li></ul>'+
+    job('Erie County Technical School, Erie, PA','August 2018 &ndash; May 2020','Focus: Computer Networking',['Coursework: designing, installing, and troubleshooting computer and A/V network systems; LANs, WANs, OSI model, Ethernet, IP addressing, routers and router programming, and cabling.'])+
+    '<ul><li>Coursera: AI Engineering and Prompting (Google Gemini, Google AI Studio). Completed. <a href="#/certifications">All credentials</a></li><li>Sony Pictures Animation &amp; Imageworks: This Is Animation, Yellowbrick Program. Completed June 2025.</li><li>Penn State Bridge Program (master&rsquo;s prep): CMPSC 2310 Foundations of Programming (Python), CMPSC 2320 Data Structures and Algorithms, MATH 2340 Calculus, MATH 2350 Statistics and Probability. In progress.</li></ul>'+
     '<h2>Work experience</h2>'+
     job('Bayfront Convention Center, Erie, PA','July 2025 &ndash; Present','Banquet Server',['Deliver food and beverage service in banquet and catering settings with attention to timing and presentation.','Set up and break down event spaces, including linens, tableware, and place settings.'])+
-    job('Penn State Behrend, Erie, PA','September 2022 &ndash; May 2025','Student Technician',['Triaged and resolved faculty and staff help desk tickets in ServiceNow, troubleshooting technical issues, diagnosing hardware faults, and repairing electronic devices.','Decommissioned out-of-date computers and equipment, preparing hardware assets for transfer and shipment to the University Park campus.'])+
-    job('Erie County Convention Center Authority (ECCA), Erie, PA','May 2024 &ndash; August 2024','IT / Social Media Intern',['Installed IP cameras across the Bayfront Convention Center and adjacent hotel.','Audited all Erie Events websites for UI and UX improvements.','Designed logos and logo animations for Erie Events, Warner Theater, and Erie Convention Center using Adobe Creative Cloud.'])+
-    job('Waldameer Park &amp; Water Park, Erie, PA','Summers 2018 &ndash; 2022','Admission and Guest Service Representative',['Served as a front-line contact for a high volume of park guests, resolving questions and billing complaints through refunds and bill adjustments.','Managed orders for large groups and companies, coordinating their needs for accurate, timely service.'])+
-    '<h2>Projects &amp; leadership</h2>'+
-    job('AI Journaling App &middot; Google AI Studio, Claude Code','June 2026 &ndash; Present','',['Building a journaling application using Google AI Studio and Claude Code, applying AI-assisted development and prompting skills.'])+
-    job('Matter Monsters &middot; Unreal Engine 5, Game Development Capstone','August 2024 &ndash; December 2024','',['Created environment designs, assets, story, and character concepts for a team-built game in Unreal Engine.'])+
-    job('Insurance App UI/UX Concept &middot; Miro, Trello','April 2025 &ndash; May 2025','',['Developed app concepts for claims, policies, and plans in a senior project commissioned by a large-scale insurance company, presented at a showcase.'])+
-    job('Portfolio Website &middot; HTML, CSS, GitHub, Claude Code','August 2022 &ndash; Present','',['Building and maintaining a portfolio site on GitHub Pages, now rebuilding the entire site with Claude Code.'])+
-    job('Behrend Esports Club &middot; Player and Captain, Valorant','August 2021 &ndash; May 2025','',['Helped establish the club and coached students, competing in the East College Athletic Conference (ECAC) for 8 semesters.'])+
-    job('National Society of Leadership and Success &middot; Member','January 2025 &ndash; Present','',['Completed a leadership program on personal growth, career success, and positive community impact.'])+
+    job('Penn State Behrend, Erie, PA','September 2022 &ndash; May 2025','Student Technician',['Triaged and resolved faculty and staff tickets in ServiceNow, supporting Office 365, printer software, and CAD.','Built, upgraded, and repaired computers and peripherals on Windows 8&ndash;11 and macOS, including network repairs.','Configured security software to protect campus computers and networks, and managed user permissions.','Decommissioned out-of-date computers and equipment, preparing assets for transfer to the University Park campus.'])+
+    job('Erie County Convention Center Authority (ECCA), Erie, PA','May 2024 &ndash; August 2024','IT / Social Media Intern',['Installed IP cameras across the entire ECCA campus, including the Bayfront Convention Center.','Designed logos and animations for Erie Events venues in Adobe Creative Cloud and audited their websites for UI/UX.'])+
+    job('Waldameer Park &amp; Water Park, Erie, PA','Summers 2018 &ndash; 2022','Admission and Guest Service Representative',['Served a high volume of guests and large group orders, resolving questions and billing complaints via refunds.'])+
+    '<h2>Projects</h2>'+
+    job('AI Journaling App &middot; Google AI Studio, Claude Code','June 2026 &ndash; Present','',['Building a journaling app through AI-assisted development and prompt engineering.'])+
+    job('Matter Monsters &middot; Unreal Engine 5, Capstone','August 2024 &ndash; December 2024','',['Created environment designs, assets, story, and character concepts for a team-built game.'])+
+    job('Insurance App UI/UX Concept &middot; Miro, Trello','April 2025 &ndash; May 2025','',['Developed claims and policy app concepts for a senior project commissioned by a large insurer.'])+
+    job('Portfolio Website &middot; HTML, CSS, GitHub Pages, Claude Code','August 2022 &ndash; Present','',['Designing and maintaining my portfolio site, currently building it with Claude Code.'])+
+    '<h2>Leadership</h2>'+
+    job('Behrend Esports Club &middot; Valorant Player and Captain','August 2021 &ndash; May 2025','',['Helped establish the club, coached teammates, and competed in the ECAC for 8 semesters.'])+
+    job('National Society of Leadership and Success &middot; Member','January 2025 &ndash; Present','',['Completed a leadership program on personal growth, career success, and community impact.'])+
     '<h2>Relevant technical skills</h2>'+
     '<p class="skill"><b>AI tools:</b> Google AI Studio, Google Gemini, Claude Code</p>'+
     '<p class="skill"><b>Design &amp; 3D:</b> Blender, Unreal Engine 5, OpenToonz, Clip Studio Paint, Adobe Creative Cloud</p>'+
     '<p class="skill"><b>Web &amp; development:</b> Python, HTML, CSS, Git, GitHub, Data Structures, Recursion</p>'+
-    '<p class="skill"><b>IT &amp; networking:</b> ServiceNow, help desk support, hardware repair, IP camera installation</p>'+
+    '<p class="skill"><b>IT &amp; networking:</b> ServiceNow, Windows 8&ndash;11, macOS, user permissions, LAN/WAN, IP addressing, routers, cabling</p>'+
     '<p class="skill"><b>Productivity &amp; audio:</b> Office 365, Miro, Trello, Pro Tools, Logic Pro</p>'+
     '<p class="skill"><b>Additional skills:</b> Tennis racket stringing, DJing, Valorant coaching, cable management connoisseur</p>'+
     '</div></div>';}
