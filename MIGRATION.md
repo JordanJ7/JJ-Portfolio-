@@ -6,7 +6,7 @@ Goal: the new site becomes https://jordanj7.github.io/JJ-Portfolio-/ with nothin
 - Everything stays where it is (old project pages, `pics/`, `DIGIT400/`, and so on). Old project pages keep working, and the new Solar System page still links to `DIGIT400Project.html`.
 - `index.html` is replaced by the new site.
 - `certs.html`, `resume.html`, `Resume.html` and `InternBlog.html` become small redirects to the new pages (`#/certifications`, `#/resume`, `#/intern-blog`), so old links and LinkedIn links still land somewhere useful.
-- Copies of the old versions are kept as `legacy-index.html`, `legacy-certs.html`, `legacy-resume.html`, `legacy-Resume.html` and `legacy-InternBlog.html`.
+- Copies of the old versions are kept as `legacy-index.html`, `legacy-certs.html` and `legacy-InternBlog.html`. The old résumé copies and images were removed in October 2026 when the résumé was updated; they are still in the `v1-legacy` tag.
 
 ## Steps
 1. **Check where Pages publishes from.** Repo > Settings > Pages. The old site appears to be served from `main` and the `/docs` folder. If yours is different, tell Claude Code before continuing.
