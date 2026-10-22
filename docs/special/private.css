@@ -1,5 +1,5 @@
 :root{
-  --cream:#f4efe4; --cream2:#ece5d4; --paper:#fdfaf3;
+  --cream:#f4efe4; --night:#1d2330; --cream2:#ece5d4; --paper:#fdfaf3;
   --blue:#8fb8e6; --blue-d:#6c9bd0; --blue-dd:#4f7eb1; --ink:#2c3a4b; --line:rgba(76,120,168,.22);
   --mono:ui-monospace,"SF Mono","Cascadia Mono","Courier New",monospace;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -7,6 +7,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0;overflow:hidden;background:var(--cream);color:var(--blue);font-family:var(--mono);transition:background-color .9s ease}
 body.dark{background:#000}
+body.dark.hidem{background:var(--night)}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--blue-d);outline-offset:3px}
 
@@ -115,8 +116,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 #more .line{font-size:clamp(26px,5vw,46px);letter-spacing:.06em;color:var(--blue);display:flex;align-items:baseline;white-space:pre;height:1.5em;line-height:1.5}
 
 /* ---------- montage and tv-off ---------- */
-#mont{background:#000}
-#mont canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:#000}
+#mont{background:var(--night);transition:opacity 1.1s ease}
+#mont canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:var(--night)}
 
 /* ---------- folders ---------- */
 #fold{background:#000}

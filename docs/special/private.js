@@ -7,6 +7,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function merge(a,b){for(var k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])){a[k]=merge(a[k]||{},b[k]);}else a[k]=b[k];}return a;}
 function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
 function rnd(a,b){return a+Math.random()*(b-a);}
+function until(t){return new Promise(function(r){requestAnimationFrame(function f(now){if(now>=t-4)r();else requestAnimationFrame(f);});});}   /* resolves on the first frame at or after time t */
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.random()*(i+1)|0,t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
 /* ------------------------------------------------------------------ config */
@@ -21,7 +22,7 @@ var CFG=merge({
   returnSkips:true,                                 /* after the Back button, skip typing, montage and the folder animation */
   mont:{frames:64,start:150,end:60,size:[.38,.8],maxFill:.78,tilt:7},   /* ms per frame ramping from start to end; size = long side as a share of the shorter screen side; maxFill = no photo is ever bigger than this share of the screen width or height; tilt = random degrees */
   tv:1300,
-  fold:{settle:9500,stars:26,circles:26,perImpact:3},
+  fold:{settle:9500,stars:26,circles:26,perImpact:3,delay:2000},   /* delay = ms of stillness before the folders start flying in */
   start:'login'
 },window.PRIVATE_CONFIG||{});
 var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -371,12 +372,17 @@ async function montage(){
   var wrap=$('#mwrap'),cv=$('#mcv'),w=window.innerWidth,h=window.innerHeight,dpr=Math.min(2,devicePixelRatio||1);
   cv.width=w*dpr;cv.height=h*dpr;var ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
   wrap.style.transform='';wrap.style.opacity='';$('#mwhite').style.opacity=0;
-  ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);
+  var bg=getComputedStyle(D.documentElement).getPropertyValue('--night').trim()||'#1d2330';
+  bmps.forEach(function(b){ctx.drawImage(b,0,0,1,1);});      /* upload every photo once now, so the first draws don't stall */
+  ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
   D.body.classList.add('dark');on('mont');
+  if(!RM)await sleep(1250);                                    /* let the screen settle into the dark before photos start */
   var M=CFG.mont,N=Math.max(2,M.frames),base=Math.min(w,h),cells=[],sizes=[];
   /* photos land on a loose 3 x 3 spread so the pile builds up everywhere, and each gets its own random size */
   function nextCell(){if(!cells.length){for(var i=0;i<9;i++)cells.push(i);shuffle(cells);}return cells.pop();}
+  var due=performance.now();                                   /* absolute schedule: a slow frame never pushes the rest back */
   for(var i=0;i<N;i++){
+    await until(due);
     var b=bmps[i%bmps.length],ar=b.width/b.height;
     var L=base*rnd(M.size[0],M.size[1]);                        /* long side, in px */
     var dw=ar>=1?L:L*ar,dh=ar>=1?L/ar:L;
@@ -390,8 +396,9 @@ async function montage(){
     ctx.fillStyle='#f6f1e6';ctx.fillRect(-dw/2-pad,-dh/2-pad,dw+pad*2,dh+pad*2);   /* thin white print edge */
     ctx.shadowColor='transparent';ctx.drawImage(b,-dw/2,-dh/2,dw,dh);
     ctx.restore();
-    await sleep(M.start+(M.end-M.start)*(i/(N-1)));
+    due+=M.start+(M.end-M.start)*(i/(N-1));
   }
+  await until(due);
 }
 async function tvOff(){
   var m=D.getElementById('mont');
@@ -665,7 +672,7 @@ function foldersScene(){
       show:function(){D.body.classList.add('dark');SCENE.resume();on('fold');stageName('folders-ready');setTimeout(function(){$('#backBtn').classList.add('vis');},500);return Promise.resolve();}
     };
     if(RM){ready();for(var s=0;s<STAR_CAP;s++)spawnP(0,W/2,H/2);for(var c2=0;c2<CIRC_CAP;c2++)spawnP(1,W/2,H/2);stars.concat(circs).forEach(function(p){var tg=T[p.ti]||[p.x,p.y];p.x=tg[0];p.y=tg[1];p.a=1;});planets.forEach(function(p){if(!p.off){p.spawned=true;p.x=p.tx;p.y=p.ty;p.a=1;}});drawP();return;}
-    last=performance.now();raf=requestAnimationFrame(frame);
+    setTimeout(function(){if(paused||raf)return;last=performance.now();raf=requestAnimationFrame(frame);},CFG.fold.delay||0);
     window.__fy.bodies=bodies;window.__fy.slots=slots;window.__fy.targets=function(){return T;};window.__fy.particlesRef=function(){return {stars:stars,circs:circs};};window.__fy.planets=function(){return planets;};
   });
 }
