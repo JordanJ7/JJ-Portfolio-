@@ -110,111 +110,230 @@ Array.prototype.forEach.call(dds,function(d){
 });
 document.addEventListener('click',function(){closeDD(null);});
 
-/* ---------- Mareep: opens the special site ---------- */
-/* Mareep: a small pixel-art companion. Idle bob, lean, tail wag and blinking. Hop on hover, zap on click. */
-var Mareep=(function(){
-  var SRC='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAhCAYAAAC1ONkWAAAEXUlEQVR4nK2YLXSjShTH/7OnInJw1FFHHRK3kawjLnWRqVpceA5JHVEbWRfqeA7ZOiRueWpZ1XEg89Q8QWcYPpPs6z2H08zn/c3cO3fulHDOMSdv+3sOAFlWy7rd8Z3MDrpSfr8QXjITAPD1+08CAGQO7G1/z+31ulPHihLxIUWYnlBVFRHgAOAGDABQVdXF4L9fCNfdE1AuAABRoGN3fCeTYE8Pt9yLtqNtrCgBAJabgBXeoF4FvwgKAEsaMN1q4EbB5qDOwYm2Ms/gBmwW7vcL4boFsLyt0y1Atylu+p3//otwQB9MksUxAKBvWt9ZDPrqpvHRluLp4Vau/BrflDv29HDLTYNhc6AAMDCRbhrSv7xoC1aUsNxE9nne1rCcjYTK4lguYm4H3/b33HYKWRY+dgMAq9WKxyHD2ncBvE7ugCqWm2C5XDaTrZMP32h8ixVeZ2fF+DwBNE3jKtzX7z/J2/6eZ1mNMD0BOGEH4Iumadx1XQCA67pSmfChvjSDIfu7rgvd+gBwQiyXS+hmNLm4JNA75hVwu+M7EboBND7meR7oFvAOnmwwQguln8sJhTkAYLGhoB/jAGB5aMaI8pwYlo0sS2f7PD3c8puqqoimaZ0V1HYAZ+vCCIGQhp1dokGMOi06E+V5d+I8cWcVh2ljrr7EYQKWA9aWts6vaRp/3tbYHChoEMM0zMHAomyByigBrWNZ9p0FTIN1DkBf1BDjO4vBKf33H8IF2BdRWVUVKUodjDHUQTckSLDtsm0zW3DfWWC9dWA5m9FxKpTav+9rWdrO2Ylju+P7wKyq6PowvokwAYyf3j4UANg2lX+fHm757vhOVqsVf31lAJq2QeQn3/bccMzzpkwL0CyQ/jQFNQUnJD40B0H1YwCtKVvtxQBirEyzAM/behZGlSnwMD3BC9jgBumAve3v+SnTUaYtnPhUEe3nTHiNeAFDfqiRBDqqqiISrJPiFMXU+IEJP0tYDpTMlKmTBFMTQXXXOlBRgpCGnwZluQnyxIVuUwklrqtOHOunL+rVIo5422ZcBdF3/jLPYFi2/N2/4AdpT3cyb/Q0/V8oABJqSiSYuJoEjFD+GY79J9I5lVVVEd2MLg6Ul/Q5N0YkBv1wMTDlWEYqFFy6e5csQIUaSyCHAXZCkYjQnwGkQgHjmzEA8zP3KgV9KFXhGESZZ52yG7DRt0AHjNw9cifyYWwWyOIYrCilwiZlbn4vbIaFzWRZhRIBUhVRJ4CyrEaW1bOvKBnHBJS4fsooQWgn8nIVp7amaziRDwBIDwlKPwfQviXV4CtAk2Dk1fWR40+BdZxfQNXBGhTA7lgRNdOsqoqQu0eu9hUvpSTQ4aPuvJxE/bVQQC/yqwCTA+4eueG58s4cU96+eMYdW7XClB5wzq/6KKVcfGN1lFIOJ7qqfeybvZLGZGyVwsRiJ6fa1XT8nFwUxy4R/usHKaMEhjOunP/6QebSqb7M/hvqT0T46pT/nGsX8h/R6RlXBca52QAAAABJRU5ErkJggg==';
-  var W=38,H=33,PX=3,PT=7,PB=1,LW=W+PX*2,LH=H+PT+PB;       /* sprite size, padding, logical canvas size */
-  var TAIL_X=31,TAIL_ROWS=9;                               /* the ball and top of the tail move on their own */
+/* ---------- nav buddy: a different Pokemon in the corner on each visit; it opens the special site ---------- */
+/* Every buddy gets Mareep's moves: idle bob, lean, blinking, hop on hover, sparks on click.
+   Mareep also wags its tail. Jirachi sleeps until you hover or tap it, then dozes off again a few seconds later. */
+var Buddy=(function(){
   var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var img=new Image(),ready=false,queue=[];
-  var normal=document.createElement('canvas'),blink=document.createElement('canvas');
-  img.onload=function(){
-    [normal,blink].forEach(function(c){c.width=W;c.height=H;c.getContext('2d').drawImage(img,0,0);});
-    var bc=blink.getContext('2d'),face=bc.getImageData(10,11,1,1).data;
-    [[11,11],[12,11]].forEach(function(p){var d=bc.createImageData(1,1);d.data.set(face);bc.putImageData(d,p[0],p[1]);});   /* eye closes into a line */
-    ready=true;queue.forEach(function(f){f();});queue=[];
-  };
-  img.src=SRC;
-  /* o.scale: size relative to the original 44 x 40 (for example 0.8). Anything other than 1 is drawn big and
-     then smoothed down, so it stays clean at sizes that are not a whole multiple of the sprite's pixels. */
-  function mount(host,o){
+  var BOX_W=42,BOX_H=28;                                   /* largest sprite size in the nav, css px */
+  var PAD_T=6,PAD_X=3,PAD_B=1;                             /* room for the hop, lean and sparks, css px */
+  var DIR='assets/sprites/';
+  var ROSTER=[
+    {id:'mareep',src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAhCAYAAAC1ONkWAAAEXUlEQVR4nK2YLXSjShTH/7OnInJw1FFHHRK3kawjLnWRqVpceA5JHVEbWRfqeA7ZOiRueWpZ1XEg89Q8QWcYPpPs6z2H08zn/c3cO3fulHDOMSdv+3sOAFlWy7rd8Z3MDrpSfr8QXjITAPD1+08CAGQO7G1/z+31ulPHihLxIUWYnlBVFRHgAOAGDABQVdXF4L9fCNfdE1AuAABRoGN3fCeTYE8Pt9yLtqNtrCgBAJabgBXeoF4FvwgKAEsaMN1q4EbB5qDOwYm2Ms/gBmwW7vcL4boFsLyt0y1Atylu+p3//otwQB9MksUxAKBvWt9ZDPrqpvHRluLp4Vau/BrflDv29HDLTYNhc6AAMDCRbhrSv7xoC1aUsNxE9nne1rCcjYTK4lguYm4H3/b33HYKWRY+dgMAq9WKxyHD2ncBvE7ugCqWm2C5XDaTrZMP32h8ixVeZ2fF+DwBNE3jKtzX7z/J2/6eZ1mNMD0BOGEH4Iumadx1XQCA67pSmfChvjSDIfu7rgvd+gBwQiyXS+hmNLm4JNA75hVwu+M7EboBND7meR7oFvAOnmwwQguln8sJhTkAYLGhoB/jAGB5aMaI8pwYlo0sS2f7PD3c8puqqoimaZ0V1HYAZ+vCCIGQhp1dokGMOi06E+V5d+I8cWcVh2ljrr7EYQKWA9aWts6vaRp/3tbYHChoEMM0zMHAomyByigBrWNZ9p0FTIN1DkBf1BDjO4vBKf33H8IF2BdRWVUVKUodjDHUQTckSLDtsm0zW3DfWWC9dWA5m9FxKpTav+9rWdrO2Ylju+P7wKyq6PowvokwAYyf3j4UANg2lX+fHm757vhOVqsVf31lAJq2QeQn3/bccMzzpkwL0CyQ/jQFNQUnJD40B0H1YwCtKVvtxQBirEyzAM/behZGlSnwMD3BC9jgBumAve3v+SnTUaYtnPhUEe3nTHiNeAFDfqiRBDqqqiISrJPiFMXU+IEJP0tYDpTMlKmTBFMTQXXXOlBRgpCGnwZluQnyxIVuUwklrqtOHOunL+rVIo5422ZcBdF3/jLPYFi2/N2/4AdpT3cyb/Q0/V8oABJqSiSYuJoEjFD+GY79J9I5lVVVEd2MLg6Ul/Q5N0YkBv1wMTDlWEYqFFy6e5csQIUaSyCHAXZCkYjQnwGkQgHjmzEA8zP3KgV9KFXhGESZZ52yG7DRt0AHjNw9cifyYWwWyOIYrCilwiZlbn4vbIaFzWRZhRIBUhVRJ4CyrEaW1bOvKBnHBJS4fsooQWgn8nIVp7amaziRDwBIDwlKPwfQviXV4CtAk2Dk1fWR40+BdZxfQNXBGhTA7lgRNdOsqoqQu0eu9hUvpSTQ4aPuvJxE/bVQQC/yqwCTA+4eueG58s4cU96+eMYdW7XClB5wzq/6KKVcfGN1lFIOJ7qqfeybvZLGZGyVwsRiJ6fa1XT8nFwUxy4R/usHKaMEhjOunP/6QebSqb7M/hvqT0T46pT/nGsX8h/R6RlXBca52QAAAABJRU5ErkJggg==',scale:.8,tail:{x:31,rows:9},blink:{copy:[10,11],at:[[11,11],[12,11]]},spark:['#f8d800','#ffffff']},
+    {id:'reshiram',src:DIR+'reshiram.png',blink:{color:'#4a4a6a',at:[[20,11],[18,12]]},spark:['#ff7a1a','#ffd27a']},
+    {id:'rayquaza',src:DIR+'rayquaza.png',spark:['#3fd18a','#f8e04a']},
+    {id:'latias',src:DIR+'latias-right.png',spark:['#c792ea','#ffffff']},
+    {id:'jirachi',src:DIR+'jirachi.png',sleep:DIR+'jirachi-sleep.png',blink:{color:'#101010',at:[[23,20],[24,20],[23,21],[30,21],[31,21]]},spark:['#ffe65a','#62d5de'],wakeMs:5000}
+  ];
+  function load(src){return new Promise(function(ok,no){var i=new Image();i.onload=function(){ok(i);};i.onerror=no;i.src=src;});}
+  function canvas(w,h){var c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');x.imageSmoothingEnabled=false;return [c,x];}
+
+  /* one pose (an image) prepared for drawing: s = css px per sprite pixel, k = work-canvas px per sprite pixel */
+  function pose(img,def,blinkSpec){
+    var w=img.width,h=img.height,s=def.scale||Math.min(1,BOX_W/w,BOX_H/h),k=Math.max(1,Math.round(4*s));
+    var normal=canvas(w,h),closed=null;normal[1].drawImage(img,0,0);
+    if(blinkSpec){
+      closed=canvas(w,h);var bx=closed[1];bx.drawImage(img,0,0);
+      var col=blinkSpec.copy?bx.getImageData(blinkSpec.copy[0],blinkSpec.copy[1],1,1).data:null;
+      blinkSpec.at.forEach(function(p){if(col){var d=bx.createImageData(1,1);d.data.set(col);bx.putImageData(d,p[0],p[1]);}else{bx.fillStyle=blinkSpec.color;bx.fillRect(p[0],p[1],1,1);}});
+    }
+    return {w:w,h:h,s:s,k:k,normal:normal[0],closed:closed&&closed[0]};
+  }
+
+  function mount(host,def,o){
     o=o||{};
-    var zoom=o.zoom||1,sc=o.scale||1,smooth=sc!==1,dpr=Math.max(1,window.devicePixelRatio||1);
-    var k=smooth?4*zoom:Math.max(1,Math.round(dpr))*zoom;
-    var cssW=LW*zoom*sc,cssH=LH*zoom*sc,hw=LW*k,hh=LH*k;
-    var fw=smooth?Math.round(cssW*dpr):hw,fh=smooth?Math.round(cssH*dpr):hh;
-    var cv=document.createElement('canvas');cv.width=fw;cv.height=fh;
-    cv.style.width=cssW+'px';cv.style.height=cssH+'px';cv.style.display='block';
-    cv.style.imageRendering=smooth?'auto':'pixelated';
-    cv.setAttribute('aria-hidden','true');host.appendChild(cv);
-    var ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=smooth;if(smooth)ctx.imageSmoothingQuality='high';
-    function layer(){var c=document.createElement('canvas');c.width=hw;c.height=hh;var x=c.getContext('2d');x.imageSmoothingEnabled=false;return [c,x];}
-    var L1=layer(),fr=L1[0],fx=L1[1],L2=layer(),rim=L2[0],rx=L2[1],L3=layer(),hc=L3[0],hx=L3[1];
-    var rimColor=o.rim||null;
-    var t0=performance.now(),nextBlink=2200+Math.random()*2000,blinkUntil=0,hop=null,zap=null,speed=1,hover=false,onscreen=true;
-    function bobY(t){return ((Math.sin(2*Math.PI*t/1.3-Math.PI/2)+1)/2)>.5?-1:0;}
+    var poses={};
+    var ready=Promise.all([load(def.src),def.sleep?load(def.sleep):null]).then(function(r){
+      poses.awake=pose(r[0],def,def.blink);
+      if(r[1])poses.sleep=pose(r[1],def,null);
+    });
+    var dpr=Math.max(1,window.devicePixelRatio||1),cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    cv.setAttribute('aria-hidden','true');cv.style.display='block';host.appendChild(cv);
+    var cssW=0,cssH=0,fw=0,fh=0,work={};
+    function size(){
+      var mw=0,mh=0;Object.keys(poses).forEach(function(n){var p=poses[n];mw=Math.max(mw,p.w*p.s);mh=Math.max(mh,p.h*p.s);});
+      cssW=Math.round(mw+PAD_X*2+(poses.sleep?4:0));cssH=Math.round(mh+PAD_T+PAD_B);
+      fw=Math.round(cssW*dpr);fh=Math.round(cssH*dpr);cv.width=fw;cv.height=fh;cv.style.width=cssW+'px';cv.style.height=cssH+'px';
+      ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+      Object.keys(poses).forEach(function(n){   /* work canvases: the frame, its light rim, and the two combined */
+        var p=poses[n],ww=Math.ceil(cssW/p.s*p.k),wh=Math.ceil(cssH/p.s*p.k);
+        work[n]={fr:canvas(ww,wh),rim:canvas(ww,wh),hc:canvas(ww,wh),ww:ww,wh:wh};
+      });
+    }
+    var rimColor=o.rim||null,t0=performance.now(),nextBlink=2200+Math.random()*2000,blinkUntil=0,hop=null,zap=null,hover=false,onscreen=true;
+    var state=poses&&def.sleep&&!RM?'sleep':'awake',wakeT=0,zzz=[],nextZ=0;
+    function bobY(t,period){return ((Math.sin(2*Math.PI*t/period-Math.PI/2)+1)/2)>.5?-1:0;}
     function draw(now){
-      var t=RM?0:(now-t0)/1000*speed*(hover?1.7:1),ms=now-t0;
-      var bob=RM?0:bobY(t),sway=Math.sin(2*Math.PI*t/3.2),wag=Math.sin(2*Math.PI*t/1.15+.8),hopY=0;
-      if(hop){var p=(now-hop)/300;if(p>=1)hop=null;else hopY=-Math.round(5*Math.sin(Math.PI*p));}
-      if(!RM&&ms>nextBlink){blinkUntil=ms+120;nextBlink=ms+2600+Math.random()*2600;}
-      var src=(ms<blinkUntil)?blink:normal;
-      fx.clearRect(0,0,hw,hh);
-      for(var y=0;y<H;y++){
-        var lean=Math.round(1.4*sway*Math.pow((H-1-y)/(H-1),1.3)),dy=PT+y+bob+hopY;
-        var tail=(y<TAIL_ROWS)?Math.round(2.2*wag*(TAIL_ROWS-y)/TAIL_ROWS):0;
-        fx.drawImage(src,0,y,TAIL_X,1,(PX+lean)*k,dy*k,TAIL_X*k,k);
-        fx.drawImage(src,TAIL_X,y,W-TAIL_X,1,(PX+TAIL_X+lean+tail)*k,dy*k,(W-TAIL_X)*k,k);
+      var p=poses[state]||poses.awake,W=work[state]||work.awake;if(!p)return;
+      var t=RM?0:(now-t0)/1000*(hover?1.7:1),ms=now-t0,asleep=state==='sleep',U=p.k;   /* U = work px per sprite pixel */
+      var px=function(css){return Math.round(css/p.s);};                               /* css px -> sprite pixels */
+      var bob=RM?0:bobY(t,asleep?2.6:1.3)*Math.max(1,px(.8)),sway=asleep?0:Math.sin(2*Math.PI*t/3.2),wag=Math.sin(2*Math.PI*t/1.15+.8),hopY=0;
+      if(hop){var hp=(now-hop)/300;if(hp>=1)hop=null;else hopY=-Math.round(px(4)*Math.sin(Math.PI*hp));}
+      if(!RM&&!asleep&&ms>nextBlink){blinkUntil=ms+120;nextBlink=ms+2600+Math.random()*2600;}
+      var src=(ms<blinkUntil&&p.closed)?p.closed:p.normal;
+      var ox=Math.round((W.ww/U-p.w)/2),oy=px(PAD_T)+Math.round((W.wh/U-px(PAD_T)-px(PAD_B)-p.h));   /* sprite sits on the bottom, centred */
+      var fx=W.fr[1],tail=def.tail&&state==='awake'?def.tail:null,TX=tail?tail.x:p.w,lean1=px(1.12),wag1=px(1.76);
+      fx.clearRect(0,0,W.ww,W.wh);
+      for(var y=0;y<p.h;y++){
+        var lean=Math.round(lean1*sway*Math.pow((p.h-1-y)/(p.h-1),1.3)),dy=oy+y+bob+hopY;
+        var tw=(tail&&y<tail.rows)?Math.round(wag1*wag*(tail.rows-y)/tail.rows):0;
+        fx.drawImage(src,0,y,TX,1,(ox+lean)*U,dy*U,TX*U,U);
+        if(tail)fx.drawImage(src,TX,y,p.w-TX,1,(ox+TX+lean+tw)*U,dy*U,(p.w-TX)*U,U);
       }
-      hx.clearRect(0,0,hw,hh);
+      var hx=W.hc[1];hx.clearRect(0,0,W.ww,W.wh);
       if(rimColor){   /* thin light edge so the dark outline stays visible on a dark page */
-        rx.clearRect(0,0,hw,hh);rx.globalCompositeOperation='source-over';rx.drawImage(fr,0,0);
-        rx.globalCompositeOperation='source-in';rx.fillStyle=rimColor;rx.fillRect(0,0,hw,hh);
-        var rw=Math.round(k*(smooth?1.3:1));[[-1,0],[1,0],[0,-1],[0,1]].forEach(function(d){hx.drawImage(rim,d[0]*rw,d[1]*rw);});
+        var rx=W.rim[1];rx.clearRect(0,0,W.ww,W.wh);rx.globalCompositeOperation='source-over';rx.drawImage(W.fr[0],0,0);
+        rx.globalCompositeOperation='source-in';rx.fillStyle=rimColor;rx.fillRect(0,0,W.ww,W.wh);
+        var rw=Math.max(1,Math.round(U/p.s));[[-1,0],[1,0],[0,-1],[0,1]].forEach(function(d){hx.drawImage(W.rim[0],d[0]*rw,d[1]*rw);});
       }
-      hx.drawImage(fr,0,0);
-      if(zap){   /* little sparks of electricity */
+      hx.drawImage(W.fr[0],0,0);
+      var dot=Math.max(1,Math.round(U/p.s));                                            /* one css px, in work px */
+      if(asleep&&!RM){   /* little z's drifting up from its head */
+        if(ms>nextZ){zzz.push(ms);nextZ=ms+1400;}
+        zzz=zzz.filter(function(z){return ms-z<2800;});
+        zzz.forEach(function(z){
+          var a=(ms-z)/2800,zx=(ox+p.w)*U-dot*2+Math.round(a*dot*5),zy=(oy+p.h*.35)*U-Math.round(a*dot*14),n=a<.5?3:2;
+          hx.globalAlpha=1-a;hx.fillStyle='#e6eef6';
+          for(var i=0;i<n;i++){hx.fillRect(zx+i*dot,zy,dot,dot);hx.fillRect(zx+i*dot,zy+(n-1)*dot,dot,dot);hx.fillRect(zx+(n-1-i)*dot,zy+i*dot,dot,dot);}
+          hx.globalAlpha=1;
+        });
+      }
+      if(zap){   /* sparks in the buddy's colours */
         var zp=(now-zap)/420;
         if(zp>=1)zap=null;else{
           hx.globalAlpha=1-zp;
+          var cx0=(ox+p.w/2)*U,cy0=(oy+p.h*.45)*U;
           for(var i=0;i<8;i++){
-            var a=i/8*Math.PI*2+.4,r=(8+zp*13)*(i%2?1:.75),cx=Math.round(LW/2-1+Math.cos(a)*r),cy=Math.round(PT+H*.45+Math.sin(a)*r*.8);
-            hx.fillStyle=(i%2)?'#f8d800':'#ffffff';
-            hx.fillRect(cx*k,cy*k,k,k);hx.fillRect((cx+1)*k,cy*k,k,k);hx.fillRect(cx*k,(cy+1)*k,k,k);
+            var a2=i/8*Math.PI*2+.4,r=(8+zp*13)*(i%2?1:.75)*.8*dot,cx=Math.round(cx0+Math.cos(a2)*r),cy=Math.round(cy0+Math.sin(a2)*r*.8);
+            hx.fillStyle=def.spark[i%2];
+            hx.fillRect(cx,cy,dot,dot);hx.fillRect(cx+dot,cy,dot,dot);hx.fillRect(cx,cy+dot,dot,dot);
           }
           hx.globalAlpha=1;
         }
       }
-      ctx.clearRect(0,0,fw,fh);ctx.drawImage(hc,0,0,hw,hh,0,0,fw,fh);
+      ctx.clearRect(0,0,fw,fh);ctx.drawImage(W.hc[0],0,0,Math.round(cssW/p.s*U),Math.round(cssH/p.s*U),0,0,fw,fh);
     }
-    var last=0,raf=0;
+    var last=0,raf=0,dead=false,io=null;
     function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<28)return;last=now;draw(now);}
-    function start(){if(!raf){draw(performance.now());raf=requestAnimationFrame(loop);}}
-    if(window.IntersectionObserver)new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;}).observe(cv);
-    var api={
+    ready.then(function(){if(dead)return;state=poses.sleep&&!RM?'sleep':'awake';size();draw(performance.now());raf=requestAnimationFrame(loop);});
+    if(window.IntersectionObserver){io=new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;});io.observe(cv);}
+    function doze(){clearTimeout(wakeT);if(poses.sleep)wakeT=setTimeout(function(){if(!hover){state='sleep';zzz=[];nextZ=0;}},def.wakeMs||5000);}
+    return {
+      def:def,
       hop:function(){if(!RM)hop=performance.now();},
       zap:function(){zap=performance.now();if(!RM)hop=performance.now();},
-      blink:function(){blinkUntil=performance.now()-t0+140;},
-      speed:function(s){speed=s;},
-      hover:function(v){hover=v;},
-      setRim:function(c){rimColor=c||null;},
+      hover:function(v){hover=v;if(!v)doze();},
+      asleep:function(){return state==='sleep';},
+      wake:function(){if(!poses.sleep)return;clearTimeout(wakeT);if(state==='sleep'){state='awake';if(!RM)hop=performance.now();}doze();},
+      destroy:function(){dead=true;cancelAnimationFrame(raf);clearTimeout(wakeT);if(io)io.disconnect();cv.remove();},
       canvas:cv
     };
-    if(ready)start();else queue.push(start);
-    return api;
   }
-  /* turns a link into a Mareep button: hops on hover, zaps on click, then goes to href */
+  /* a random buddy, never the one just shown (remembered across reloads) */
+  function pick(){
+    var last='';try{last=localStorage.getItem('jj_buddy')||'';}catch(e){}
+    var pool=ROSTER.filter(function(d){return d.id!==last;}),def=pool[Math.random()*pool.length|0];
+    try{localStorage.setItem('jj_buddy',def.id);}catch(e){}
+    return def;
+  }
+  /* turns a link into a buddy button: hops on hover, sparks on click, then goes to href.
+     A new buddy is picked on every page load and every page change inside the site. */
   function link(a,o){
-    var m=mount(a,o||{});
+    var forced=(/[?&]buddy=([a-z]+)/.exec(location.search)||[])[1];
+    var def=ROSTER.filter(function(d){return d.id===forced;})[0]||pick(),m=null;
+    function show(d){
+      if(m)m.destroy();
+      m=mount(a,d,o||{});a.dataset.buddy=d.id;
+      if(a.matches(':hover')){m.hover(true);m.wake();}
+    }
+    show(def);
     a.classList.add('mareep');
-    a.addEventListener('mouseenter',function(){m.hover(true);m.hop();});
+    window.addEventListener('hashchange',function(){show(pick());});
+    a.addEventListener('mouseenter',function(){m.hover(true);m.wake();m.hop();});
     a.addEventListener('mouseleave',function(){m.hover(false);});
-    a.addEventListener('focus',function(){m.hop();});
+    a.addEventListener('focus',function(){m.wake();m.hop();});
+    a.addEventListener('blur',function(){m.hover(false);});
     a.addEventListener('click',function(e){
       if(e.metaKey||e.ctrlKey||e.shiftKey||e.button===1)return;
+      if(m.asleep()){e.preventDefault();m.wake();return;}   /* a tap on a sleeping Jirachi just wakes it */
       m.zap();
       if(a.target==='_blank')return;                    /* new tab: let the browser open it right away */
       e.preventDefault();
       var href=a.getAttribute('href');
       setTimeout(function(){location.assign(href);},RM?0:430);
     });
-    return m;
+    return {id:function(){return m.def.id;},asleep:function(){return m.asleep();},next:function(){show(pick());}};
   }
-  return {mount:mount,link:link};
+  return {link:link,roster:ROSTER};
 })();
 
-Mareep.link(document.getElementById('mareepLink'),{scale:.8,rim:'rgba(244,239,228,.95)'});
+window.__buddy=Buddy.link(document.getElementById('mareepLink'),{rim:'rgba(244,239,228,.95)'});
+
+/* ---------- Giratina: now and then flies across the page on a random path ---------- */
+/* Not on every visit: a chance per page load, after a random wait, and sometimes it comes back later.
+   The sheet has 8 facing directions (rows: S, SE, E, NE, N, NW, W, SW) with 3 wing poses each. */
+window.__fly=(function(){
+  var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var CFG={chance:.45,first:[8000,30000],again:.3,gap:[40000,120000],speed:[150,230]};
+  var CW=59,CH=38,ROW={E:2,SE:1,S:0,SW:7,W:6,NW:5,N:4,NE:3},SECT=['E','SE','S','SW','W','NW','N','NE'];
+  var atlas=null,flying=false;
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function sheet(){return atlas||(atlas=new Promise(function(ok,no){var i=new Image();i.onload=function(){ok(i);};i.onerror=no;i.src='assets/sprites/giratina-fly.png';}));}
+  /* a path that enters from one edge, wanders through 2-3 random points, and leaves by another edge */
+  function route(W,H,m){
+    function edge(e){return e===0?[rnd(0,W),-m]:e===1?[W+m,rnd(0,H)]:e===2?[rnd(0,W),H+m]:[-m,rnd(0,H)];}
+    var e0=Math.random()*4|0,e1=(e0+1+(Math.random()*3|0))%4,pts=[edge(e0)];
+    for(var i=0,n=2+(Math.random()*2|0);i<n;i++)pts.push([rnd(.12,.88)*W,rnd(.15,.8)*H]);
+    pts.push(edge(e1));
+    var P=[pts[0]].concat(pts,[pts[pts.length-1]]),poly=[[pts[0][0],pts[0][1],0]];
+    for(var j=1;j<P.length-2;j++){   /* Catmull-Rom through every point */
+      for(var s=1;s<=40;s++){
+        var t=s/40,t2=t*t,t3=t2*t,p0=P[j-1],p1=P[j],p2=P[j+1],p3=P[j+2];
+        var x=.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3);
+        var y=.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3);
+        var q=poly[poly.length-1];poly.push([x,y,q[2]+Math.hypot(x-q[0],y-q[1])]);
+      }
+    }
+    return poly;
+  }
+  function at(poly,d){   /* point and heading at distance d along the path */
+    var lo=0,hi=poly.length-1;while(hi-lo>1){var mid=(lo+hi)>>1;if(poly[mid][2]<d)lo=mid;else hi=mid;}
+    var a=poly[lo],b=poly[hi],f=(d-a[2])/((b[2]-a[2])||1);
+    return {x:a[0]+(b[0]-a[0])*f,y:a[1]+(b[1]-a[1])*f,ang:Math.atan2(b[1]-a[1],b[0]-a[0])};
+  }
+  function fly(){
+    if(flying)return Promise.resolve();
+    if(document.hidden){return new Promise(function(r){document.addEventListener('visibilitychange',function v(){if(!document.hidden){document.removeEventListener('visibilitychange',v);fly().then(r);}});});}
+    flying=true;
+    return sheet().then(function(img){return new Promise(function(done){
+      var W=window.innerWidth,H=window.innerHeight,dpr=Math.min(2,window.devicePixelRatio||1),sc=W<600?1.4:2;
+      var cv=document.createElement('canvas');cv.className='flyer';cv.setAttribute('aria-hidden','true');
+      cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);document.body.appendChild(cv);
+      var ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false;
+      var poly=route(W,H,Math.max(CW,CH)*sc),len=poly[poly.length-1][2],v=rnd(CFG.speed[0],CFG.speed[1]),t0=performance.now(),last=t0,d=0,sect=-1;
+      (function frame(now){
+        var dt=Math.min(.05,(now-last)/1000);last=now;
+        var tt=(now-t0)/1000;d+=v*dt*(1+.18*Math.sin(tt*1.7));   /* glides a little faster and slower */
+        if(d>=len){cv.remove();flying=false;done();return;}
+        var p=at(poly,d),deg=p.ang*180/Math.PI;
+        var want=((Math.round(deg/45)%8)+8)%8;
+        if(sect<0)sect=want;
+        else{var off=Math.abs(((deg-sect*45)%360+540)%360-180);if(off>32)sect=want;}   /* only turn once clearly past the edge of a direction */
+        var pose=[0,1,2,1][Math.floor(tt/.13)%4],row=ROW[SECT[sect]];
+        var x=p.x,y=p.y+Math.sin(tt*2.3)*6,dw=CW*sc,dh=CH*sc;
+        ctx.clearRect(0,0,W,H);
+        ctx.drawImage(img,pose*CW,row*CH,CW,CH,Math.round(x-dw/2),Math.round(y-dh/2),dw,dh);
+        requestAnimationFrame(frame);
+      })(t0);
+    });});
+  }
+  function schedule(range,chance){if(Math.random()<chance)setTimeout(function(){fly().then(function(){schedule(CFG.gap,CFG.again);});},rnd(range[0],range[1]));}
+  if(!RM){
+    if(/[?&]fly=1/.test(location.search))setTimeout(function(){fly().then(function(){schedule(CFG.gap,CFG.again);});},800);
+    else schedule(CFG.first,CFG.chance);
+  }
+  return {fly:fly,config:CFG,active:function(){return flying;}};
+})();
 
 /* ---------- scroll cue: fades out once the page has been scrolled ---------- */
 (function(){var m=document.getElementById('moreh');if(!m)return;function chk(){m.classList.toggle('gone',window.scrollY>60);}window.addEventListener('scroll',chk,{passive:true});chk();})();
