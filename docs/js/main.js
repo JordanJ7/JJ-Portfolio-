@@ -213,10 +213,10 @@ var Buddy=(function(){
       }
       ctx.clearRect(0,0,fw,fh);ctx.drawImage(W.hc[0],0,0,Math.round(cssW/p.s*U),Math.round(cssH/p.s*U),0,0,fw,fh);
     }
-    var last=0,raf=0;
+    var last=0,raf=0,dead=false,io=null;
     function loop(now){raf=requestAnimationFrame(loop);if(!onscreen||now-last<28)return;last=now;draw(now);}
-    ready.then(function(){state=poses.sleep&&!RM?'sleep':'awake';size();draw(performance.now());raf=requestAnimationFrame(loop);});
-    if(window.IntersectionObserver)new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;}).observe(cv);
+    ready.then(function(){if(dead)return;state=poses.sleep&&!RM?'sleep':'awake';size();draw(performance.now());raf=requestAnimationFrame(loop);});
+    if(window.IntersectionObserver){io=new IntersectionObserver(function(e){onscreen=e[0].isIntersecting;});io.observe(cv);}
     function doze(){clearTimeout(wakeT);if(poses.sleep)wakeT=setTimeout(function(){if(!hover){state='sleep';zzz=[];nextZ=0;}},def.wakeMs||5000);}
     return {
       def:def,
@@ -225,17 +225,30 @@ var Buddy=(function(){
       hover:function(v){hover=v;if(!v)doze();},
       asleep:function(){return state==='sleep';},
       wake:function(){if(!poses.sleep)return;clearTimeout(wakeT);if(state==='sleep'){state='awake';if(!RM)hop=performance.now();}doze();},
+      destroy:function(){dead=true;cancelAnimationFrame(raf);clearTimeout(wakeT);if(io)io.disconnect();cv.remove();},
       canvas:cv
     };
   }
-  /* turns a link into a buddy button: hops on hover, sparks on click, then goes to href */
-  function link(a,o){
+  /* a random buddy, never the one just shown (remembered across reloads) */
+  function pick(){
     var last='';try{last=localStorage.getItem('jj_buddy')||'';}catch(e){}
-    var forced=(/[?&]buddy=([a-z]+)/.exec(location.search)||[])[1];
-    var pool=ROSTER.filter(function(d){return d.id!==last;}),def=ROSTER.filter(function(d){return d.id===forced;})[0]||pool[Math.random()*pool.length|0];
+    var pool=ROSTER.filter(function(d){return d.id!==last;}),def=pool[Math.random()*pool.length|0];
     try{localStorage.setItem('jj_buddy',def.id);}catch(e){}
-    var m=mount(a,def,o||{});
-    a.classList.add('mareep');a.dataset.buddy=def.id;
+    return def;
+  }
+  /* turns a link into a buddy button: hops on hover, sparks on click, then goes to href.
+     A new buddy is picked on every page load and every page change inside the site. */
+  function link(a,o){
+    var forced=(/[?&]buddy=([a-z]+)/.exec(location.search)||[])[1];
+    var def=ROSTER.filter(function(d){return d.id===forced;})[0]||pick(),m=null;
+    function show(d){
+      if(m)m.destroy();
+      m=mount(a,d,o||{});a.dataset.buddy=d.id;
+      if(a.matches(':hover')){m.hover(true);m.wake();}
+    }
+    show(def);
+    a.classList.add('mareep');
+    window.addEventListener('hashchange',function(){show(pick());});
     a.addEventListener('mouseenter',function(){m.hover(true);m.wake();m.hop();});
     a.addEventListener('mouseleave',function(){m.hover(false);});
     a.addEventListener('focus',function(){m.wake();m.hop();});
@@ -249,7 +262,7 @@ var Buddy=(function(){
       var href=a.getAttribute('href');
       setTimeout(function(){location.assign(href);},RM?0:430);
     });
-    return m;
+    return {id:function(){return m.def.id;},asleep:function(){return m.asleep();},next:function(){show(pick());}};
   }
   return {link:link,roster:ROSTER};
 })();

@@ -48,6 +48,6 @@ python3 tests/audit.py http://localhost:8000/   # checks
 
 ## Mareep
 - Jordan approved Mareep at 80% size (`scale:.8`). Do not change its size, motion or sprite without asking. The sprite is his own image, scaled by whole pixels.
-- The portfolio nav now shows a random buddy on each visit (`Buddy` in `site/js/main.js`): Mareep, Reshiram, Rayquaza, Latias and Jirachi, never the same one twice in a row. Jirachi sleeps until hovered or tapped and dozes off 5s after. Sprites live in `site/assets/sprites/`. Add `?buddy=<id>` to the URL to pick one.
+- The portfolio nav now shows a random buddy on every page load and every page change (`Buddy` in `site/js/main.js`): Mareep, Reshiram, Rayquaza, Latias and Jirachi, never the same one twice in a row. Jirachi sleeps until hovered or tapped and dozes off 5s after. Sprites live in `site/assets/sprites/`. Add `?buddy=<id>` to the URL to pick the first one (page changes still swap it).
 - Giratina sometimes flies across the page (`window.__fly`): 45% chance per load after 8-30s, 30% chance of a return visit. Add `?fly=1` to force a flight. Neither runs with reduced motion. The special site keeps Mareep only.
 - Portfolio: next to his name in the nav, links to `special/`. Special site: fixed top-left, links to `../`. On the special site it hides during the montage and TV-off, and the Back button sits beside it.
