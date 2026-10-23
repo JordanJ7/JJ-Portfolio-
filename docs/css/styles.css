@@ -17,6 +17,7 @@ a{color:inherit}
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,4vw);background:rgba(10,10,10,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);color:#fff;font-size:13px;border-bottom:1px solid rgba(255,255,255,.08)}
 nav b{font-weight:600;letter-spacing:-.01em}
 .brand{display:flex;align-items:center;gap:2px;min-width:0}
+.flyer{position:fixed;inset:0;width:100vw;height:100vh;z-index:25;pointer-events:none}
 a.mareep{display:inline-flex;line-height:0;border-radius:8px;cursor:pointer;outline-offset:2px;-webkit-tap-highlight-color:transparent}
 .links{display:flex;align-items:center;gap:2px}
 nav .links>a,.dd>button,.dd>a.ddl{white-space:nowrap;background:none;border:0;color:#fff;font-size:13px;padding:14px 11px;cursor:pointer;text-decoration:none;opacity:.85;line-height:1;display:block}
