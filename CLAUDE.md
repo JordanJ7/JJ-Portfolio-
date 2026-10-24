@@ -39,12 +39,12 @@ python3 tests/audit.py http://localhost:8000/   # checks
 - Vault v2: each question has a random secret wrapped once per accepted answer; all secrets together unlock the content key (`kw`); the editor password unlocks the same key (`ke`). The secrets live inside the encrypted content (`_secrets`) so one answer can change without the others. Media never needs re-encrypting when answers change.
 - Only Mareep in the portfolio nav links to the special site; the other buddies are decoration.
 - Folder names are private: never render them in the public UI, never log them in the browser console, and keep them out of commit messages.
-- The questions, prompts, hints and how many there are come from the vault (editable in the editor). Today there are three: a birthday, "My Child's Name", and "My Original Child". Never write the answers into any file.
+- The questions, prompts, hints and how many there are come from the vault (editable in the editor). Today there are four ("Our B-day", "Our First Child", "My Original Child", "and the second one...?"), and Earth has its own date password ("The Date We Started Dating"). Never write the answers into any file. Tests read them from PW1-PW4, EARTHPW and EDPW.
 - Lockouts are in seconds: 7, then 11, repeating, after every 2 further wrong tries once the hint is showing.
 - After the Back button, going forward again must skip the typed line, the montage, the TV-off and the folder animation (`CFG.returnSkips`).
 - After any change to `private.js`, `private.css`, `editor.js` or `index.html` there, run `tests/private_flow.py`, `tests/private_world.py` and `tests/private_editor.py` (the editor test publishes to a fake GitHub only).
 - Keep the folder settle time under 10 seconds even with collisions (`CFG.fold.settle` is the hard guarantee). The folder count comes from the content.
-- The Earth on the folders page flies to 42.115744, -79.983994 and draws the heart map (an encrypted vector JSON, not a photo) from five starting points in about 10 s, waits 4 s, then blurs it behind the books. Slides default to baby blue (#8fb8e6) with bone-white text.
+- The Earth on the folders page flies to 42.115744, -79.983994 and holds plain paper for 2 s, draws the heart map (an encrypted vector JSON, not a photo) from five starting points in about 14 s, waits 4 s, then blurs it behind the books. Slides default to baby blue (#8fb8e6) with bone-white text.
 
 ## Culture Log
 - Covers are self-hosted via `tools/fetch-covers.mjs` (`site/assets/covers/` and `site/js/covers.js`). Do not hotlink images other than the Steam artwork already used for games.

@@ -1,13 +1,14 @@
 """Stress tests for the special site: several screen sizes, the settle-time guarantee, pass-through, lockout persistence, reduced motion.
 Usage: python3 tests/private_stress.py   (needs the site served at http://localhost:8000/)"""
 import time,json,os,sys
-try: PW1,PW2,PW3=os.environ['PW1'],os.environ['PW2'],os.environ['PW3']
-except KeyError: sys.exit('Set PW1, PW2 and PW3 to the three answers (they are never stored in the repo).')
+try: PW1,PW2,PW3,PW4=os.environ['PW1'],os.environ['PW2'],os.environ['PW3'],os.environ['PW4']
+except KeyError: sys.exit('Set PW1, PW2, PW3 and PW4 to the four answers (they are never stored in the repo).')
 from playwright.sync_api import sync_playwright
 def cfgjs(extra=''):
     return "window.PRIVATE_CONFIG={locks:[1,1.4],prompt:{fadeIn:100,hold:100,fadeOut:100,rise:56},start:'folders'%s};"%extra
 def login(pg):
     pg.goto('http://localhost:8000/special/'); pg.wait_for_timeout(500); pg.click('#login')
+    pg.wait_for_function("!document.getElementById('field').disabled",timeout=8000)
     pg.keyboard.type(PW1); pg.keyboard.press('Enter')
     pg.wait_for_function("__fy.stage==='login2'",timeout=8000)
     pg.wait_for_function("!document.getElementById('field').disabled",timeout=8000)
@@ -15,6 +16,9 @@ def login(pg):
     pg.wait_for_function("__fy.stage==='login3'",timeout=8000); pg.wait_for_timeout(300)
     pg.wait_for_function("!document.getElementById('field').disabled",timeout=8000)
     pg.keyboard.type(PW3); pg.keyboard.press('Enter')
+    pg.wait_for_function("__fy.stage==='login4'",timeout=8000); pg.wait_for_timeout(300)
+    pg.wait_for_function("!document.getElementById('field').disabled",timeout=8000)
+    pg.keyboard.type(PW4); pg.keyboard.press('Enter')
 with sync_playwright() as p:
     b=p.chromium.launch()
     # 1: several viewports, default settle
@@ -37,13 +41,14 @@ with sync_playwright() as p:
     # 4: lockout alternation and persistence across reload
     ctx=b.new_context(viewport={'width':1280,'height':800}); ctx.add_init_script("window.PRIVATE_CONFIG={locks:[2,3]};"); pg=ctx.new_page()
     pg.goto('http://localhost:8000/special/'); pg.wait_for_timeout(500); pg.click('#login')
+    pg.wait_for_function("!document.getElementById('field').disabled",timeout=8000)   # question 1's prompt plays first
     def bad():
         pg.keyboard.type('000'); pg.keyboard.press('Enter'); pg.wait_for_timeout(450)
     for _ in range(4): bad()
     first=pg.evaluate("document.getElementById('count').textContent"); pg.wait_for_function("!document.getElementById('field').disabled",timeout=6000)
     bad(); bad(); second=pg.evaluate("document.getElementById('count').textContent")
     print('lock1 shows',first,'lock2 shows',second)
-    pg.reload(); pg.wait_for_timeout(700); print('after reload locked:',pg.evaluate("document.getElementById('field').disabled"),'hint visible:',pg.evaluate("document.getElementById('hint').classList.contains('vis')")); ctx.close()
+    pg.reload(); pg.wait_for_timeout(300); print('after reload locked:',pg.evaluate("(JSON.parse(localStorage.getItem('jj_fy_state')||'{}').s1||{}).u>Date.now()"),'(lock survives the reload)',pg.wait_for_timeout(3300) or '','hint visible:',pg.evaluate("document.getElementById('hint').classList.contains('vis')")); ctx.close()
     # 5: reduced motion path
     ctx=b.new_context(viewport={'width':1280,'height':800},reduced_motion='reduce'); ctx.add_init_script(cfgjs()); pg=ctx.new_page(); errs=[]; pg.on('pageerror',lambda e:errs.append(str(e)))
     login(pg); pg.wait_for_function("__fy.stage==='folders-ready'",timeout=9000); print('reduced motion ready, errors',errs); ctx.close()

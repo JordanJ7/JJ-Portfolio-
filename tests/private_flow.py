@@ -1,11 +1,11 @@
 """End-to-end test of the special site (three questions). Short timings so it runs in about a minute.
 Usage: python3 tests/private_flow.py [url]   (default http://localhost:8000/special/)
-Set PW1, PW2 and PW3 (the three answers) in the environment; they are never stored in the repo."""
+Set PW1, PW2, PW3 and PW4 (the four answers) in the environment; they are never stored in the repo."""
 import time,json,os,sys
 from playwright.sync_api import sync_playwright
 BASE=sys.argv[1] if len(sys.argv)>1 else 'http://localhost:8000/special/'
-try: PW1,PW2,PW3=os.environ['PW1'],os.environ['PW2'],os.environ['PW3']
-except KeyError: sys.exit('Set PW1, PW2 and PW3 to the three answers (they are never stored in the repo).')
+try: PW1,PW2,PW3,PW4=os.environ['PW1'],os.environ['PW2'],os.environ['PW3'],os.environ['PW4']
+except KeyError: sys.exit('Set PW1, PW2, PW3 and PW4 to the four answers (they are never stored in the repo).')
 CFG="""window.PRIVATE_CONFIG={locks:[1,1.4],prompt:{pre:650,fadeIn:200,hold:250,fadeOut:300,rise:56},intro:{typing:300,delay:50,attr:50,reading:150,fade:100},more:{type:600,hold:300},mont:{frames:20,start:60,end:30},tv:300};"""
 def typ(pg,s): pg.keyboard.type(s); pg.keyboard.press('Enter')
 def caret_top(pg): return pg.evaluate("document.getElementById('caret').getBoundingClientRect().top")
@@ -18,6 +18,9 @@ with sync_playwright() as p:
     b=p.chromium.launch(); ctx=b.new_context(viewport={'width':1280,'height':800}); ctx.add_init_script(CFG)
     pg=ctx.new_page(); errs=[]; pg.on('pageerror',lambda e:errs.append(str(e))); pg.on('console',lambda m: errs.append(m.text) if m.type=='error' and 'fonts.g' not in m.text and 'ERR_' not in m.text else None)
     pg.goto(BASE); pg.wait_for_timeout(800); pg.click('#login'); pg.wait_for_timeout(200)
+    # question 1 now has a prompt too: it floats away before the cursor takes typing
+    pg.wait_for_function("document.getElementById('prompt').textContent==='Our B-day'",timeout=4000); check('q1 prompt text',True)
+    pg.wait_for_function("!document.getElementById('field').disabled",timeout=8000); pg.wait_for_timeout(200)
     # question 1: cursor must not move when typing starts
     y0=caret_top(pg); pg.keyboard.type('1'); pg.wait_for_timeout(100); y1=caret_top(pg); pg.keyboard.press('Backspace')
     check('q1 cursor does not move when typing starts',abs(y0-y1)<0.5,f'{y0:.1f} -> {y1:.1f}')
@@ -52,6 +55,11 @@ with sync_playwright() as p:
     check('q3 lockout',pg.evaluate("document.getElementById('field').disabled")==True)
     pg.wait_for_function("!document.getElementById('field').disabled",timeout=6000)
     typ(pg,PW3)
+    pg.wait_for_function("__fy.stage==='login4'",timeout=6000)
+    pg.wait_for_function("document.getElementById('prompt').textContent==='and the second one...?'",timeout=4000); check('q4 prompt text',True)
+    pg.wait_for_function("!document.getElementById('field').disabled",timeout=6000)
+    typ(pg,'nope'); pg.wait_for_timeout(700); check('q4 wrong answer refused',pg.evaluate("__fy.stage")=='login4')
+    typ(pg,PW4.lower())
     pg.wait_for_function("__fy.stage==='intro'",timeout=8000)
     pg.wait_for_function("__fy.stage==='slides'",timeout=8000); pg.wait_for_timeout(900)
     for i in range(5): pg.click('.nav.next'); pg.wait_for_timeout(900)

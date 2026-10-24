@@ -18,7 +18,7 @@ var CFG=merge({
   prompt:{pre:553,fadeIn:612,hold:1496,fadeOut:1020,rise:56},   /* waits before the prompts for questions 2 and 3, ms (15% quicker than the last version); pre = pause while the old line fades out; rise = px the prompt floats up while fading */
   intro:{typing:1800,delay:180,attr:200,reading:2100,fade:600},   /* same timings as Journal-101 */
   slide:{autoplay:false,ms:7000},
-  more:{type:4320,hold:3000},                      /* typed "There's More", ms (was 6000, then 5400, now 20% faster again) */
+  more:{type:3757,hold:3000},                      /* typed "There's More", ms (was 6000, 5400, 4320; now 15% faster again) */
   returnSkips:true,                                 /* after the Back button, skip typing, montage and the folder animation */
   mont:{frames:64,start:150,end:60,size:[.38,.8],maxFill:.78,tilt:7},   /* ms per frame ramping from start to end; size = long side as a share of the shorter screen side; maxFill = no photo is ever bigger than this share of the screen width or height; tilt = random degrees */
   tv:1300,
@@ -987,7 +987,7 @@ function drawMap(M){
     var gB=sv('g',{}),gH=sv('g',{fill:'none',stroke:'#1b1b22','stroke-width':M.heartW,'stroke-linecap':'round','stroke-linejoin':'round'});
     svg.appendChild(gR);svg.appendChild(gB);svg.appendChild(gH);box.appendChild(svg);
     $('#world').classList.add('mapon');
-    var D0=RM?0:1,anims=[],ends=[];
+    var D0=RM?0:1,anims=[],ends=[],HOLD=D0?2000:0,SLOW=1.6;   /* 2 s of plain paper first; the drawing itself about 5 s longer than before */
     /* five starting points spread over the heart: every line starts when the "wave" from its nearest point reaches it */
     var seeds=[[.28,.3],[.72,.26],[.5,.55],[.3,.72],[.72,.7]].map(function(p){return [p[0]*M.w,p[1]*M.h];});
     function wave0(x,y){var m=1e9;seeds.forEach(function(s){m=Math.min(m,Math.hypot(x-s[0],y-s[1]));});return m;}
@@ -997,6 +997,7 @@ function drawMap(M){
       var pad=Math.max(M.heartW,M.roadW)+8;   /* keeps the rounded line ends out of sight until the line starts */
       path.style.strokeDasharray=len+' '+(len+pad*2);path.style.strokeDashoffset=D0?len+pad:0;
       if(!D0)return;
+      delay=HOLD+delay*SLOW;dur=dur*SLOW;
       var a=path.animate([{strokeDashoffset:len+pad},{strokeDashoffset:0}],{duration:dur,delay:delay,easing:'cubic-bezier(.45,.1,.35,1)',fill:'forwards'});anims.push(a);ends.push(delay+dur);
     }
     M.heart.forEach(function(d){var p=sv('path',{d:d});gH.appendChild(p);draw(p,p.getTotalLength(),0,4200);});
@@ -1010,7 +1011,7 @@ function drawMap(M){
       gB.appendChild(p);
       var delay=900+wave(b.c[0],b.c[1])*6800,len=b.len*1.1;
       p.style.fillOpacity=D0?0:1;draw(p,len,delay,1300);
-      if(D0){var f=p.animate([{fillOpacity:0},{fillOpacity:1}],{duration:700,delay:delay+1000,fill:'forwards'});anims.push(f);ends.push(delay+1700);}
+      if(D0){var fd=HOLD+(delay+1000)*SLOW;var f=p.animate([{fillOpacity:0},{fillOpacity:1}],{duration:700*SLOW,delay:fd,fill:'forwards'});anims.push(f);ends.push(fd+700*SLOW);}
     });
     var total=D0?Math.max.apply(null,ends.concat([0])):0;
     window.__fy.mapDrawMs=total;
