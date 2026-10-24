@@ -9,7 +9,7 @@
 <title>&nbsp;</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Plus+Jakarta+Sans:wght@300;400&family=Space+Grotesk:wght@300;400&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Luckiest+Guy&family=Plus+Jakarta+Sans:wght@300;400;600&family=Space+Grotesk:wght@300;400&display=swap" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="private.css">
 </head>
 <body>
@@ -25,7 +25,9 @@
     <div id="count" aria-live="polite"></div>
     <input id="field" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" aria-label="Type here">
   </div>
+  <button id="editBtn" type="button" aria-label="Edit the page" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button>
 </section>
+<div id="gate" role="dialog" aria-modal="true" aria-label="Editor password"><form id="gateForm"><label for="gatePw">Editor password</label><input id="gatePw" type="password" autocomplete="current-password"><div id="gateMsg" aria-live="polite"></div><div class="grow"><button type="button" id="gateX">Cancel</button><button type="submit">Open editor</button></div></form></div>
 
 <section id="intro" class="layer" role="region" aria-label="Welcome quote">
   <div class="glow" aria-hidden="true"></div>
@@ -50,14 +52,29 @@
 </section>
 
 <section id="mont" class="layer" aria-hidden="true">
-  <div id="mwrap" style="position:absolute;inset:0"><canvas id="mcv"></canvas><div id="mwhite" style="position:absolute;inset:0;background:#fff;opacity:0"></div></div>
+  <div id="mwrap" style="position:absolute;inset:0"><div id="mstage"></div><div id="mwhite" style="position:absolute;inset:0;background:#fff;opacity:0"></div></div>
 </section>
 
 <section id="fold" class="layer" aria-label="Folders">
   <canvas id="fx" aria-hidden="true"></canvas>
   <button id="backBtn" type="button" aria-label="Back to the slideshow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
   <div id="fgrid"></div>
+  <button id="earthBtn" type="button" aria-label="Fly to Earth"></button>
+  <div id="jam" aria-hidden="true"><svg viewBox="0 0 230 130"><defs><linearGradient id="jamg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe14d"/><stop offset=".55" stop-color="#ff9a1f"/><stop offset="1" stop-color="#ff4f1f"/></linearGradient><linearGradient id="jams" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2fd36b"/><stop offset="1" stop-color="#00a2ff"/></linearGradient></defs>
+    <g class="jarrow"><path d="M30 104 C 80 128, 150 120, 196 86" fill="none" stroke="#25105e" stroke-width="15" stroke-linecap="round"/><path d="M30 104 C 80 128, 150 120, 196 86" fill="none" stroke="url(#jams)" stroke-width="8" stroke-linecap="round"/><path d="M182 70 L214 76 L200 106 Z" fill="#2fd36b" stroke="#25105e" stroke-width="5" stroke-linejoin="round"/></g>
+    <g class="jtext" font-family="'Luckiest Guy',Impact,sans-serif" font-size="40" text-anchor="middle" transform="rotate(-7 115 52)"><text x="115" y="62" fill="none" stroke="#25105e" stroke-width="12" stroke-linejoin="round" paint-order="stroke">CLICK HERE!</text><text x="115" y="62" fill="url(#jamg)" stroke="#fff6c2" stroke-width="1.5">CLICK HERE!</text></g>
+    <g class="jstars" fill="#fff6c2"><path d="M18 30l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path d="M212 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></g></svg></div>
 </section>
+
+<section id="world" class="layer" aria-label="Map and books">
+  <canvas id="flycv" aria-hidden="true"></canvas>
+  <div id="mapwrap"><div id="mapcard"><div id="mapbox"></div><div id="mapcoords"></div></div></div>
+  <div id="shelf"></div>
+  <div id="hud" aria-live="polite"><span id="hlat"></span><span id="hlon"></span><span id="hplace">Erie, Pennsylvania</span></div>
+  <button id="worldBack" type="button" aria-label="Back to the folders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
+  <button id="booksBtn" type="button">Hide books</button>
+</section>
+<div id="reader" role="dialog" aria-modal="true" aria-label="Book"></div>
 
 <div id="bub" role="dialog" aria-modal="true" aria-label="Folder contents"></div>
 

@@ -15,3 +15,6 @@ __pycache__/
 
 # special site source (photos, videos, text): never commit. Only the encrypted output in docs/special/ is published.
 private-src/
+
+# screenshots the special-site tests write
+fy*.png

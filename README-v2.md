@@ -73,19 +73,11 @@ A separate, unlisted page with its own look. It is not linked from the portfolio
 
 **Flow:** a bare cream login with a blinking horizontal cursor, then three questions (a birthday, then "My Child's Name", then "My Original Child"; a hint after 2 wrong tries, then lockouts of 7 seconds, 11 seconds, 7 and so on, every 2 more wrong tries), the typewriter quote intro from Journal-101 (with its own quotes), a slideshow with arrows and morphing dots, a typed "There's More...", a rapid-fire montage of your own photos, an old-TV switch-off, then 16 baby-blue folders that fly in, bounce and settle into a 4 x 4 grid, with sparkles, a ringed planet (pastel orange with a pastel blue ring) and an earth-like planet drifting in behind them. Each folder opens a bubble sized for its media. A Back button returns to the slideshow, and going forward again skips the typing, montage and folder animation.
 
-**Editing it.** Everything is in `private-src/content.json` plus `private-src/media/` (copy `private-src.example/` to start). Item kinds are `photo`, `video` (optional `poster`) and `text`. A slide or bubble with 5 or more items scrolls. Folder `name` fields are only ever visible to you: set `localStorage.jj_fy_owner = '1'` in the browser console on the page to show them under the folders.
-
-**Building it.** Passwords are never stored in the repo. Pass them on the command line each time:
-
-```bash
-PRIVATE_PW1='...' PRIVATE_PW2='...' PRIVATE_PW3='...' node tools/build-private.mjs
-```
-
-This encrypts everything into `site/special/vault.json` and `site/special/media/*.enc`, which are safe to publish. `private-src/` is in `.gitignore`: **never commit it.** The folder currently contains a *demo* vault (built with the three real answers but with placeholder photos, videos and quotes) so the page works out of the box. Rebuild it with your real content before sharing the link.
+**Editing it.** Open `/special/`, click the small pencil in the bottom-left corner of the first password page, and type the editor password. The editor lets you change the slides (photos, videos, text, captions, dates, background and text colour), the intro quotes and their speed, the photo barrage (what pops in, how many, how fast, and the vertical ending video that always plays to the end), the folders (how many, titles shown inside, long text, photos and videos with captions, messages and dates), the books (covers and page photos, which are straightened and cleaned like a scan), and the questions (prompts, hints, how many, and their answers, which need the current answer to change). Use **Preview** to see it for real, then **Publish** to commit it to the site with your GitHub token (saved only on your device). Until you publish, changes are kept as an encrypted draft on that device.
 
 **Timings** live at the top of `site/special/private.js` (`CFG`): prompt fade, lockout seconds, intro speed, typing speed, montage speed, folder settle time.
 
-**What it does and does not protect.** The content, media and folder names are encrypted with a key made from both passwords, so the files cannot be read without them. But this is a static site: the lockouts only live in the visitor's browser, and anyone can download the encrypted files and try passwords offline. An 8-digit date is a small space to guess, so treat this as a polite lock for a gift, not a vault. Do not put anything on it that would be harmful if someone got through.
+**What it does and does not protect.** The content, media and folder names are encrypted, and can only be unlocked with all the answers or with the editor password. Nobody can change the site without both the editor password and a GitHub token that can write to the repo. But this is a static site: the lockouts only live in the visitor's browser, and anyone can download the encrypted files and try passwords offline. An 8-digit date is a small space to guess, so treat this as a polite lock for a gift, not a vault. Do not put anything on it that would be harmful if someone got through.
 
 ## Tests
 

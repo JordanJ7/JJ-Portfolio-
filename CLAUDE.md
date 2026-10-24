@@ -34,13 +34,17 @@ python3 tests/audit.py http://localhost:8000/   # checks
 
 ## The special site (`site/special/`)
 - It is a personal gift page. Do not link to it from the portfolio, do not add it to a sitemap, and keep `noindex`.
-- **Never commit `private-src/` or any password.** The build tool reads passwords from `PRIVATE_PW1` and `PRIVATE_PW2`. Ask Jordan for them each time; do not store them anywhere in the repo, in comments, or in test files you add.
+- **Never commit `private-src/` or any password.** Passwords and answers come from the environment (`PW1`-`PW3`, `EDPW` for tests). Ask Jordan for them each time; do not store them anywhere in the repo, in comments, or in test files you add.
+- Content is now edited by Jordan in the **page editor** (pencil button, bottom-left of the first password page, editor password). It publishes by committing `docs/special/vault.json` and `docs/special/media/*.enc` with his own GitHub token. `tools/build-private.mjs` is retired (it wrote the old v1 vault); `tools/vault2.mjs` was the one-time upgrade to v2.
+- Vault v2: each question has a random secret wrapped once per accepted answer; all secrets together unlock the content key (`kw`); the editor password unlocks the same key (`ke`). The secrets live inside the encrypted content (`_secrets`) so one answer can change without the others. Media never needs re-encrypting when answers change.
+- Only Mareep in the portfolio nav links to the special site; the other buddies are decoration.
 - Folder names are private: never render them in the public UI, never log them in the browser console, and keep them out of commit messages.
-- There are three questions: a birthday, "My Child's Name", and "My Original Child". Jordan knows the answers; ask him for them when building and never write them into any file.
+- The questions, prompts, hints and how many there are come from the vault (editable in the editor). Today there are three: a birthday, "My Child's Name", and "My Original Child". Never write the answers into any file.
 - Lockouts are in seconds: 7, then 11, repeating, after every 2 further wrong tries once the hint is showing.
 - After the Back button, going forward again must skip the typed line, the montage, the TV-off and the folder animation (`CFG.returnSkips`).
-- After any change to `private.js`, `private.css` or `index.html` there, run `python3 tests/private_flow.py` and make sure it ends with no errors and `folders ready` under 10 seconds.
-- Keep the 4 x 4 settle time under 10 seconds even with collisions (`CFG.fold.settle` is the hard guarantee).
+- After any change to `private.js`, `private.css`, `editor.js` or `index.html` there, run `tests/private_flow.py`, `tests/private_world.py` and `tests/private_editor.py` (the editor test publishes to a fake GitHub only).
+- Keep the folder settle time under 10 seconds even with collisions (`CFG.fold.settle` is the hard guarantee). The folder count comes from the content.
+- The Earth on the folders page flies to 42.115744, -79.983994 and draws the heart map (an encrypted vector JSON, not a photo) from five starting points in about 10 s, waits 4 s, then blurs it behind the books. Slides default to baby blue (#8fb8e6) with bone-white text.
 
 ## Culture Log
 - Covers are self-hosted via `tools/fetch-covers.mjs` (`site/assets/covers/` and `site/js/covers.js`). Do not hotlink images other than the Steam artwork already used for games.

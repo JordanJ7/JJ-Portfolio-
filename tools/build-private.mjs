@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 /*
+  RETIRED: the special site now uses vault v2 and is edited in the page editor (pencil on the first password page).
+  This tool writes the old v1 format, which the page no longer reads, so it refuses to run.
+
   Builds the encrypted vault for the special site (site/special/).
 
   Usage (Node 18+):
@@ -12,6 +15,7 @@
   made from ALL THREE passwords (PBKDF2-SHA256 plus AES-256-GCM). Passwords are read from the environment and are
   never written to disk.
 */
+console.error('build-private.mjs is retired: edit the special site in its page editor instead (see README-v2.md).');process.exit(1);
 import {readFileSync,writeFileSync,mkdirSync,rmSync,existsSync,statSync} from 'node:fs';
 import {pbkdf2Sync,randomBytes,createCipheriv} from 'node:crypto';
 import {join,extname,resolve} from 'node:path';

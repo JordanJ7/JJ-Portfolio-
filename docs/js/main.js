@@ -239,11 +239,15 @@ var Buddy=(function(){
   /* turns a link into a buddy button: hops on hover, sparks on click, then goes to href.
      A new buddy is picked on every page load and every page change inside the site. */
   function link(a,o){
+    var HREF=a.getAttribute('href'),LABEL=a.getAttribute('aria-label'),TITLE=a.getAttribute('title');
     var forced=(/[?&]buddy=([a-z]+)/.exec(location.search)||[])[1];
     var def=ROSTER.filter(function(d){return d.id===forced;})[0]||pick(),m=null;
     function show(d){
       if(m)m.destroy();
       m=mount(a,d,o||{});a.dataset.buddy=d.id;
+      /* only Mareep is a way into the special site; the others are just for fun */
+      if(d.id==='mareep'){a.setAttribute('href',HREF);a.setAttribute('aria-label',LABEL);if(TITLE)a.setAttribute('title',TITLE);a.removeAttribute('role');a.removeAttribute('tabindex');}
+      else{a.removeAttribute('href');a.setAttribute('role','img');a.setAttribute('aria-label',d.id.charAt(0).toUpperCase()+d.id.slice(1));a.removeAttribute('title');}
       if(a.matches(':hover')){m.hover(true);m.wake();}
     }
     show(def);
@@ -257,9 +261,10 @@ var Buddy=(function(){
       if(e.metaKey||e.ctrlKey||e.shiftKey||e.button===1)return;
       if(m.asleep()){e.preventDefault();m.wake();return;}   /* a tap on a sleeping Jirachi just wakes it */
       m.zap();
+      var href=a.getAttribute('href');
+      if(!href){e.preventDefault();return;}             /* not Mareep: sparks, but it goes nowhere */
       if(a.target==='_blank')return;                    /* new tab: let the browser open it right away */
       e.preventDefault();
-      var href=a.getAttribute('href');
       setTimeout(function(){location.assign(href);},RM?0:430);
     });
     return {id:function(){return m.def.id;},asleep:function(){return m.asleep();},next:function(){show(pick());}};
