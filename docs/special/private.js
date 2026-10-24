@@ -834,6 +834,22 @@ window.addEventListener('keydown',function(e){
 /* ------------------------------------------------------------------ Earth: fly in to 42.115744, -79.983994, the heart map draws itself, then the books */
 var TARGET={lat:42.115744,lon:-79.983994,label:'Erie, Pennsylvania'};
 var WORLD={busy:false,map:null,booksShown:false,timers:[]};
+/* soft, puffy clouds: overlapping round puffs with a lit top and a shaded underside, drawn once and reused */
+var CLOUDS=null;
+function cloudSprites(){
+  if(CLOUDS)return CLOUDS;CLOUDS=[];
+  for(var v=0;v<6;v++){
+    var c=D.createElement('canvas'),W2=320,H2=180;c.width=W2;c.height=H2;var x=c.getContext('2d'),puffs=[],n=8+(v%3)*3;
+    for(var i=0;i<n;i++){var t=i/(n-1),px=W2*(.16+.68*t)+rnd(-14,14),py=H2*(.6-Math.sin(t*Math.PI)*.28)+rnd(-10,8),pr=H2*(.16+Math.sin(t*Math.PI)*.2)*rnd(.8,1.15);puffs.push([px,py,pr]);}
+    for(i=0;i<5;i++)puffs.push([W2*rnd(.25,.75),H2*rnd(.55,.7),H2*rnd(.12,.2)]);   /* a fuller base */
+    function layer(dy,col0,col1,k){puffs.forEach(function(p){var g=x.createRadialGradient(p[0],p[1]+dy,p[2]*.15,p[0],p[1]+dy,p[2]*k);g.addColorStop(0,col0);g.addColorStop(.62,col0);g.addColorStop(1,col1);x.fillStyle=g;x.beginPath();x.arc(p[0],p[1]+dy,p[2]*k,0,6.283);x.fill();});}
+    layer(H2*.05,'rgba(196,212,232,.9)','rgba(196,212,232,0)',1.08);    /* shaded underside */
+    layer(0,'rgba(255,255,255,.96)','rgba(255,255,255,0)',1);           /* body */
+    layer(-H2*.04,'rgba(255,255,255,.6)','rgba(255,255,255,0)',.7);      /* lit tops */
+    CLOUDS.push(c);
+  }
+  return CLOUDS;
+}
 function fmtLat(v){return Math.abs(v).toFixed(6)+'° '+(v>=0?'N':'S');}
 function fmtLon(v){return Math.abs(v).toFixed(6)+'° '+(v>=0?'E':'W');}
 async function flyToEarth(ex,ey,er){
@@ -849,7 +865,7 @@ async function flyToEarth(ex,ey,er){
   var hud=$('#hud');hud.classList.add('vis');
   $('#fold').classList.remove('vis');
   var T=RM?600:4600,t0=performance.now(),la0=rnd(-50,60),lo0=rnd(-170,170);
-  var clouds=[];for(var i=0;i<46;i++)clouds.push({a:rnd(0,6.283),d:rnd(.05,1),s:rnd(.6,1.6),z:rnd(0,1)});
+  var clouds=[],CS=cloudSprites();for(var i=0;i<40;i++)clouds.push({a:rnd(0,6.283),d:rnd(.05,1),s:rnd(.7,1.5),z:rnd(0,1),v:i%CS.length,f:Math.random()<.5});
   function ease(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
   await new Promise(function(done){
     (function frame(now){
@@ -865,7 +881,8 @@ async function flyToEarth(ex,ey,er){
       /* clouds rush past near the end */
       if(p>.55){var cp=(p-.55)/.45;
         clouds.forEach(function(c){var z=(c.z+cp*1.6)%1.2,sc=Math.pow(z,2.2)*Math.max(w,h)*.9,x=w/2+Math.cos(c.a)*c.d*w*.4*(1+z*3),y=h/2+Math.sin(c.a)*c.d*h*.4*(1+z*3);
-          ctx.fillStyle='rgba(255,255,255,'+Math.min(.55,z*.6)*(1-Math.max(0,cp-.8)*5)+')';ctx.beginPath();ctx.ellipse(x,y,sc*c.s*.35,sc*.2,0,0,6.283);ctx.fill();});
+          var cw=sc*c.s*.9,ch=cw*.56;ctx.globalAlpha=Math.max(0,Math.min(.9,z*.95)*(1-Math.max(0,cp-.8)*5));
+          ctx.save();ctx.translate(x,y);if(c.f)ctx.scale(-1,1);ctx.drawImage(CS[c.v],-cw/2,-ch/2,cw,ch);ctx.restore();ctx.globalAlpha=1;});
         ctx.fillStyle='rgba(243,238,230,'+Math.max(0,(cp-.55)/.45)+')';ctx.fillRect(0,0,w,h);   /* into the paper */
       }
       var k=Math.min(1,p/.8),kk=1-Math.pow(1-k,3);
@@ -892,8 +909,11 @@ function globe(ctx,x,y,r,e,now){
   L.forEach(function(b){ctx.beginPath();ctx.ellipse(x+b[0]*r,y+b[1]*r,b[2]*r,b[3]*r,b[4],0,6.283);ctx.fill();});
   ctx.fillStyle='#a9e6a3';
   L.forEach(function(b){ctx.beginPath();ctx.ellipse(x+b[0]*r-b[2]*r*.08,y+b[1]*r-b[3]*r*.1,b[2]*r*.7,b[3]*r*.66,b[4],0,6.283);ctx.fill();});
-  var cl=[[-.3,-.35,.25,.04],[.25,.25,.3,.05],[.1,-.5,.2,.035],[-.45,.45,.22,.04]];ctx.fillStyle='rgba(255,255,255,'+(.5*(1-e))+')';
-  cl.forEach(function(c){ctx.beginPath();ctx.ellipse(x+c[0]*r+Math.sin(now/2000)*r*.02,y+c[1]*r,c[2]*r,c[3]*r,-.15,0,6.283);ctx.fill();});
+  /* a layer of puffy clouds drifting over the planet, thinning out as we get close */
+  var CS=cloudSprites(),cl=[[-.32,-.36,.34],[.26,.24,.4],[.08,-.52,.28],[-.46,.44,.3],[.5,-.12,.26],[-.12,.12,.2],[.36,.56,.24],[-.6,-.04,.22]],dr=Math.sin(now/2600)*r*.025;
+  ctx.globalAlpha=Math.max(0,.85*(1-e*1.15));
+  cl.forEach(function(c,i){var cw=c[2]*r,ch=cw*.56;ctx.drawImage(CS[i%CS.length],x+c[0]*r+dr*(i%2?1:-1)-cw/2,y+c[1]*r-ch/2,cw,ch);});
+  ctx.globalAlpha=1;
   if(e>.55){   /* the Great Lakes appear: Lake Erie just north of the point */
     var a=Math.min(1,(e-.55)/.3);ctx.globalAlpha=a;ctx.fillStyle='#5aa6e0';
     ctx.beginPath();ctx.ellipse(x-r*.004,y-r*.0035,r*.012,r*.0028,-.42,0,6.283);ctx.fill();
@@ -931,9 +951,10 @@ function drawMap(M){
     var wmax=1;M.roads.forEach(function(r){wmax=Math.max(wmax,Math.min(wave0(r.a[0],r.a[1]),wave0(r.b[0],r.b[1])));});M.buildings.forEach(function(b){wmax=Math.max(wmax,wave0(b.c[0],b.c[1]));});
     function wave(x,y){return wave0(x,y)/wmax;}   /* 0 at a starting point, 1 at the farthest line: the whole drawing takes about 10 seconds */
     function draw(path,len,delay,dur){
-      path.style.strokeDasharray=len+' '+len;path.style.strokeDashoffset=D0?len:0;
+      var pad=Math.max(M.heartW,M.roadW)+8;   /* keeps the rounded line ends out of sight until the line starts */
+      path.style.strokeDasharray=len+' '+(len+pad*2);path.style.strokeDashoffset=D0?len+pad:0;
       if(!D0)return;
-      var a=path.animate([{strokeDashoffset:len},{strokeDashoffset:0}],{duration:dur,delay:delay,easing:'cubic-bezier(.45,.1,.35,1)',fill:'forwards'});anims.push(a);ends.push(delay+dur);
+      var a=path.animate([{strokeDashoffset:len+pad},{strokeDashoffset:0}],{duration:dur,delay:delay,easing:'cubic-bezier(.45,.1,.35,1)',fill:'forwards'});anims.push(a);ends.push(delay+dur);
     }
     M.heart.forEach(function(d){var p=sv('path',{d:d});gH.appendChild(p);draw(p,p.getTotalLength(),0,4200);});
     M.roads.forEach(function(r){
