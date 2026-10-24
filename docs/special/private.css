@@ -214,20 +214,21 @@ body.hidem #mareep{opacity:0;pointer-events:none}
 #earthBtn{position:absolute;z-index:4;border-radius:50%;border:0;background:transparent;padding:0;cursor:pointer;display:none}
 #earthBtn.vis{display:block}
 #earthBtn:focus-visible{outline:2px solid #ffe14d;outline-offset:4px}
-#jam{position:absolute;z-index:4;width:clamp(150px,22vw,220px);pointer-events:none;opacity:0;transition:opacity .8s ease;filter:drop-shadow(0 0 10px rgba(80,150,255,.55)) drop-shadow(0 4px 0 rgba(0,0,0,.35))}
-#jam.vis{opacity:1}
+#jam{position:absolute;z-index:4;width:clamp(150px,20vw,220px);pointer-events:none;opacity:0;--glow:#ffb8dc}
 #jam svg{display:block;width:100%;height:auto;overflow:visible}
-#jam .jtext{animation:jambounce 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-#jam .jarrow{transform-box:view-box;transform-origin:115px 65px}
-#jam.l .jarrow{transform:scaleX(1)}
-#jam.r .jarrow{transform:scaleX(-1)}
-#jam.t .jarrow{transform:scaleY(1)}
-#jam.r.t .jarrow{transform:scaleX(-1)}
-#jam.l.b .jarrow{transform:scaleY(-1)}
-#jam.r.b .jarrow{transform:scale(-1,-1)}
+#jam.vis{opacity:1;animation:neonOn 1.7s steps(1,end) both,neonBuzz 9s 2.4s infinite steps(1,end)}
+#jam .jtext{filter:drop-shadow(0 0 4px var(--glow)) drop-shadow(0 0 12px var(--glow)) drop-shadow(0 0 26px rgba(185,160,255,.7))}
 #jam .jstars{animation:twinkle 1.2s ease-in-out infinite alternate}
-@keyframes jambounce{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-4px) scale(1.04)}}
+#jamArrow{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;overflow:visible;opacity:0}
+#jamArrow.vis{opacity:1;animation:neonOn 1.7s .45s steps(1,end) both,neonBuzz 11s 3.1s infinite steps(1,end)}
+#jamArrow .jaLine{fill:none;stroke:url(#jams);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 4px #b8f0ff) drop-shadow(0 0 12px rgba(184,220,255,.8))}
+#jamArrow .jaHead{fill:#bfe0ff;stroke:#ffffff;stroke-width:1.5;stroke-linejoin:round;filter:drop-shadow(0 0 4px #b8f0ff) drop-shadow(0 0 12px rgba(184,220,255,.8))}
+/* a neon tube warming up: dark, a couple of stutters, then on */
+@keyframes neonOn{0%{opacity:0}8%{opacity:.85}11%{opacity:.1}17%{opacity:.95}20%{opacity:.25}24%{opacity:.6}27%{opacity:.05}40%{opacity:1}44%{opacity:.35}47%{opacity:1}100%{opacity:1}}
+/* now and then it buzzes */
+@keyframes neonBuzz{0%,91%{opacity:1}92%{opacity:.35}93%{opacity:1}95%{opacity:.55}96%,100%{opacity:1}}
 @keyframes twinkle{to{opacity:.3}}
+@media (prefers-reduced-motion:reduce){#jam.vis,#jamArrow.vis{animation:none}}
 
 /* ---------- world: flight, map, books ---------- */
 #world{background:#f3eee6;z-index:12;overflow:hidden}

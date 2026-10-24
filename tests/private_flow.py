@@ -67,7 +67,7 @@ with sync_playwright() as p:
     check('"There\u2019s More" cursor does not move while typing',abs(y0-y1)<0.5 and len(mt)>0,f'{y0:.1f} -> {y1:.1f} text="{mt}"')
     pg.wait_for_function("__fy.stage==='montage'",timeout=8000); pg.wait_for_timeout(800)
     check('Mareep hides during the montage',float(pg.evaluate("getComputedStyle(document.getElementById('mareep')).opacity"))<0.2)
-    pg.wait_for_function("__fy.stage==='tvoff'",timeout=8000)
+    pg.wait_for_function("__fy.stage==='tvoff'",timeout=16000)   # montage + the pause before the TV switches off
     t0=time.time(); pg.wait_for_function("__fy.stage==='folders-ready'",timeout=16000); dt=time.time()-t0
     st=pg.evaluate("({settle:__fy.settleMs,maxErr:Math.max(...__fy.bodies.map(b=>Math.hypot(b.x-__fy.slots[b.i].x,b.y-__fy.slots[b.i].y))),ready:[...document.querySelectorAll('.fld.ready')].length,stars:__fy.particlesRef().stars.length,circ:__fy.particlesRef().circs.length})")
     check('folders settle in under 10s',st['settle']<10000 and st['maxErr']<0.5 and st['ready']==16,str(st))

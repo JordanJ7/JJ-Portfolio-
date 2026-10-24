@@ -445,21 +445,31 @@ async function montage(){
   }
   await until(due);
   /* the ending: the vertical video, played all the way through, then a pause before the TV switches off */
+  live.forEach(function(v){v.pause();});
   if(fin){
-    live.forEach(function(v){v.pause();});
     var shade=el('div','mshade');st.appendChild(shade);
-    var fc=el('div','mcard mfinale'),fv=D.createElement('video');fv.playsInline=true;fv.src=fin.url;fc.appendChild(fv);st.appendChild(fc);
-    void fc.offsetWidth;shade.classList.add('on');fc.classList.add('on');
+    var fc=el('div','mcard mfinale'),fv=D.createElement('video');fv.playsInline=true;fv.preload='auto';fv.src=fin.url;fc.appendChild(fv);st.appendChild(fc);
     window.__fy.finale=fv;
-    await new Promise(function(done){
-      var ended=false;function end(){if(ended)return;ended=true;done();}
-      fv.onended=end;fv.onerror=end;
-      var p1=fv.play();
-      if(p1&&p1.catch)p1.catch(function(){fv.muted=true;var p2=fv.play();if(p2&&p2.catch)p2.catch(end);});
-      fv.onloadedmetadata=function(){if(!isFinite(fv.duration))return;setTimeout(end,(fv.duration+8)*1000);};   /* never get stuck */
-    });
-    await sleep(RM?0:(+M.holdMs||3000));
+    /* wait until it can actually play (or give up after a few seconds), then show it and play it to the end */
+    var playable=await new Promise(function(r){if(fv.readyState>=3){r(true);return;}fv.oncanplay=function(){r(true);};fv.onerror=function(){r(false);};setTimeout(function(){r(fv.readyState>=2);},6000);});
+    if(playable&&fv.videoWidth&&fv.videoHeight)fc.style.aspectRatio=fv.videoWidth+'/'+fv.videoHeight;
+    void fc.offsetWidth;shade.classList.add('on');fc.classList.add('on');
+    if(playable){
+      await new Promise(function(done){
+        var ended=false;function end(){if(ended)return;ended=true;done();}
+        fv.onended=end;fv.onerror=end;
+        var p1=fv.play();
+        if(p1&&p1.catch)p1.catch(function(){fv.muted=true;var p2=fv.play();if(p2&&p2.catch)p2.catch(end);});
+        setTimeout(end,((isFinite(fv.duration)?fv.duration:120)+8)*1000);   /* never get stuck */
+      });
+    }else{   /* this browser cannot play the file: show its still frame instead */
+      fv.remove();var M2=S.content.montage||{},pst=M2.finale&&(M2.finale.poster||M2.finale.thumb);
+      if(pst){try{var pm=await media(pst.id,pst.mime),im=new Image();im.src=pm.url;fc.appendChild(im);}catch(e){}}
+      await sleep(2500);
+    }
   }
+  /* always a pause before the TV switches off */
+  await sleep(RM?0:(+M.holdMs||3000));
   live.forEach(function(v){v.pause();});
 }
 async function tvOff(){
@@ -560,7 +570,7 @@ function foldersScene(){
       bodies.push({i:i,el:b,x:-999,y:-999,vx:0,vy:0,r:0,spawned:false,entered:false,at:0,born:0});
     });
     layout();
-    window.addEventListener('resize',function(){layout();if(isReady)place(true);});
+    window.addEventListener('resize',function(){layout();jamAt=null;arrow.style.width='';if(isReady)place(true);});
     function place(snap){bodies.forEach(function(b){if(snap){b.x=slots[b.i].x;b.y=slots[b.i].y;b.vx=b.vy=0;}draw1(b);});}
     function draw1(b){b.el.style.transform='translate('+(b.x-size/2)+'px,'+(b.y-size*.4)+'px)';}
     function ready(){
@@ -651,19 +661,46 @@ function foldersScene(){
       ctx.fillStyle=sh;ctx.fillRect(x-r,y-r,r*2,r*2);ctx.restore();
       ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.lineWidth=Math.max(1,r*.07);ctx.strokeStyle='rgba(205,234,255,.5)';ctx.stroke();
     }
-    var earthBtn=$('#earthBtn'),arrow=$('#jam');
+    var earthBtn=$('#earthBtn'),arrow=$('#jam'),jaSvg=$('#jamArrow'),jaLine=$('.jaLine',jaSvg),jaHead=$('.jaHead',jaSvg),jamAt=null;
+    function hideJam(){earthBtn.classList.remove('vis');arrow.classList.remove('vis');jaSvg.classList.remove('vis');}
     function placeEarth(){
       var p=planets[1];
-      if(!p||p.off||!p.spawned||p.a<.9||!(S.content.books||[]).length&&!S.content.map){earthBtn.classList.remove('vis');arrow.classList.remove('vis');return;}
+      if(!p||p.off||!p.spawned||p.a<.9||!(S.content.books||[]).length&&!S.content.map){hideJam();return;}
       var r=p.r*1.25,ex=p.x,ey=p.y+Math.sin(p.ph*.9)*2.2;
       earthBtn.style.cssText='left:'+(ex-r)+'px;top:'+(ey-r)+'px;width:'+(r*2)+'px;height:'+(r*2)+'px';
-      earthBtn.classList.add('vis');earthBtn.onclick=function(){flyToEarth(ex,ey,p.r);};
+      earthBtn.classList.add('vis');earthBtn.onclick=function(){hideJam();flyToEarth(ex,ey,p.r);};
       if(!isReady)return;
-      /* the arrow sits on whichever side has room and points at the planet */
-      var aw=arrow.offsetWidth||190,ah=arrow.offsetHeight||110,left=ex>W/2,top=ey>H/2;
-      var ax=left?ex-r-aw*.92:ex+r-aw*.08,ay=top?ey-r-ah*.8:ey+r-ah*.2;
-      ax=Math.max(6,Math.min(W-aw-6,ax));ay=Math.max(54,Math.min(H-ah-6,ay));
-      arrow.className='vis '+(left?'l':'r')+(top?'t':'b');arrow.style.left=ax+'px';arrow.style.top=ay+'px';
+      /* the sign sits off toward the middle of the screen (where there is room), and the arrow runs from it to the planet */
+      var aw=arrow.offsetWidth||200,ah=arrow.offsetHeight||64;
+      if(!jamAt){   /* try spots around the planet: on screen, clear of the folders and the other planet; shrink the sign if nothing fits */
+        var gx0=W/2-G.w/2-10,gx1=W/2+G.w/2+10,gy0=H/2-G.h/2-10,gy1=H/2+G.h/2+10,o=planets[0],best=null,px0=p.tx,py0=p.ty,full=Math.min(220,Math.max(150,W*.2));
+        [1,.82,.68,.56].some(function(f){
+          var bw=full*f,bh=bw*78/250;best=null;
+          for(var dd=0;dd<7;dd++)for(var k=0;k<24;k++){
+            var ang=k/24*Math.PI*2,dist=r+70+dd*36+Math.hypot(bw,bh)/2,cx=px0+Math.cos(ang)*dist,cy=py0+Math.sin(ang)*dist*.8;
+            var l=cx-bw/2,t0=cy-bh/2,rr=cx+bw/2,b0=cy+bh/2;
+            if(l<8||rr>W-8||t0<56||b0>H-8)continue;
+            var hitG=!(rr<gx0||l>gx1||b0<gy0||t0>gy1),hitO=o&&!o.off&&Math.hypot(cx-o.x,cy-o.y)<o.r*2.4+bw/2;
+            if(hitG||hitO)continue;
+            var sc=dist+(Math.sin(ang)>.3?40:0);
+            if(!best||sc<best.s)best={s:sc,x:cx,y:cy,w:bw};
+          }
+          return !!best;
+        });
+        if(!best)best={x:Math.max(full*.28+8,Math.min(W-full*.28-8,px0)),y:Math.max(56+full*.1,py0-r-80),w:full*.56};
+        arrow.style.width=best.w+'px';aw=best.w;ah=aw*78/250;
+        jamAt={x:best.x,y:best.y};   /* a fixed spot on screen; only the arrow's tip follows the bobbing planet */
+      }else{aw=arrow.offsetWidth;ah=arrow.offsetHeight;}
+      var sx=jamAt.x,sy=jamAt.y;
+      arrow.style.left=(sx-aw/2)+'px';arrow.style.top=(sy-ah/2)+'px';
+      /* start just outside the sign, on the side facing the planet; end just short of the planet */
+      var vx=ex-sx,vy=ey-sy,vl=Math.hypot(vx,vy)||1,nx=vx/vl,ny=vy/vl;
+      var t=Math.min(Math.abs(aw/2/(nx||1e-6)),Math.abs(ah/2/(ny||1e-6)))+10,x0=sx+nx*t,y0=sy+ny*t,x1=ex-nx*(r+10),y1=ey-ny*(r+10);
+      var side=(nx>=0?1:-1)*(ny>=0?-1:1),len=Math.hypot(x1-x0,y1-y0),qx=(x0+x1)/2+(-ny)*len*.32*side,qy=(y0+y1)/2+nx*len*.32*side;
+      jaLine.setAttribute('d','M'+x0.toFixed(1)+' '+y0.toFixed(1)+' Q'+qx.toFixed(1)+' '+qy.toFixed(1)+' '+x1.toFixed(1)+' '+y1.toFixed(1));
+      var tx=x1-qx,ty=y1-qy,tl=Math.hypot(tx,ty)||1;tx/=tl;ty/=tl;var hs=16;
+      jaHead.setAttribute('d','M'+(x1+tx*4).toFixed(1)+' '+(y1+ty*4).toFixed(1)+' L'+(x1-tx*hs-ty*hs*.6).toFixed(1)+' '+(y1-ty*hs+tx*hs*.6).toFixed(1)+' L'+(x1-tx*hs+ty*hs*.6).toFixed(1)+' '+(y1-ty*hs-tx*hs*.6).toFixed(1)+' Z');
+      if(len>24){arrow.classList.add('vis');jaSvg.classList.add('vis');}
     }
     function drawPlanets(){
       planets.forEach(function(p){
@@ -744,7 +781,7 @@ function foldersScene(){
       if(!paused)raf=requestAnimationFrame(frame);
     }
     SCENE={
-      pause:function(){paused=true;cancelAnimationFrame(raf);earthBtn.classList.remove('vis');arrow.classList.remove('vis');},
+      pause:function(){paused=true;cancelAnimationFrame(raf);hideJam();},
       resume:function(){if(!paused)return;paused=false;layout();if(isReady)place(true);last=performance.now();raf=requestAnimationFrame(frame);},
       show:function(){D.body.classList.add('dark');SCENE.resume();on('fold');stageName('folders-ready');setTimeout(function(){$('#backBtn').classList.add('vis');},500);return Promise.resolve();}
     };
