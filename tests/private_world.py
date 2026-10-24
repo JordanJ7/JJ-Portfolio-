@@ -1,6 +1,6 @@
 """Earth trip test: from the folders, click Earth, fly in, watch the heart map draw, see the books, hide/show them, open the reader, go back.
 Usage: python3 tests/private_world.py [width height]   (needs the site at http://localhost:8000/)
-Set PW1, PW2 and PW3 (the three answers) in the environment; they are never stored in the repo."""
+Set PW1, PW2 and PW3 (the three answers) and PW4 (the Earth password) in the environment; they are never stored in the repo."""
 import os,sys,time
 from playwright.sync_api import sync_playwright
 import tempfile
@@ -15,7 +15,8 @@ with sync_playwright() as p:
     pg.wait_for_function("__fy.stage==='folders-ready'",timeout=20000); pg.wait_for_timeout(1200)
     pg.screenshot(path=f'{S}/w_{tag}_0folders.png')
     print('earth btn visible',pg.evaluate("document.getElementById('earthBtn').classList.contains('vis')"),'arrow',pg.evaluate("document.getElementById('jam').className"))
-    pg.click('#earthBtn'); t0=time.time()
+    pg.click('#earthBtn')
+    pg.wait_for_function("__fy.stage==='earth-lock-ready'",timeout=10000); pg.keyboard.type(os.environ['PW4']); pg.keyboard.press('Enter'); t0=time.time()
     pg.wait_for_timeout(1800); pg.screenshot(path=f'{S}/w_{tag}_1fly.png')
     pg.wait_for_function("__fy.stage==='map'",timeout=15000); print('flight took',round(time.time()-t0,1),'s')
     pg.wait_for_timeout(3500); pg.screenshot(path=f'{S}/w_{tag}_2drawing.png')

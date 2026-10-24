@@ -230,6 +230,24 @@ body.hidem #mareep{opacity:0;pointer-events:none}
 @keyframes twinkle{to{opacity:.3}}
 @media (prefers-reduced-motion:reduce){#jam.vis,#jamArrow.vis{animation:none}}
 
+/* ---------- Earth password: the folders blur behind the same cursor as the start ---------- */
+#egate{position:fixed;inset:0;z-index:25;display:none;align-items:center;justify-content:center;background:rgba(6,10,20,.38);backdrop-filter:blur(16px) saturate(.9);-webkit-backdrop-filter:blur(16px) saturate(.9);opacity:0;transition:opacity .5s ease;cursor:text;color:#bcd8f5}
+#egate.on{display:flex}
+#egate.vis{opacity:1}
+#egate .logbox{position:relative;width:min(760px,90vw);height:120px;display:flex;align-items:center;justify-content:center}
+#egate .ehint{position:absolute;left:0;right:0;top:-26px;text-align:center;font:400 clamp(14px,2.2vw,18px) var(--mono);letter-spacing:.18em;text-transform:lowercase;opacity:0;transition:opacity 1s ease}
+#egate .ehint.vis{opacity:.85}
+#egate .eprompt{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-50% + var(--py,0px)));text-align:center;font:400 clamp(22px,4vw,38px) var(--mono);letter-spacing:.04em;opacity:0;text-shadow:0 0 18px rgba(143,184,230,.35)}
+#egate .eline{display:flex;align-items:baseline;justify-content:center;max-width:100%;overflow:hidden;white-space:pre;font:400 clamp(28px,5.2vw,48px)/1.5 var(--mono);letter-spacing:.06em;height:1.5em}
+#egate .etyped{white-space:pre}
+#egate .etyped:empty::before{content:"\200b"}
+#egate .caret{background:#bcd8f5}
+#egate .eline.wiggle{animation:wig .38s ease}
+#egate .efield{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0;top:0}
+#egate .ex{position:absolute;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));width:40px;height:40px;border-radius:50%;border:1px solid rgba(188,216,245,.3);background:rgba(188,216,245,.08);color:#cfe6fb;display:grid;place-items:center;cursor:pointer}
+#egate .ex:hover{background:rgba(188,216,245,.18)}
+#egate .ex svg{width:16px;height:16px}
+
 /* ---------- world: flight, map, books ---------- */
 #world{background:#f3eee6;z-index:12;overflow:hidden}
 #world.flying{background:#03060d}

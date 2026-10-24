@@ -404,7 +404,7 @@ function tabAccess(m){
     var r=el('div','edRow');
     r.appendChild(field('Prompt (typed above the line)',q.prompt,function(v){q.prompt=v;},{placeholder:i===0?'nothing: just the blinking line':''}));
     r.appendChild(field('Hint (after 2 wrong tries)',q.hint,function(v){q.hint=v;}));
-    var kw=el('label','edField'),sel=el('select');sel.innerHTML='<option value="digits">Numbers (leading zeros ignored)</option><option value="text">Words</option>';sel.value=q.kind||'text';
+    var kw=el('label','edField'),sel=el('select');sel.innerHTML='<option value="digits">Numbers (leading zeros ignored)</option><option value="date">Date (only the digits count)</option><option value="text">Words</option>';sel.value=q.kind||'text';
     sel.onchange=function(){toast('To switch between numbers and words, change the answers too (so they are saved the new way).');sel.value=q.kind||'text';};
     kw.appendChild(el('span','edLab','Kind of answer'));kw.appendChild(sel);r.appendChild(kw);
     c.appendChild(r);
@@ -413,6 +413,36 @@ function tabAccess(m){
     m.appendChild(c);
   });
   m.appendChild(btn('+ Add a question',function(){addQuestion();},'pri'));
+  /* Earth's own password, asked when the planet is clicked */
+  var eq=E.vault.earth,ce=card('Earth password',eq?[btn('Remove',async function(){
+    var r=await ask('Remove the Earth password',[{label:'Its current answer',type:'password',note:'Needed to remove it. Without it, anyone who gets in can fly to the map and books.'}],'Remove');
+    if(!r)return;if(!await API.unwrapAnswer(eq,r.values[0])){r.msg.textContent='That is not the current answer.';await sleep(700);r.close();return;}
+    delete E.vault.earth;r.close();changed();render();toast('Earth no longer asks for a password.');},'bad')]:[]);
+  if(eq){
+    var er=el('div','edRow');
+    er.appendChild(field('Prompt',eq.prompt,function(v){eq.prompt=v;}));
+    er.appendChild(field('Hint (after 2 wrong tries)',eq.hint,function(v){eq.hint=v;},{placeholder:'optional'}));
+    ce.appendChild(er);
+    ce.appendChild(el('p','edNote','Kind of answer: '+({date:'date (slashes, dashes or just the digits all work)',digits:'numbers',text:'words'}[eq.kind]||eq.kind)+'. '+eq.w.length+' accepted answer'+(eq.w.length>1?'s':'')+'.'));
+    ce.appendChild(btn('Change the answer\u2026',async function(){
+      while(true){
+        var r=await ask('Change the Earth password',[{label:'Current answer',type:'password'},{label:'Kind of answer',options:[['date','Date'],['digits','Numbers'],['text','Words']],value:eq.kind||'date'},{label:'New accepted answers',area:true,placeholder:'one per line'}],'Change');
+        if(!r)return;r.msg.textContent='Checking\u2026';
+        var sec=await API.unwrapAnswer(eq,r.values[0]);
+        if(!sec){r.msg.textContent='That is not the current answer.';await sleep(700);r.close();continue;}
+        var ans=lines(r.values[2]);if(!ans.length){r.close();toast('Type at least one answer.',true);continue;}
+        var nq=Object.assign({},eq,{kind:r.values[1]});nq.w=await wrapAnswers(nq,ans,sec);E.vault.earth=nq;r.close();changed();render();toast('Earth password changed.');return;
+      }
+    }));
+  }else{
+    ce.appendChild(el('p','edNote','Earth opens without a password.'));
+    ce.appendChild(btn('Add a password for Earth\u2026',async function(){
+      var r=await ask('Add a password for Earth',[{label:'Prompt',value:'The Date We Started Dating'},{label:'Hint',placeholder:'optional'},{label:'Kind of answer',options:[['date','Date'],['digits','Numbers'],['text','Words']]},{label:'Accepted answers',area:true,placeholder:'one per line'}],'Add');
+      if(!r)return;var ans=lines(r.values[3]);if(!ans.length){r.close();toast('Type at least one answer.',true);return;}
+      var q2={prompt:r.values[0],hint:r.values[1],kind:r.values[2],w:[]};q2.w=await wrapAnswers(q2,ans,crypto.getRandomValues(new Uint8Array(32)));E.vault.earth=q2;r.close();changed();render();
+    }));
+  }
+  m.appendChild(ce);
   var c2=card('Editor password');
   c2.appendChild(el('p','edNote','The password for this editor. You need the current one to set a new one.'));
   c2.appendChild(btn('Change the editor password…',changeEditorPw));
@@ -435,7 +465,7 @@ function lines(v){return String(v||'').split(/\n|,/).map(function(s){return s.tr
 async function changeAnswers(i){
   var q=E.vault.q[i];
   while(true){
-    var r=await ask('Change the answers for question '+(i+1),[{label:'Current answer',type:'password'},{label:'Kind of answer',options:[['digits','Numbers'],['text','Words']],value:q.kind||'text'},{label:'New accepted answers',area:true,placeholder:'one per line',note:'Every line is a right answer. The first is the main one.'}],'Change answers');
+    var r=await ask('Change the answers for question '+(i+1),[{label:'Current answer',type:'password'},{label:'Kind of answer',options:[['digits','Numbers'],['date','Date'],['text','Words']],value:q.kind||'text'},{label:'New accepted answers',area:true,placeholder:'one per line',note:'Every line is a right answer. The first is the main one.'}],'Change answers');
     if(!r)return;
     r.msg.textContent='Checking…';
     var sec=await API.unwrapAnswer(Object.assign({},q,{w:q.w}),r.values[0]);
@@ -447,7 +477,7 @@ async function changeAnswers(i){
   }
 }
 async function addQuestion(){
-  var r=await ask('Add a question',[{label:'Prompt',placeholder:'what visitors see'},{label:'Hint',placeholder:'after 2 wrong tries'},{label:'Kind of answer',options:[['text','Words'],['digits','Numbers']]},{label:'Accepted answers',area:true,placeholder:'one per line'}],'Add question');
+  var r=await ask('Add a question',[{label:'Prompt',placeholder:'what visitors see'},{label:'Hint',placeholder:'after 2 wrong tries'},{label:'Kind of answer',options:[['text','Words'],['digits','Numbers'],['date','Date']]},{label:'Accepted answers',area:true,placeholder:'one per line'}],'Add question');
   if(!r)return;var ans=lines(r.values[3]);if(!ans.length){r.close();toast('A question needs at least one answer.',true);return;}
   var sec=crypto.getRandomValues(new Uint8Array(32)),q={prompt:r.values[0],hint:r.values[1],kind:r.values[2],w:[]};
   q.w=await wrapAnswers(q,ans,sec);E.vault.q.push(q);E.c._secrets.push(API.toB64(sec));await rewrapContentKey();r.close();changed();render();toast('Question added. Visitors now answer '+E.vault.q.length+' questions.');

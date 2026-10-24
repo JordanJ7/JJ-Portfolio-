@@ -37,6 +37,7 @@ function toB64(u8){var s='',c=0x8000;for(var i=0;i<u8.length;i+=c)s+=String.from
 function hex(u){var s='';for(var i=0;i<u.length;i++)s+=('0'+u[i].toString(16)).slice(-2);return s;}
 var NORM={
   digits:function(v){var s=String(v).replace(/\s+/g,'');return /^\d+$/.test(s)?s.replace(/^0+/,''):s;},   /* leading zeros do not matter */
+  date:function(v){return String(v).replace(/\D+/g,'').replace(/^0+/,'');},   /* 1/31/2020, 1-31-2020 and 1312020 are the same */
   text:function(v){return String(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase().replace(/\s+/g,' ');}
 };
 function normQ(q,v){return (NORM[q.kind]||NORM.text)(v);}
@@ -668,7 +669,7 @@ function foldersScene(){
       if(!p||p.off||!p.spawned||p.a<.9||!(S.content.books||[]).length&&!S.content.map){hideJam();return;}
       var r=p.r*1.25,ex=p.x,ey=p.y+Math.sin(p.ph*.9)*2.2;
       earthBtn.style.cssText='left:'+(ex-r)+'px;top:'+(ey-r)+'px;width:'+(r*2)+'px;height:'+(r*2)+'px';
-      earthBtn.classList.add('vis');earthBtn.onclick=function(){hideJam();flyToEarth(ex,ey,p.r);};
+      earthBtn.classList.add('vis');earthBtn.onclick=function(){earthGate().then(function(ok){if(ok){hideJam();flyToEarth(ex,ey,p.r);}});};
       if(!isReady)return;
       /* the sign sits off toward the middle of the screen (where there is room), and the arrow runs from it to the planet */
       var aw=arrow.offsetWidth||200,ah=arrow.offsetHeight||64;
@@ -833,6 +834,47 @@ window.addEventListener('keydown',function(e){
 
 /* ------------------------------------------------------------------ Earth: fly in to 42.115744, -79.983994, the heart map draws itself, then the books */
 var TARGET={lat:42.115744,lon:-79.983994,label:'Erie, Pennsylvania'};
+/* Earth has its own password: the screen blurs, the prompt floats up and away like the ones at the start, then the cursor waits */
+var EG={open:false,ok:false,fails:0};
+function earthGate(){
+  var q=S.vault&&S.vault.earth;
+  if(!q||EG.ok)return Promise.resolve(true);
+  if(EG.open)return Promise.resolve(false);
+  EG.open=true;stageName('earth-lock');
+  var g=$('#egate'),pr=$('.eprompt',g),ln=$('.eline',g),ty=$('.etyped',g),ca=$('.caret',g),hi=$('.ehint',g),fd=$('.efield',g),busy=false;
+  fd.inputMode=q.kind==='text'?'text':'numeric';fd.value='';ty.textContent='';hi.classList.remove('vis');hi.textContent=q.hint||'';ca.classList.add('hide');fd.disabled=true;
+  g.classList.add('on');void g.offsetWidth;g.classList.add('vis');
+  return new Promise(function(done){
+    function close(ok){
+      g.classList.remove('vis');fd.blur();EG.open=false;
+      setTimeout(function(){g.classList.remove('on');},500);
+      if(!ok)stageName('folders-ready');
+      done(ok);
+    }
+    function sync(){ty.textContent=fd.value;}
+    async function submit(){
+      if(busy||fd.disabled||!fd.value.trim())return;busy=true;
+      var sec=await unwrapAnswer(q,fd.value);busy=false;
+      if(sec){EG.ok=true;close(true);return;}
+      EG.fails++;fd.value='';sync();ln.classList.remove('wiggle');void ln.offsetWidth;ln.classList.add('wiggle');
+      if(EG.fails>=CFG.hintAfter&&q.hint)hi.classList.add('vis');
+    }
+    fd.oninput=sync;
+    fd.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();submit();}else if(e.key==='Escape'){e.preventDefault();close(false);}};
+    g.onpointerdown=function(e){if(e.target.closest('.ex'))return;if(!fd.disabled)setTimeout(function(){fd.focus();},0);};
+    $('.ex',g).onclick=function(){close(false);};
+    /* the same prompt animation as the questions at the start */
+    var P=CFG.prompt;
+    pr.textContent=q.prompt||'';pr.style.transition='none';pr.style.opacity=0;pr.style.setProperty('--py','12px');void pr.offsetWidth;
+    setTimeout(function(){
+      pr.style.transition='opacity '+P.fadeIn+'ms ease,transform '+P.fadeIn+'ms ease';pr.style.opacity=1;pr.style.setProperty('--py','0px');
+      setTimeout(function(){
+        pr.style.transition='opacity '+P.fadeOut+'ms ease,transform '+P.fadeOut+'ms cubic-bezier(.3,.6,.3,1)';pr.style.opacity=0;pr.style.setProperty('--py',(-P.rise)+'px');
+        setTimeout(function(){ca.classList.remove('hide');fd.disabled=false;try{fd.focus();}catch(e){}stageName('earth-lock-ready');},Math.round(P.fadeOut*.45));
+      },P.fadeIn+P.hold);
+    },RM?0:350);
+  });
+}
 var WORLD={busy:false,map:null,booksShown:false,timers:[]};
 /* soft, puffy clouds: overlapping round puffs with a lit top and a shaded underside, drawn once and reused */
 var CLOUDS=null;
