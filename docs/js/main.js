@@ -376,31 +376,31 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
   function pageResume(){
     return '<div class="pg"><div class="btns"><a href="assets/Jordan-James-Resume.pdf" download>Download PDF</a><button type="button" onclick="window.print()">Print</button><a href="#/certifications">See certifications</a></div>'+
     '<div class="paper"><h1>Jordan James</h1><p class="contactline">Erie, PA &middot; <a href="mailto:saojmj123456@gmail.com">saojmj123456@gmail.com</a> &middot; <a href="https://www.linkedin.com/in/jordan-james07/" target="_blank" rel="noopener">linkedin.com/in/jordan-james07</a> &middot; <a href="#/flx-edits">Edits</a></p>'+
-    '<h2>Summary</h2><ul><li>Digital Media, Arts &amp; Technology graduate experienced in IT support, network hardware installation, and 3D/game design.</li><li>Google-certified (Coursera) in AI engineering and prompting, building AI-powered apps with Claude Code.</li></ul>'+
+    '<h2>Summary</h2><ul><li>IT support technician with nearly three years of help desk experience, resolving 40+ tickets weekly in ServiceNow.</li><li>Trained in computer networking, with hands-on hardware repair, network installation, and customer service skills.</li></ul>'+
     '<h2>Education &amp; certifications</h2>'+
     job('The Pennsylvania State University, Erie, PA','May 2025','Bachelor of Arts, Digital Media, Arts &amp; Technology. Minor: Game Development',[])+
-    job('Erie County Technical School, Erie, PA','August 2018 &ndash; May 2020','Focus: Computer Networking',['Coursework: designing, installing, and troubleshooting computer and A/V network systems; LANs, WANs, OSI model, Ethernet, IP addressing, routers and router programming, and cabling.'])+
-    '<ul><li>Coursera: AI Engineering and Prompting (Google Gemini, Google AI Studio). Completed. <a href="#/certifications">All credentials</a></li><li>Sony Pictures Animation &amp; Imageworks: This Is Animation, Yellowbrick Program. Completed June 2025.</li><li>Penn State Bridge Program (master&rsquo;s prep): CMPSC 2310 Foundations of Programming (Python), CMPSC 2320 Data Structures and Algorithms, MATH 2340 Calculus, MATH 2350 Statistics and Probability. In progress.</li></ul>'+
-    '<h2>Work experience</h2>'+
-    job('Bayfront Convention Center, Erie, PA','July 2025 &ndash; Present','Banquet Server',['Deliver food and beverage service in banquet and catering settings with attention to timing and presentation.','Set up and break down event spaces, including linens, tableware, and place settings.'])+
-    job('Penn State Behrend, Erie, PA','September 2022 &ndash; May 2025','Student Technician',['Triaged and resolved faculty and staff tickets in ServiceNow, supporting Office 365, printer software, and CAD.','Built, upgraded, and repaired computers and peripherals on Windows 8&ndash;11 and macOS, including network repairs.','Configured security software to protect campus computers and networks, and managed user permissions.','Decommissioned out-of-date computers and equipment, preparing assets for transfer to the University Park campus.'])+
-    job('Erie County Convention Center Authority (ECCA), Erie, PA','May 2024 &ndash; August 2024','IT / Social Media Intern',['Installed IP cameras across the entire ECCA campus, including the Bayfront Convention Center.','Designed logos and animations for Erie Events venues in Adobe Creative Cloud and audited their websites for UI/UX.'])+
+    job('Erie County Technical School, Erie, PA','August 2018 &ndash; May 2020','Focus: Computer Networking',['Coursework: designing, installing, and troubleshooting computer and A/V network systems; LANs, WANs, OSI model, Ethernet, IP addressing, routers and router programming, cabling, and Windows Server administration.'])+
+    '<ul><li>Coursera: AI Engineering and Prompting (Google Gemini, Google AI Studio). Completed June 2026. <a href="#/certifications">All credentials</a></li><li>Sony Pictures Animation &amp; Imageworks: This Is Animation, Yellowbrick Program. Completed June 2025.</li><li>Penn State Bridge Program (master&rsquo;s prep): CMPSC 2310 Foundations of Programming (Python), CMPSC 2320 Data Structures and Algorithms, MATH 2340 Calculus, MATH 2350 Statistics and Probability. In progress.</li></ul>'+
+    '<h2>IT experience</h2>'+
+    job('Penn State Behrend, Erie, PA','September 2022 &ndash; May 2025','Student Technician',['Resolved 40+ ServiceNow tickets weekly for 800+ faculty and staff and 3,000+ students, documenting each one.','Provided onsite and remote support (Remote Desktop, TeamViewer) for Windows 8&ndash;11, macOS, Microsoft 365, and CAD.','Reimaged, deployed, or decommissioned 1,000+ computers using SCCM, and built, upgraded, and repaired hardware.','Managed Active Directory accounts and permissions, including password resets and MFA troubleshooting.','Set up printers, classroom projectors, and A/V equipment, and configured security software on campus machines.','Trained new student hires on software and daily help desk procedures, and wrote how-to guides for users.'])+
+    job('Erie County Convention Center Authority (ECCA), Erie, PA','May 2024 &ndash; August 2024','IT / Social Media Intern',['Installed networked IP cameras across the entire ECCA campus, including the Bayfront Convention Center.','Audited Erie Events venue websites for UI/UX and designed logos and animations in Adobe Creative Cloud.'])+
+    '<h2>Customer service experience</h2>'+
+    job('Bayfront Convention Center, Erie, PA','July 2025 &ndash; Present','Banquet Server',['Deliver professional food and beverage service in banquet and catering settings with attention to timing.','Set up and break down event spaces, including linens, tableware, and place settings.'])+
     job('Waldameer Park &amp; Water Park, Erie, PA','Summers 2018 &ndash; 2022','Admission and Guest Service Representative',['Served a high volume of guests and large group orders, resolving questions and billing complaints via refunds.'])+
     '<h2>Projects</h2>'+
     job('AI Journaling App &middot; Google AI Studio, Claude Code','June 2026 &ndash; Present','',['Building a journaling app through AI-assisted development and prompt engineering.'])+
-    job('Matter Monsters &middot; Unreal Engine 5, Capstone','August 2024 &ndash; December 2024','',['Created environment designs, assets, story, and character concepts for a team-built game.'])+
-    job('Insurance App UI/UX Concept &middot; Miro, Trello','April 2025 &ndash; May 2025','',['Developed claims and policy app concepts for a senior project commissioned by a large insurer.'])+
     job('Portfolio Website &middot; HTML, CSS, GitHub Pages, Claude Code','August 2022 &ndash; Present','',['Designing and maintaining my portfolio site, currently building it with Claude Code.'])+
+    job('Matter Monsters &middot; Unreal Engine 5, Capstone','August 2024 &ndash; December 2024','',['Created environment designs, assets, story, and character concepts for a team-built game.'])+
     '<h2>Leadership</h2>'+
     job('Behrend Esports Club &middot; Valorant Player and Captain','August 2021 &ndash; May 2025','',['Helped establish the club, coached teammates, and competed in the ECAC for 8 semesters.'])+
     job('National Society of Leadership and Success &middot; Member','January 2025 &ndash; Present','',['Completed a leadership program on personal growth, career success, and community impact.'])+
-    '<h2>Relevant technical skills</h2>'+
-    '<p class="skill"><b>AI tools:</b> Google AI Studio, Google Gemini, Claude Code</p>'+
+    '<h2>Technical skills</h2>'+
+    '<p class="skill"><b>Support &amp; systems:</b> ServiceNow, Active Directory, SCCM, RDP, TeamViewer, Windows 8&ndash;11, macOS, Microsoft 365</p>'+
+    '<p class="skill"><b>Hardware:</b> PC build, upgrade, and repair; imaging; printers and peripherals; classroom A/V; IP cameras</p>'+
+    '<p class="skill"><b>Networking &amp; servers:</b> LAN/WAN, OSI model, Ethernet, IP addressing, routers, cabling, Windows Server administration</p>'+
     '<p class="skill"><b>Design &amp; 3D:</b> Blender, Unreal Engine 5, OpenToonz, Clip Studio Paint, Adobe Creative Cloud</p>'+
-    '<p class="skill"><b>Web &amp; development:</b> Python, HTML, CSS, Git, GitHub, Data Structures, Recursion</p>'+
-    '<p class="skill"><b>IT &amp; networking:</b> ServiceNow, Windows 8&ndash;11, macOS, user permissions, LAN/WAN, IP addressing, routers, cabling</p>'+
-    '<p class="skill"><b>Productivity &amp; audio:</b> Office 365, Miro, Trello, Pro Tools, Logic Pro</p>'+
-    '<p class="skill"><b>Additional skills:</b> Tennis racket stringing, DJing, Valorant coaching, cable management connoisseur</p>'+
+    '<p class="skill"><b>Development &amp; AI:</b> Python, HTML/CSS, Git/GitHub, Claude Code, Google AI Studio, Google Gemini</p>'+
+    '<p class="skill"><b>Additional:</b> Trello, tennis racket stringing, DJing, cable management connoisseur</p>'+
     '</div></div>';}
   function pageBlog(){
     var posts=[
