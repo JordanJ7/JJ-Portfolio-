@@ -673,6 +673,7 @@ function foldersScene(){
       if(!isReady)return;
       /* the sign sits off toward the middle of the screen (where there is room), and the arrow runs from it to the planet */
       var aw=arrow.offsetWidth||200,ah=arrow.offsetHeight||64;
+      if(jamAt&&(jamAt.tx!==p.tx||jamAt.ty!==p.ty)){jamAt=null;arrow.style.width='';}   /* the planet has a new resting place (e.g. after coming back): pick a new spot */
       if(!jamAt){   /* try spots around the planet: on screen, clear of the folders and the other planet; shrink the sign if nothing fits */
         var gx0=W/2-G.w/2-10,gx1=W/2+G.w/2+10,gy0=H/2-G.h/2-10,gy1=H/2+G.h/2+10,o=planets[0],best=null,px0=p.tx,py0=p.ty,full=Math.min(220,Math.max(150,W*.2));
         [1,.82,.68,.56].some(function(f){
@@ -690,9 +691,9 @@ function foldersScene(){
         });
         if(!best)best={x:Math.max(full*.28+8,Math.min(W-full*.28-8,px0)),y:Math.max(56+full*.1,py0-r-80),w:full*.56};
         arrow.style.width=best.w+'px';aw=best.w;ah=aw*78/250;
-        jamAt={x:best.x,y:best.y};   /* a fixed spot on screen; only the arrow's tip follows the bobbing planet */
+        jamAt={dx:best.x-px0,dy:best.y-py0,tx:p.tx,ty:p.ty};   /* kept relative to the planet, so the whole sign travels with it */
       }else{aw=arrow.offsetWidth;ah=arrow.offsetHeight;}
-      var sx=jamAt.x,sy=jamAt.y;
+      var sx=p.x+jamAt.dx,sy=p.y+jamAt.dy;
       arrow.style.left=(sx-aw/2)+'px';arrow.style.top=(sy-ah/2)+'px';
       /* start just outside the sign, on the side facing the planet; end just short of the planet */
       var vx=ex-sx,vy=ey-sy,vl=Math.hypot(vx,vy)||1,nx=vx/vl,ny=vy/vl;
