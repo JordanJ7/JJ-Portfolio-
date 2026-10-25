@@ -251,6 +251,15 @@ body.hidem #mareep{opacity:0;pointer-events:none}
 .it.link .lcap{font:400 14px/1.45 var(--sans);color:#5a6878}
 .it.link .lhost{font:500 12px var(--sans);letter-spacing:.04em;color:var(--blue-dd)}
 .sheet .items.mixed .it.link{grid-column:1/-1}
+/* Safari: rows in a height-capped grid shrink below their content unless they are sized to it; scroll boxes inside also report no minimum height */
+.sheet .items.mixed{grid-auto-rows:max-content}
+.sheet .items.mixed>*{min-height:auto}
+.sheet .items.mixed .it.text{overflow:visible}
+.sheet .items.mixed .it.photo,.sheet .items.mixed .it.video{aspect-ratio:auto;display:block;height:auto}
+.sheet .items.mixed .it.photo::before,.sheet .items.mixed .it.video::before{content:"";display:block;padding-top:75%}
+.sheet .items.mixed .it.photo img,.sheet .items.mixed .it.video img,.sheet .items.mixed .it.video video{position:absolute;inset:0}
+.sheet .items.mixed .it.video .play{left:50%;top:50%;transform:translate(-50%,-50%);z-index:1}
+.fig .it{aspect-ratio:auto;display:block;height:auto}.fig .it::before{content:"";display:block;padding-top:75%}.fig .it img,.fig .it video{position:absolute;inset:0}
 
 @media (max-width:640px){
   .stage{height:min(62vh,560px)}
