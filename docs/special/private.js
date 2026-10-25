@@ -703,6 +703,7 @@ function foldersScene(){
       var tx=x1-qx,ty=y1-qy,tl=Math.hypot(tx,ty)||1;tx/=tl;ty/=tl;var hs=16;
       jaHead.setAttribute('d','M'+(x1+tx*4).toFixed(1)+' '+(y1+ty*4).toFixed(1)+' L'+(x1-tx*hs-ty*hs*.6).toFixed(1)+' '+(y1-ty*hs+tx*hs*.6).toFixed(1)+' L'+(x1-tx*hs+ty*hs*.6).toFixed(1)+' '+(y1-ty*hs-tx*hs*.6).toFixed(1)+' Z');
       if(len>24){arrow.classList.add('vis');jaSvg.classList.add('vis');}
+      if(!PLANET&&!placeEarth.warm){placeEarth.warm=1;(window.requestIdleCallback||function(f){setTimeout(f,400);})(function(){makePlanet();chaseSprites();});}   /* get the planet ready before it is clicked */
     }
     function drawPlanets(){
       planets.forEach(function(p){
@@ -882,8 +883,8 @@ var CLOUDS=null;
 function cloudSprites(){
   if(CLOUDS)return CLOUDS;CLOUDS=[];
   for(var v=0;v<6;v++){
-    var c=D.createElement('canvas'),W2=320,H2=180;c.width=W2;c.height=H2;var x=c.getContext('2d'),puffs=[],n=8+(v%3)*3;
-    for(var i=0;i<n;i++){var t=i/(n-1),px=W2*(.16+.68*t)+rnd(-14,14),py=H2*(.6-Math.sin(t*Math.PI)*.28)+rnd(-10,8),pr=H2*(.16+Math.sin(t*Math.PI)*.2)*rnd(.8,1.15);puffs.push([px,py,pr]);}
+    var c=D.createElement('canvas'),W2=320,H2=200;c.width=W2;c.height=H2;var x=c.getContext('2d'),puffs=[],n=8+(v%3)*3;
+    for(var i=0;i<n;i++){var t=i/(n-1),px=W2*(.2+.6*t)+rnd(-10,10),py=H2*(.64-Math.sin(t*Math.PI)*.2)+rnd(-6,6),pr=H2*(.13+Math.sin(t*Math.PI)*.15)*rnd(.85,1.1);puffs.push([px,py,pr]);}
     for(i=0;i<5;i++)puffs.push([W2*rnd(.25,.75),H2*rnd(.55,.7),H2*rnd(.12,.2)]);   /* a fuller base */
     function layer(dy,col0,col1,k){puffs.forEach(function(p){var g=x.createRadialGradient(p[0],p[1]+dy,p[2]*.15,p[0],p[1]+dy,p[2]*k);g.addColorStop(0,col0);g.addColorStop(.62,col0);g.addColorStop(1,col1);x.fillStyle=g;x.beginPath();x.arc(p[0],p[1]+dy,p[2]*k,0,6.283);x.fill();});}
     layer(H2*.05,'rgba(196,212,232,.9)','rgba(196,212,232,0)',1.08);    /* shaded underside */
@@ -907,7 +908,8 @@ async function flyToEarth(ex,ey,er){
   var cv=$('#flycv');cv.width=w*dpr;cv.height=h*dpr;var ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
   var hud=$('#hud');hud.classList.add('vis');
   $('#fold').classList.remove('vis');
-  var T=RM?600:4600,t0=performance.now(),la0=rnd(-50,60),lo0=rnd(-170,170);
+  chaseSprites();await Promise.race([makePlanet(),sleep(2500)]);   /* usually ready long before the click */
+  var T=RM?600:8000,t0=performance.now(),la0=rnd(-50,60),lo0=rnd(-170,170),spin=rnd(110,170)*(Math.random()<.5?-1:1),tilt0=rnd(-10,35);
   var clouds=[],CS=cloudSprites();for(var i=0;i<40;i++)clouds.push({a:rnd(0,6.283),d:rnd(.05,1),s:rnd(.7,1.5),z:rnd(0,1),v:i%CS.length,f:Math.random()<.5});
   function ease(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
   await new Promise(function(done){
@@ -920,9 +922,14 @@ async function flyToEarth(ex,ey,er){
       /* stars streak outward as we speed up */
       ctx.strokeStyle='rgba(220,236,255,'+(.5*(1-p))+')';ctx.lineWidth=1.2;
       for(var i=0;i<70;i++){var a=i*2.399,rr=((i*53)%97)/97*Math.max(w,h)*.7+p*240,len=6+p*90;ctx.beginPath();ctx.moveTo(w/2+Math.cos(a)*rr,h/2+Math.sin(a)*rr);ctx.lineTo(w/2+Math.cos(a)*(rr+len),h/2+Math.sin(a)*(rr+len));ctx.stroke();}
-      globe(ctx,cx,cy,R,e,now);
+      /* the globe turns so Erie comes round to the middle as we close in */
+      var tw=ease(Math.min(1,p/.62)),vlon=TARGET.lon+spin*(1-tw),vlat=tilt0+(TARGET.lat-tilt0)*tw;
+      drawPlanet(ctx,w,h,cx,cy,R,vlon,vlat,now/1000*3,Math.max(0,.55-e*.9));
+      var mk=project(TARGET.lon,TARGET.lat,vlon,vlat);
+      if(mk&&e>.25){var mx=cx+mk[0]*R,my=cy-mk[1]*R,pa=.5+.5*Math.sin(now/180);ctx.strokeStyle='rgba(255,92,140,'+(.55+.4*pa)+')';ctx.lineWidth=2;ctx.beginPath();ctx.arc(mx,my,6+pa*6,0,6.283);ctx.stroke();ctx.fillStyle='#ff5c8c';ctx.beginPath();ctx.arc(mx,my,3,0,6.283);ctx.fill();}
+      if(!RM&&p>.06&&p<.62)drawChase(ctx,w,h,(p-.06)/.5,now);
       /* clouds rush past near the end */
-      if(p>.55){var cp=(p-.55)/.45;
+      if(p>.7){var cp=(p-.7)/.3;   /* clouds once we are right over Erie */
         clouds.forEach(function(c){var z=(c.z+cp*1.6)%1.2,sc=Math.pow(z,2.2)*Math.max(w,h)*.9,x=w/2+Math.cos(c.a)*c.d*w*.4*(1+z*3),y=h/2+Math.sin(c.a)*c.d*h*.4*(1+z*3);
           var cw=sc*c.s*.9,ch=cw*.56;ctx.globalAlpha=Math.max(0,Math.min(.9,z*.95)*(1-Math.max(0,cp-.8)*5));
           ctx.save();ctx.translate(x,y);if(c.f)ctx.scale(-1,1);ctx.drawImage(CS[c.v],-cw/2,-ch/2,cw,ch);ctx.restore();ctx.globalAlpha=1;});
@@ -930,7 +937,7 @@ async function flyToEarth(ex,ey,er){
       }
       var k=Math.min(1,p/.8),kk=1-Math.pow(1-k,3);
       $('#hlat').textContent=fmtLat(la0+(TARGET.lat-la0)*kk);$('#hlon').textContent=fmtLon(lo0+(TARGET.lon-lo0)*kk);
-      $('#hplace').classList.toggle('vis',p>.7);
+      $('#hplace').classList.toggle('vis',p>.62);
       if(p<1)requestAnimationFrame(frame);else done();
     })(t0);
   });
@@ -940,34 +947,142 @@ async function flyToEarth(ex,ey,er){
   await drawMap(map);
   WORLD.busy=false;
 }
-/* a stylised Earth, turning so the target ends up in the middle; Lake Erie shows up as we get close */
-function globe(ctx,x,y,r,e,now){
-  if(r>1e5)r=1e5;
-  ctx.save();ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.clip();
-  var g=ctx.createRadialGradient(x-r*.35,y-r*.4,r*.05,x,y,r);g.addColorStop(0,'#bfe5fc');g.addColorStop(.6,'#7fc1ee');g.addColorStop(1,'#3f8ccc');
-  ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2);
-  /* land around the target: offsets in planet radii, scaled with the zoom */
-  var L=[[-.42,-.22,.2,.12,.5],[-.18,-.08,.16,.1,.2],[.02,.03,.12,.07,-.3],[.2,-.12,.14,.08,.6],[-.05,.22,.11,.16,.1],[.36,.14,.1,.15,-.4],[-.3,.3,.09,.06,.3],[.14,.32,.07,.05,0],[.45,-.3,.12,.07,.2],[-.02,-.002,.03,.018,-.2]];
-  ctx.fillStyle='#86d08c';
-  L.forEach(function(b){ctx.beginPath();ctx.ellipse(x+b[0]*r,y+b[1]*r,b[2]*r,b[3]*r,b[4],0,6.283);ctx.fill();});
-  ctx.fillStyle='#a9e6a3';
-  L.forEach(function(b){ctx.beginPath();ctx.ellipse(x+b[0]*r-b[2]*r*.08,y+b[1]*r-b[3]*r*.1,b[2]*r*.7,b[3]*r*.66,b[4],0,6.283);ctx.fill();});
-  /* a layer of puffy clouds drifting over the planet, thinning out as we get close */
-  var CS=cloudSprites(),cl=[[-.32,-.36,.34],[.26,.24,.4],[.08,-.52,.28],[-.46,.44,.3],[.5,-.12,.26],[-.12,.12,.2],[.36,.56,.24],[-.6,-.04,.22]],dr=Math.sin(now/2600)*r*.025;
-  ctx.globalAlpha=Math.max(0,.85*(1-e*1.15));
-  cl.forEach(function(c,i){var cw=c[2]*r,ch=cw*.56;ctx.drawImage(CS[i%CS.length],x+c[0]*r+dr*(i%2?1:-1)-cw/2,y+c[1]*r-ch/2,cw,ch);});
-  ctx.globalAlpha=1;
-  if(e>.55){   /* the Great Lakes appear: Lake Erie just north of the point */
-    var a=Math.min(1,(e-.55)/.3);ctx.globalAlpha=a;ctx.fillStyle='#5aa6e0';
-    ctx.beginPath();ctx.ellipse(x-r*.004,y-r*.0035,r*.012,r*.0028,-.42,0,6.283);ctx.fill();
-    ctx.beginPath();ctx.ellipse(x+r*.022,y-r*.012,r*.009,r*.0024,-.25,0,6.283);ctx.fill();
-    ctx.beginPath();ctx.ellipse(x-r*.03,y-r*.02,r*.006,r*.012,.3,0,6.283);ctx.fill();
-    ctx.globalAlpha=1;
+/* ---------- the Earth for the flight: a lit sphere drawn from real coastlines (Natural Earth, public domain), turning so Erie ends up under the marker ---------- */
+/* Three levels of map detail: the whole Earth, the region, and a close-up of Erie. The coastlines are drawn here; a background thread colours them. */
+function planetWorker(){
+  function hash2(x,y,s){var h=Math.sin(x*127.1+y*311.7+s*74.7)*43758.5453;return h-Math.floor(h);}
+  function vnoise(x,y,s){var xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
+    var a=hash2(xi,yi,s),b=hash2(xi+1,yi,s),c=hash2(xi,yi+1,s),d=hash2(xi+1,yi+1,s);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v;}
+  function fbm(x,y,s,o){var t=0,amp=.5,f=1;for(var i=0;i<o;i++){t+=amp*vnoise(x*f,y*f,s+i*13);f*=2.03;amp*=.5;}return t;}
+  function colour(out,i,lon,lat,land,coast,oct,fine){
+    var r=Math.PI/180,cy=Math.cos(lat*r),nx=Math.cos(lon*r)*cy,nz=Math.sin(lon*r)*cy,ny=Math.sin(lat*r),al=Math.abs(lat);
+    var n=fbm(nx*3+7,ny*3+nz*2,2,5),m=fbm(nx*2.2+31,ny*2.2+nz*1.4,5,4),g=fine?(fbm(lon*fine,lat*fine,9,3)-.5)+(fbm(nx*40,ny*40+nz*30,4,3)-.5)*.8:0,R,G,B;   /* same base everywhere, finer grain only up close */
+    if(land<128){   /* water: deep out at sea, lighter near the shore */
+      var sh=Math.min(1,coast/255*1.6);R=22+30*sh;G=74+66*sh;B=150+52*sh;R+=g*6;G+=g*8;B+=g*8;
+    }else if(al>72||lat<-62){R=236+8*g;G=242+6*g;B=248;}                                  /* ice */
+    else{
+      var dry=m+(al>18&&al<31?.14:0)-(al<10?.12:0)-(al>36?.16:0);                        /* deserts in the dry belts */
+      if(al>58){R=96+30*n;G=118+24*n;B=88;}                                               /* tundra and taiga */
+      else if(dry>.7){R=214+16*g;G=186+14*g;B=124+10*g;}
+      else if(dry>.63){R=150+24*n+14*g;G=162+18*n+14*g;B=92;}                             /* dry grass */
+      else if(n>.55){R=50+26*g;G=110+30*g;B=52+8*g;}                                       /* forest */
+      else{R=86+36*n+30*g;G=150+16*n+28*g;B=68+12*g;}
+      if(n>.68&&al<60){var k=Math.min(1,(n-.68)*6);R+=(150-R)*k*.6;G+=(132-G)*k*.6;B+=(108-B)*k*.6;}   /* mountains */
+      if(coast<235&&coast>0){var bch=Math.max(0,1-(255-coast)/40)*0;R+=bch;}
+    }
+    out[i]=R;out[i+1]=G;out[i+2]=B;out[i+3]=255;
   }
-  var sh=ctx.createRadialGradient(x-r*.5,y-r*.55,r*.2,x,y,r*1.1);sh.addColorStop(0,'rgba(255,255,255,.16)');sh.addColorStop(.6,'rgba(255,255,255,0)');sh.addColorStop(1,'rgba(10,40,90,.4)');
-  ctx.fillStyle=sh;ctx.fillRect(x-r,y-r,r*2,r*2);ctx.restore();
-  /* the target marker pulses in the middle */
-  if(e>.2){var pa=.5+.5*Math.sin(now/180);ctx.strokeStyle='rgba(255,92,140,'+(.55+.4*pa)+')';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,6+pa*6,0,6.283);ctx.stroke();ctx.fillStyle='#ff5c8c';ctx.beginPath();ctx.arc(x,y,3,0,6.283);ctx.fill();}
+  self.onmessage=function(ev){
+    var L=ev.data.levels,res={},tr=[];
+    L.forEach(function(lv){
+      var w=lv.w,h=lv.h,b=lv.box,out=new Uint8ClampedArray(w*h*4);
+      for(var y=0;y<h;y++){var lat=b[3]-(y+.5)/h*(b[3]-b[1]);for(var x=0;x<w;x++){var j=y*w+x,lon=b[0]+(x+.5)/w*(b[2]-b[0]);colour(out,j*4,lon,lat,lv.land[j],lv.coast[j],lv.oct,lv.fine);}}
+      res[lv.name]={w:w,h:h,box:b,px:out};tr.push(out.buffer);
+    });
+    var cl=new Uint8ClampedArray(1024*512);
+    for(var y2=0;y2<512;y2++){var la=90-(y2+.5)/512*180,c0=Math.cos(la*Math.PI/180);for(var x2=0;x2<1024;x2++){var lo=(x2+.5)/1024*360-180,nx=Math.cos(lo*Math.PI/180)*c0,nz=Math.sin(lo*Math.PI/180)*c0,ny=Math.sin(la*Math.PI/180),c=fbm(nx*3+20,ny*5+nz*3,3,5);cl[y2*1024+x2]=Math.max(0,Math.min(255,(c-.62)*1100));}}
+    res.cl=cl;tr.push(cl.buffer);
+    self.postMessage(res,tr);
+  };
+}
+var PLANET=null,PLANETP=null;
+function makePlanet(){
+  if(PLANETP)return PLANETP;
+  PLANETP=fetch('earth.json').then(function(r){return r.json();}).then(function(E){
+    function rings(list){return list.map(function(f){var o=[];for(var i=0;i<f.length;i+=2)o.push([f[i],f[i+1]]);return o;});}
+    var world=rings(E.land),region=rings(E.region.land),lakes=rings(E.lakes),RB=E.region.box;
+    /* draw the land (and cut the lakes out) for one level, plus a blurred copy for the shallows */
+    function raster(box,w,h){
+      var c=D.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');
+      var sx=w/(box[2]-box[0]),sy=h/(box[3]-box[1]);
+      function fill(list,col){x.fillStyle=col;list.forEach(function(r){x.beginPath();r.forEach(function(p,i){var X=(p[0]-box[0])*sx,Y=(box[3]-p[1])*sy;if(i)x.lineTo(X,Y);else x.moveTo(X,Y);});x.closePath();x.fill();});}
+      x.fillStyle='#000';x.fillRect(0,0,w,h);
+      var inside=box[0]>=RB[0]&&box[2]<=RB[2]&&box[1]>=RB[1]&&box[3]<=RB[3];
+      fill(inside?region:world,'#fff');if(!inside)fill(region,'#fff');fill(lakes,'#000');
+      var land=x.getImageData(0,0,w,h).data;
+      var ppd=w/(box[2]-box[0]),f=Math.max(2,ppd*.9);   /* the shallows are about one degree wide at every level */
+      var s1=D.createElement('canvas');s1.width=Math.max(8,Math.round(w/f));s1.height=Math.max(8,Math.round(h/f));var x1=s1.getContext('2d');x1.imageSmoothingQuality='high';x1.drawImage(c,0,0,s1.width,s1.height);
+      var s2=D.createElement('canvas');s2.width=w;s2.height=h;var x2=s2.getContext('2d');x2.imageSmoothingQuality='high';x2.drawImage(s1,0,0,w,h);
+      var bl=x2.getImageData(0,0,w,h).data,L1=new Uint8Array(w*h),C1=new Uint8Array(w*h);
+      for(var i=0;i<w*h;i++){L1[i]=land[i*4];C1[i]=bl[i*4];}
+      return {land:L1,coast:C1};
+    }
+    var T=TARGET,lv=[
+      {name:'g',box:[-180,-90,180,90],w:2048,h:1024,oct:5,fine:0},
+      {name:'m',box:[T.lon-22,T.lat-18,T.lon+22,T.lat+18],w:1024,h:840,oct:5,fine:9},
+      {name:'f',box:[T.lon-6,T.lat-4.5,T.lon+6,T.lat+4.5],w:1024,h:768,oct:5,fine:22}];
+    lv.forEach(function(l){var r=raster(l.box,l.w,l.h);l.land=r.land;l.coast=r.coast;});
+    return new Promise(function(ok){
+      var wk=new Worker(URL.createObjectURL(new Blob(['('+planetWorker.toString()+')()'],{type:'text/javascript'})));
+      wk.onmessage=function(ev){PLANET=ev.data;PLANET.buf=null;wk.terminate();ok(PLANET);};
+      wk.onerror=function(){ok(null);};
+      wk.postMessage({levels:lv},lv.reduce(function(a,l){return a.concat([l.land.buffer,l.coast.buffer]);},[]));
+    });
+  }).catch(function(){return null;});
+  return PLANETP;
+}
+/* the sphere, rendered pixel by pixel at reduced resolution and scaled up smoothly */
+function drawPlanet(ctx,w,h,cx,cy,R,lon0,lat0,cloudOff,cloudA){
+  var P=PLANET;
+  if(!P){   /* maps not ready yet: a plain blue ball */
+    var g0=ctx.createRadialGradient(cx-R*.35,cy-R*.4,R*.05,cx,cy,R);g0.addColorStop(0,'#9fd3f7');g0.addColorStop(1,'#2f6fb0');ctx.fillStyle=g0;ctx.beginPath();ctx.arc(cx,cy,R,0,6.283);ctx.fill();return;
+  }
+  var q=Math.min(1,Math.sqrt(150000/(w*h))),bw=Math.ceil(w*q),bh=Math.ceil(h*q);
+  if(!P.buf||P.buf.width!==bw||P.buf.height!==bh){P.buf=D.createElement('canvas');P.buf.width=bw;P.buf.height=bh;P.bx=P.buf.getContext('2d');P.img=P.bx.createImageData(bw,bh);}
+  var o=P.img.data,Rq=R*q,cxq=cx*q,cyq=cy*q,sf=Math.sin(lat0*Math.PI/180),cf=Math.cos(lat0*Math.PI/180),D2R=180/Math.PI,Lx=-.42,Ly=.52,Lz=.74;
+  var x0=Math.max(0,Math.floor(cxq-Rq)),x1=Math.min(bw,Math.ceil(cxq+Rq)),y0=Math.max(0,Math.floor(cyq-Rq)),y1=Math.min(bh,Math.ceil(cyq+Rq));
+  o.fill(0);
+  var pix=D2R/Rq,g=P.g,m=P.m,f=P.f,CL=P.cl,useF=pix<.025,useM=pix<.2;
+  var gs=g.w/360,Gp=g.px,Mp=m.px,Fp=f.px,mb=m.box,fb=f.box,msx=m.w/(mb[2]-mb[0]),msy=m.h/(mb[3]-mb[1]),fsx=f.w/(fb[2]-fb[0]),fsy=f.h/(fb[3]-fb[1]);
+  for(var y=y0;y<y1;y++){
+    var vy=(cyq-y-.5)/Rq;
+    for(var x=x0;x<x1;x++){
+      var vx=(x+.5-cxq)/Rq,d2=vx*vx+vy*vy;if(d2>=1)continue;
+      var vz=Math.sqrt(1-d2),la=Math.asin(vy*cf+vz*sf)*D2R,lo=lon0+Math.atan2(vx,vz*cf-vy*sf)*D2R;
+      if(lo>180)lo-=360;else if(lo<-180)lo+=360;
+      var src,si;
+      if(useF&&lo>fb[0]&&lo<fb[2]&&la>fb[1]&&la<fb[3]){src=Fp;si=(((fb[3]-la)*fsy|0)*f.w+((lo-fb[0])*fsx|0))*4;}
+      else if(useM&&lo>mb[0]&&lo<mb[2]&&la>mb[1]&&la<mb[3]){src=Mp;si=(((mb[3]-la)*msy|0)*m.w+((lo-mb[0])*msx|0))*4;}
+      else{src=Gp;si=((((90-la)*gs)|0)*g.w+(((lo+180)*gs)|0))*4;}
+      var cr=src[si],cg=src[si+1],cb=src[si+2],water=cb>cr+50;
+      var lam=vx*Lx+vy*Ly+vz*Lz,li=.32+.82*(lam>0?lam:0),spec=water&&lam>.1?Math.pow(lam*1.06-.06,24)*.45:0,limb=.62+.38*vz;
+      cr=cr*li*limb+spec*255;cg=cg*li*limb+spec*255;cb=cb*li*limb+spec*255;
+      if(cloudA>0){var cx2=(lo+cloudOff+540)%360,ca=CL[(((90-la)*2.8444)|0)*1024+((cx2*2.8444)|0)%1024]/255*cloudA;if(ca>0){var c2=255*(.4+.7*(lam>0?lam:0));cr+=(c2-cr)*ca;cg+=(c2-cg)*ca;cb+=(c2*1.02-cb)*ca;}}
+      var rim=(1-vz)*(1-vz)*(1-vz)*.45;cr+=(150-cr)*rim;cg+=(205-cg)*rim;cb+=(255-cb)*rim;
+      var k=(y*bw+x)*4;o[k]=cr;o[k+1]=cg;o[k+2]=cb;o[k+3]=255;
+    }
+  }
+  P.bx.putImageData(P.img,0,0);
+  ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(P.buf,0,0,bw,bh,0,0,bw/q,bh/q);ctx.restore();
+  if(R<Math.max(w,h)*3){   /* a thin glow of atmosphere round the edge (clear inside, so the land stays crisp) */
+    var ag=ctx.createRadialGradient(cx,cy,R*.94,cx,cy,R*1.1);ag.addColorStop(0,'rgba(120,190,255,0)');ag.addColorStop(.35,'rgba(130,195,255,.45)');ag.addColorStop(1,'rgba(120,190,255,0)');ctx.fillStyle=ag;ctx.beginPath();ctx.arc(cx,cy,R*1.1,0,6.283);ctx.fill();}
+}
+function project(lon,lat,lon0,lat0){   /* where a place sits on the visible face (x right, y up), or null if round the back */
+  var f=lat*Math.PI/180,l=(lon-lon0)*Math.PI/180,f0=lat0*Math.PI/180,c=Math.sin(f0)*Math.sin(f)+Math.cos(f0)*Math.cos(f)*Math.cos(l);
+  if(c<0)return null;return [Math.cos(f)*Math.sin(l),Math.cos(f0)*Math.sin(f)-Math.sin(f0)*Math.cos(f)*Math.cos(l)];
+}
+/* Deoxys streaks across, Rayquaza right behind it */
+var CHASE=null;
+function chaseSprites(){
+  if(CHASE)return CHASE;CHASE={d:new Image(),r:new Image()};CHASE.d.src='deoxys.png';CHASE.r.src='../assets/sprites/rayquaza.png';return CHASE;
+}
+function drawChase(ctx,w,h,u,now){
+  var C=chaseSprites(),s=Math.max(1.6,Math.min(w,h)/290);
+  function path(t){return [-.2*w+t*1.45*w,h*(.36-.16*t)+Math.sin(t*9)*h*.035];}
+  function trail(t,col,len){ctx.save();ctx.lineCap='round';for(var i=1;i<=7;i++){var a=path(Math.max(0,t-i*.012)),b=path(Math.max(0,t-(i-1)*.012));ctx.strokeStyle=col.replace('A',(.45*(1-i/8)).toFixed(3));ctx.lineWidth=len*(1-i/9);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}ctx.restore();}
+  ctx.save();ctx.imageSmoothingEnabled=false;
+  var td=u,tr=u-.12;
+  if(tr>-.05&&tr<1.05&&C.r.complete&&C.r.naturalWidth){   /* Rayquaza: a ripple runs down its body as it flies */
+    var p=path(tr),rw=C.r.naturalWidth,rh=C.r.naturalHeight,sc=s*.85;trail(tr,'rgba(110,230,160,A)',22*s/2);
+    ctx.save();ctx.translate(p[0],p[1]);ctx.rotate(-.18);ctx.scale(-1,1);   /* the sprite faces left; we are flying right */
+    for(var yy=0;yy<rh;yy+=2){var off=Math.sin(yy*.16-now/90)*2.4;ctx.drawImage(C.r,0,yy,rw,2,(-rw/2+off)*sc,(-rh/2+yy)*sc,rw*sc,2*sc);}
+    ctx.restore();
+  }
+  if(td>-.05&&td<1.05&&C.d.complete&&C.d.naturalWidth){
+    var pd=path(td),fr=Math.floor(now/70)%8;trail(td,'rgba(255,170,90,A)',16*s/2);
+    ctx.save();ctx.translate(pd[0],pd[1]);ctx.rotate(.25);ctx.drawImage(C.d,fr*32,0,32,64,-16*s,-32*s,32*s,64*s);ctx.restore();
+  }
+  ctx.restore();
 }
 function loadMap(){
   if(WORLD.map)return Promise.resolve(WORLD.map);
