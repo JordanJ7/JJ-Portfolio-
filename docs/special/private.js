@@ -193,13 +193,62 @@ function upgrade(c){
 
 /* ------------------------------------------------------------------ media items (slides and bubbles) */
 var viewerOpen=null;
+/* long journal-style text: bullet and numbered lines become lists, every other line its own paragraph, links clickable */
+function linkify(h){
+  return h.replace(/https?:\/\/[^\s<]+[^\s<.,;:!?)\]'"”’]/g,function(u){
+    var raw=u.replace(/&amp;/g,'&'),lab=u;
+    try{var x=new URL(raw);lab=x.hostname.replace(/^www\./,'')+(x.pathname.length>1?'/…':'');}catch(e){}
+    return '<a href="'+u+'" target="_blank" rel="noopener noreferrer">'+lab+'</a>';
+  });
+}
+function inline(s){return linkify(esc(s)).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');}
+function richText(host,text){
+  var list=null,lt='';
+  String(text||'').replace(/\r/g,'').split('\n').forEach(function(line){
+    var l=line.replace(/\t/g,' ').trim(),m;
+    if(!l){list=null;return;}
+    var bul=/^(?:[-*]\s*\[[ xX]?\]|[•●▪◦]|[-*](?=\s))\s*(.*)$/.exec(l),num=!bul&&/^(\d+)[.)]\s+(.*)$/.exec(l);
+    if(bul||num){
+      var body=(bul?bul[1]:num[2]).replace(/^[•\s]+/,'').trim();
+      if(!body)return;
+      var want=bul?'ul':'ol';
+      if(!list||lt!==want){list=el(want,null);if(num&&+num[1]>1)list.start=+num[1];host.appendChild(list);lt=want;}
+      list.appendChild(el('li',null,inline(body)));
+      return;
+    }
+    list=null;
+    if((m=/^(.{1,60}):$/.exec(l))){host.appendChild(el('h5','isub',inline(m[1])));return;}
+    host.appendChild(el('p',null,inline(l)));
+  });
+  host.querySelectorAll('ul,ol').forEach(function(u){if(u.children.length>14)u.classList.add('long');});
+}
+var LICON={
+  tiktok:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.2 1.8 3.7 4 3.9v3.2c-1.5.1-2.8-.4-4-1.2v6.3c0 3.4-2.6 5.8-5.8 5.8S5 18.6 5 15.4c0-3.4 2.9-6 6.4-5.6v3.3c-1.6-.4-3.2.6-3.2 2.3 0 1.4 1.1 2.5 2.5 2.5 1.5 0 2.6-1.1 2.6-2.8V3h3.3z"/></svg>',
+  apple:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3v12.2a3.3 3.3 0 1 1-2-3V7.4l-8 1.7v8.1a3.3 3.3 0 1 1-2-3V5.2z"/></svg>',
+  spotify:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9c4-1.3 8.5-1 12 1M7 12.5c3.3-1 6.8-.7 9.6.9M8 16c2.6-.7 5.2-.5 7.3.7"/></svg>',
+  youtube:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8.5v7l6-3.5z"/></svg>',
+  web:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>'
+};
 function buildItem(it,host,where){
   var k=it.kind,wrap;
   if(k==='text'){
-    var t=el('div','it text');
-    String(it.text||'').split(/\n\n+/).forEach(function(p){t.appendChild(el('p',null,esc(p).replace(/\n/g,'<br>')));});
+    var t=el('div','it text'+(it.title?' titled':''));
+    if(it.title)t.appendChild(el('h4','ititle',esc(it.title)));
+    if(where==='folder')richText(t,it.text);
+    else String(it.text||'').split(/\n\n+/).forEach(function(p){t.appendChild(el('p',null,esc(p).replace(/\n/g,'<br>')));});
     if(it.date)t.appendChild(el('div','idate',esc(it.date)));
     return t;
+  }
+  if(k==='link'){
+    var u=String(it.url||''),host='';try{host=new URL(u).hostname.replace(/^www\./,'');}catch(e){}
+    var kind=/tiktok/.test(host)?'tiktok':/music\.apple/.test(host)?'apple':/spotify/.test(host)?'spotify':/youtu/.test(host)?'youtube':'web';
+    var a=el('a','it link l-'+kind);
+    if(/^https?:\/\//i.test(u)){a.href=u;a.target='_blank';a.rel='noopener noreferrer';}
+    a.appendChild(el('span','licon',LICON[kind]));
+    var tx=el('span','ltext');tx.appendChild(el('span','lname',esc(it.title||host||'Link')));
+    if(it.caption)tx.appendChild(el('span','lcap',esc(it.caption)));
+    if(host)tx.appendChild(el('span','lhost',esc(host)+' ↗'));
+    a.appendChild(tx);return a;
   }
   var b=el('button','it '+(k==='video'?'video':'photo'));b.type='button';
   var th=it.thumb||(k==='video'?it.poster:null);   /* small preview in the grid; the full file only in the viewer */

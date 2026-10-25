@@ -62,12 +62,17 @@ with sync_playwright() as p:
     typ(pg,PW4)
     pg.wait_for_function("__fy.stage==='intro'",timeout=8000)
     pg.wait_for_function("__fy.stage==='slides'",timeout=8000); pg.wait_for_timeout(900)
-    for i in range(5): pg.click('.nav.next'); pg.wait_for_timeout(900)
-    # scrolling slide: four thumbnails fit at the top
-    r=pg.evaluate("(()=>{const g=document.querySelectorAll('.sl .items')[5];const gr=g.getBoundingClientRect();const k=[...g.children].slice(0,4).map(e=>e.getBoundingClientRect());return {cls:g.className,top:g.scrollTop,n:g.children.length,fit:k.every(r=>r.top>=gr.top-1&&r.bottom<=gr.bottom+1&&r.left>=gr.left-1&&r.right<=gr.right+1),fifthBelow:g.children[4].getBoundingClientRect().top>=gr.bottom-1,canScroll:g.scrollHeight>g.clientHeight+2}})()")
-    check('scroll slide shows exactly four thumbnails at the top',r['fit'] and r['fifthBelow'] and r['canScroll'],str(r))
+    nslides=pg.evaluate("document.querySelectorAll('.dot').length")
+    # a scrolling slide (five or more items), if there is one: four thumbnails fit at the top
+    r=pg.evaluate("(()=>{const g=document.querySelector('.sl .items.scroll');if(!g)return null;const gr=g.getBoundingClientRect();const k=[...g.children].slice(0,4).map(e=>e.getBoundingClientRect());return {cls:g.className,top:g.scrollTop,n:g.children.length,fit:k.every(r=>r.top>=gr.top-1&&r.bottom<=gr.bottom+1&&r.left>=gr.left-1&&r.right<=gr.right+1),fifthBelow:g.children[4].getBoundingClientRect().top>=gr.bottom-1,canScroll:g.scrollHeight>g.clientHeight+2}})()")
+    if r is not None:
+        si=pg.evaluate("[...document.querySelectorAll('.sl')].findIndex(s=>s.querySelector('.items.scroll'))")
+        for i in range(si): pg.click('.nav.next'); pg.wait_for_timeout(900)
+        r=pg.evaluate("(()=>{const g=document.querySelector('.sl .items.scroll');const gr=g.getBoundingClientRect();const k=[...g.children].slice(0,4).map(e=>e.getBoundingClientRect());return {fit:k.every(r=>r.top>=gr.top-1&&r.bottom<=gr.bottom+1&&r.left>=gr.left-1&&r.right<=gr.right+1),fifthBelow:g.children[4].getBoundingClientRect().top>=gr.bottom-1,canScroll:g.scrollHeight>g.clientHeight+2}})()")
+        check('scroll slide shows exactly four thumbnails at the top',r['fit'] and r['fifthBelow'] and r['canScroll'],str(r))
+    else: print('(no scrolling slide in the content; skipped that check)')
     pg.screenshot(path='fy_s6.png')
-    pg.click('.nav.next'); pg.wait_for_timeout(900)
+    while pg.evaluate("[...document.querySelectorAll('.dot')].pop().classList.contains('act')")==False: pg.click('.nav.next'); pg.wait_for_timeout(900)
     pg.click('.nav.next')
     pg.wait_for_function("__fy.stage==='more'",timeout=6000)
     y0=pg.evaluate("document.getElementById('mcaret').getBoundingClientRect().top"); pg.wait_for_timeout(1400)
@@ -77,8 +82,8 @@ with sync_playwright() as p:
     check('Mareep hides during the montage',float(pg.evaluate("getComputedStyle(document.getElementById('mareep')).opacity"))<0.2)
     pg.wait_for_function("__fy.stage==='tvoff'",timeout=16000)   # montage + the pause before the TV switches off
     t0=time.time(); pg.wait_for_function("__fy.stage==='folders-ready'",timeout=16000); dt=time.time()-t0
-    st=pg.evaluate("({settle:__fy.settleMs,maxErr:Math.max(...__fy.bodies.map(b=>Math.hypot(b.x-__fy.slots[b.i].x,b.y-__fy.slots[b.i].y))),ready:[...document.querySelectorAll('.fld.ready')].length,stars:__fy.particlesRef().stars.length,circ:__fy.particlesRef().circs.length})")
-    check('folders settle in under 10s',st['settle']<10000 and st['maxErr']<0.5 and st['ready']==16,str(st))
+    st=pg.evaluate("({settle:__fy.settleMs,maxErr:Math.max(...__fy.bodies.map(b=>Math.hypot(b.x-__fy.slots[b.i].x,b.y-__fy.slots[b.i].y))),ready:[...document.querySelectorAll('.fld.ready')].length,n:document.querySelectorAll('#fgrid .fld').length,stars:__fy.particlesRef().stars.length,circ:__fy.particlesRef().circs.length})")
+    check('folders settle in under 10s',st['settle']<10000 and st['maxErr']<0.5 and st['ready']==st['n'],str(st))
     pg.wait_for_timeout(4200)
     pl=pg.evaluate("(()=>{const W=innerWidth,H=innerHeight,g=Math.min(W*.88,H*.84);return __fy.planets().map(p=>({spawned:p.spawned,near:Math.hypot(p.x-p.tx,p.y-p.ty)<6,clear:Math.max(Math.abs(p.x-W/2)-g/2,Math.abs(p.y-H/2)-g/2)>=p.r*1.95}))})()")
     check('ringed planet and earth-like planet are in place, clear of the folders',len(pl)==2 and all(x['spawned'] and x['near'] and x['clear'] for x in pl),str(pl))
@@ -94,7 +99,7 @@ with sync_playwright() as p:
     # back to the slideshow, then forward again: no typing, no montage, no folder animation
     n0=len(pg.evaluate("__fy.hist"))
     pg.click('#backBtn'); pg.wait_for_function("__fy.stage==='slides'",timeout=6000); pg.wait_for_timeout(1200)
-    onlast=pg.evaluate("document.querySelectorAll('.dot')[6].classList.contains('act')")
+    onlast=pg.evaluate("[...document.querySelectorAll('.dot')].pop().classList.contains('act')")
     check('back lands on the last slide',onlast); pg.screenshot(path='fy_back.png')
     t0=time.time(); pg.click('.nav.next'); pg.wait_for_function("__fy.stage==='folders-ready'",timeout=8000); dt2=time.time()-t0
     hist=pg.evaluate("__fy.hist")[n0:]

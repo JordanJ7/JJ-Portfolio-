@@ -236,7 +236,12 @@ function itemsEditor(items,opts){
   items.forEach(function(it,i){
     var t=el('div','edItem '+it.kind);
     if(it.kind==='text'){
+      if(opts.folder)t.appendChild(field('Heading',it.title,function(v){it.title=v;},{placeholder:'optional'}));
       t.appendChild(field('Text',it.text,function(v){it.text=v;},{area:true,rows:opts.folder?8:4,wide:true}));
+    }else if(it.kind==='link'){
+      t.appendChild(field('Link',it.url,function(v){it.url=v.trim();},{placeholder:'https://…',wide:true}));
+      t.appendChild(field('Name',it.title,function(v){it.title=v;},{placeholder:'shown on the card'}));
+      t.appendChild(field('Note',it.caption,function(v){it.caption=v;},{placeholder:'optional'}));
     }else{
       var fig=el('div','edThumb'),img=el('img');img.alt='';fig.appendChild(img);thumbInto(img,it.thumb||it.poster||it);
       fig.appendChild(el('span','edKind',it.kind==='video'?'▶ video'+(it.dur?' · '+it.dur+'s':''):'photo'));t.appendChild(fig);
@@ -253,6 +258,7 @@ function itemsEditor(items,opts){
   var add=el('div','edAdd');
   add.appendChild(btn('+ Photos / videos',async function(){var f=await pick('image/*,video/*',true);if(!f||!f.length)return;var got=await addFiles(f);got.forEach(function(x){items.push(x);});render();}));
   add.appendChild(btn('+ Text',function(){items.push({kind:'text',text:''});changed();render();}));
+  if(opts.folder)add.appendChild(btn('+ Link',function(){items.push({kind:'link',url:'',title:''});changed();render();}));
   wrap.appendChild(add);
   return wrap;
 }

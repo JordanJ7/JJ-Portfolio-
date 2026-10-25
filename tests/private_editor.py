@@ -2,7 +2,7 @@
 then publishes to a FAKE GitHub (nothing leaves this machine) and checks the commit it would make.
 Usage: python3 tests/private_editor.py   (needs the site at http://localhost:8000/)
 Set EDPW (editor password) and PW3 (the third answer) in the environment; they are never stored in the repo."""
-import os,sys,json,base64,time,tempfile
+import os,re,sys,json,base64,time,tempfile
 from playwright.sync_api import sync_playwright
 S=tempfile.mkdtemp(); F=S; EDPW=os.environ['EDPW']
 results=[]
@@ -55,7 +55,7 @@ with sync_playwright() as p:
       r.stop();await new Promise(res=>r.onstop=res);const b=new Blob(ch,{type:'video/webm'});const u=new Uint8Array(await b.arrayBuffer());let s2='';for(let i=0;i<u.length;i+=32768)s2+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s2);}""")
     open(F+'/vertical.webm','wb').write(base64.b64decode(vid))
     pg.locator('.edCard').nth(1).locator('input[type=number]').first.fill('20')
-    with pg.expect_file_chooser() as fc: pg.get_by_text('+ Choose the vertical video').click()
+    with pg.expect_file_chooser() as fc: pg.get_by_text(re.compile(r'Choose the vertical video|Replace the video')).click()
     fc.value.set_files(F+'/vertical.webm'); pg.wait_for_function("!document.getElementById('edBusy').classList.contains('on')",timeout=20000); pg.wait_for_timeout(400)
     M=pg.evaluate("FyEditor._test.state().c.montage")
     check('ending video set and vertical',M['finale'] and M['finale']['h']>M['finale']['w'],str({k:M['finale'][k] for k in ('w','h','dur')} if M['finale'] else None))
