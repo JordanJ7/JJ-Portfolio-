@@ -48,14 +48,41 @@ P.forEach(function(p,i){
   chips.appendChild(b);
 });
 
-var tiles='';
-P.slice(0,4).forEach(function(p){
-  tiles+='<article class="tile" id="p-'+p.id+'">'+
-    '<div class="copy"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h3>'+p.title+'</h3><p class="b">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
-    '<a class="more" href="#/'+p.id+'">View project</a></div>'+
-    '<div class="big">'+svg(p)+'</div></article>';
-});
+/* My Works: every project, four to a page (2x2), with the pages either side peeking in, blurred */
+var tiles='',NPG=Math.ceil(P.length/4);
+for(var pg_=0;pg_<NPG;pg_++){
+  tiles+='<div class="wpage'+(pg_?'':' act')+'" role="group" aria-roledescription="slide" aria-label="Page '+(pg_+1)+' of '+NPG+'"'+(pg_?' aria-hidden="true" inert':'')+'>';
+  P.slice(pg_*4,pg_*4+4).forEach(function(p){
+    tiles+='<article class="tile" id="p-'+p.id+'">'+
+      '<div class="copy"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h3>'+p.title+'</h3><p class="b">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
+      '<a class="more" href="#/'+p.id+'">View project</a></div>'+
+      '<div class="big">'+svg(p)+'</div></article>';
+  });
+  tiles+='</div>';
+}
 $('tiles').innerHTML=tiles;
+(function(){
+  var track=$('tiles'),pages=track.children,wp=$('wpager'),prev=$('wprev'),next=$('wnext'),at=0,dots='';
+  for(var i=0;i<NPG;i++)dots+='<button type="button" class="wdot" aria-label="Page '+(i+1)+'"></button>';
+  wp.innerHTML=dots;
+  function go(i){
+    at=Math.max(0,Math.min(NPG-1,i));
+    track.style.transform='translateX(calc('+(-at)+' * (var(--pw) + var(--wg))))';
+    Array.prototype.forEach.call(pages,function(p,k){var on=k===at;p.classList.toggle('act',on);p.toggleAttribute('inert',!on);p.setAttribute('aria-hidden',on?'false':'true');});
+    Array.prototype.forEach.call(wp.children,function(d,k){d.classList.toggle('act',k===at);d.setAttribute('aria-current',k===at?'true':'false');});
+    prev.classList.toggle('gone',at===0);next.classList.toggle('gone',at===NPG-1);
+  }
+  prev.addEventListener('click',function(){go(at-1);});
+  next.addEventListener('click',function(){go(at+1);});
+  Array.prototype.forEach.call(wp.children,function(d,k){d.addEventListener('click',function(){go(k);});});
+  /* a peeking page can be tapped to bring it in */
+  Array.prototype.forEach.call(pages,function(p,k){p.addEventListener('click',function(e){if(k!==at){e.preventDefault();go(k);}},true);});
+  var x0=null,y0=0;
+  track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
+  track.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)go(at+(dx<0?1:-1));},{passive:true});
+  if(NPG<2)$('wcar').classList.add('single');
+  go(0);
+})();
 
 var wm='<a href="#work"><span>All work</span></a><hr>';
 P.forEach(function(p){wm+='<a href="#/'+p.id+'"><span>'+p.title+'</span><small>'+p.date+'</small></a>';});
@@ -371,9 +398,11 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
   // static pages
   var CB='https://www.coursera.org/account/accomplishments/';
   function pageCerts(){
-    var o='<div class="pg"><h1>Certifications.</h1><p class="sub">Google AI certificates earned through Coursera, plus my Sony Pictures Animation certificate. Each Coursera card opens the official credential.</p><div class="certs">'+
+    var o='<div class="pg"><h1>Certifications.</h1><p class="sub">Grouped by who issued them. Each Coursera card opens the official credential.</p>'+
+      '<h2>Google AI &middot; Coursera</h2><div class="certs">'+
       '<div class="cert big"><b>Google AI Professional Certificate</b><span class="d">Google, issued Jun 2026</span><a href="'+CB+'specialization/FCZ277UI53YA" target="_blank" rel="noopener">View credential &#8599;</a></div>';
     CERTS.forEach(function(c){o+='<div class="cert"><b>'+c[0]+'</b><span class="d">Google, issued '+c[1]+'</span><a href="'+CB+c[2]+'" target="_blank" rel="noopener">View credential &#8599;</a></div>';});
+    o+='</div><h2>Sony Pictures Animation &middot; Yellowbrick</h2><div class="certs">';
     o+='<div class="cert"><b>This Is Animation</b><span class="d">Sony Pictures Animation on Yellowbrick, issued Jun 23, 2025</span><a href="#/this-is-animation">View certificate</a></div>';
     o+='</div><p class="sub" style="margin-top:22px">More on <a href="https://www.linkedin.com/in/jordan-james07" target="_blank" rel="noopener">LinkedIn</a>.</p></div>';
     return o;}
@@ -382,10 +411,13 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
     return '<div class="pg"><div class="btns"><a href="assets/Jordan-James-Resume.pdf" download>Download PDF</a><button type="button" onclick="window.print()">Print</button><a href="#/certifications">See certifications</a></div>'+
     '<div class="paper"><h1>Jordan James</h1><p class="contactline">Erie, PA &middot; <a href="mailto:saojmj123456@gmail.com">saojmj123456@gmail.com</a> &middot; <a href="https://www.linkedin.com/in/jordan-james07/" target="_blank" rel="noopener">linkedin.com/in/jordan-james07</a> &middot; <a href="#/flx-edits">Edits</a></p>'+
     '<h2>Summary</h2><ul><li>IT support technician with nearly three years of help desk experience, resolving 40+ tickets weekly in ServiceNow.</li><li>Trained in computer networking, with hands-on hardware repair, network installation, and customer service skills.</li></ul>'+
-    '<h2>Education &amp; certifications</h2>'+
+    '<h2>Education</h2>'+
     job('The Pennsylvania State University, Erie, PA','May 2025','Bachelor of Arts, Digital Media, Arts &amp; Technology. Minor: Game Development',[])+
     job('Erie County Technical School, Erie, PA','August 2018 &ndash; May 2020','Focus: Computer Networking',['Coursework: designing, installing, and troubleshooting computer and A/V network systems; LANs, WANs, OSI model, Ethernet, IP addressing, routers and router programming, cabling, and Windows Server administration.'])+
-    '<ul><li>Coursera: AI Engineering and Prompting (Google Gemini, Google AI Studio). Completed June 2026. <a href="#/certifications">All credentials</a></li><li>Sony Pictures Animation &amp; Imageworks: This Is Animation, Yellowbrick Program. Completed June 2025.</li><li>Penn State Bridge Program (master&rsquo;s prep): CMPSC 2310 Foundations of Programming (Python), CMPSC 2320 Data Structures and Algorithms, MATH 2340 Calculus, MATH 2350 Statistics and Probability. In progress.</li></ul>'+
+    '<ul><li>Penn State Bridge Program (master&rsquo;s prep): CMPSC 2310 Foundations of Programming (Python), CMPSC 2320 Data Structures and Algorithms, MATH 2340 Calculus, MATH 2350 Statistics and Probability. In progress.</li></ul>'+
+    '<h2>Certifications</h2>'+
+    '<ul><li>Google AI (Coursera): AI Engineering and Prompting (Google Gemini, Google AI Studio). Completed June 2026. <a href="#/certifications">All credentials</a></li>'+
+    '<li>Sony Pictures Animation &amp; Imageworks: This Is Animation, Yellowbrick Program. Completed June 2025.</li></ul>'+
     '<h2>IT experience</h2>'+
     job('Penn State Behrend, Erie, PA','September 2022 &ndash; May 2025','Student Technician',['Resolved 40+ ServiceNow tickets weekly for 800+ faculty and staff and 3,000+ students, documenting each one.','Provided onsite and remote support (Remote Desktop, TeamViewer) for Windows 8&ndash;11, macOS, Microsoft 365, and CAD.','Reimaged, deployed, or decommissioned 1,000+ computers using SCCM, and built, upgraded, and repaired hardware.','Managed Active Directory accounts and permissions, including password resets and MFA troubleshooting.','Set up printers, classroom projectors, and A/V equipment, and configured security software on campus machines.','Trained new student hires on software and daily help desk procedures, and wrote how-to guides for users.'])+
     job('Erie County Convention Center Authority (ECCA), Erie, PA','May 2024 &ndash; August 2024','IT / Social Media Intern',['Installed networked IP cameras across the entire ECCA campus, including the Bayfront Convention Center.','Audited Erie Events venue websites for UI/UX and designed logos and animations in Adobe Creative Cloud.'])+
@@ -415,6 +447,7 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
     ];
     var o='<div class="pg"><h1>Intern blog.</h1><p class="sub">Notes from my summer 2024 internship with the Erie County Convention Center Authority.</p>';
     posts.forEach(function(x){o+='<article class="post"><h2>'+x[0]+'</h2><p>'+x[1]+'</p></article>';});
+    o+='<p class="note">* Most of the original intern blog posts could not be recovered. These are the ones that survived.</p>';
     o+='<p class="sub" style="margin-top:22px">See the logo work from this internship in <a href="#/erie-events-branding">Erie Events Branding</a>.</p></div>';
     return o;}
 

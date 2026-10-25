@@ -16,7 +16,7 @@ var CFG=merge({
   hintAfter:2,             /* wrong tries before the hint shows */
   lockAt:4,                /* total wrong tries before the first lockout, then every 2 more */
   prompt:{pre:553,fadeIn:612,hold:1496,fadeOut:1020,rise:56},   /* waits before the prompts for questions 2 and 3, ms (15% quicker than the last version); pre = pause while the old line fades out; rise = px the prompt floats up while fading */
-  intro:{typing:1800,delay:180,attr:200,reading:2100,fade:600},   /* same timings as Journal-101 */
+  intro:{typing:1800,delay:180,attr:200,reading:2100,fade:600,enjoy:2600,blur:1300},   /* same timings as Journal-101; long quotes type and stay up longer in proportion; enjoy = the closing word and heart; blur = the slideshow sharpening in */
   slide:{autoplay:false,ms:7000},
   more:{type:2757,hold:2000},                      /* typed "There's More", ms (was 6000, 5400, 4320, 3757+3000; now 2s quicker overall) */
   returnSkips:true,                                 /* after the Back button, skip typing, montage and the folder animation */
@@ -36,7 +36,12 @@ function b64(s){var bin=atob(s),n=bin.length,u=new Uint8Array(n);for(var i=0;i<n
 function toB64(u8){var s='',c=0x8000;for(var i=0;i<u8.length;i+=c)s+=String.fromCharCode.apply(null,u8.subarray(i,i+c));return btoa(s);}
 function hex(u){var s='';for(var i=0;i<u.length;i++)s+=('0'+u[i].toString(16)).slice(-2);return s;}
 var NORM={
-  digits:function(v){var s=String(v).replace(/\s+/g,'');return /^\d+$/.test(s)?s.replace(/^0+/,''):s;},   /* leading zeros do not matter */
+  digits:function(v){   /* leading zeros, dashes, slashes and written-out months do not matter: 01/02/2000, 1-2-2000 and January 2nd 2000 are all 122000 */
+    var s=String(v).toLowerCase().trim();
+    s=s.replace(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?/g,function(m,k){return ' '+({jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,sept:9,oct:10,nov:11,dec:12}[k])+' ';});
+    s=s.replace(/(\d)(st|nd|rd|th)\b/g,'$1');
+    if(/^[\d\s\-\/.,]+$/.test(s))return s.replace(/\D+/g,'').replace(/^0+/,'');
+    return s.replace(/\s+/g,'');},
   date:function(v){return String(v).replace(/\D+/g,'').replace(/^0+/,'');},   /* 1/31/2020, 1-31-2020 and 1312020 are the same */
   text:function(v){return String(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase().replace(/\s+/g,' ');}
 };
@@ -332,20 +337,34 @@ function intro(){
   return new Promise(function(done){
     var quotes=(S.content.quotes||[]).filter(function(q){return q&&String(q).trim();});
     var q=quotes.length?quotes[Math.random()*quotes.length|0]:'Love Is A Catalyst for Change';
-    var h=$('#q'),attr=$('#attr');
-    h.className=['f-serif','f-sans','f-grotesk','f-display','f-mono'][Math.random()*5|0];
+    var h=$('#q'),attr=$('#attr'),long=q.length>160;
+    h.className=(long?['f-serif','f-sans','f-grotesk']:['f-serif','f-sans','f-grotesk','f-display','f-mono'])[Math.random()*(long?3:5)|0]+(long?' long':'');
+    $('#intro .mn').classList.remove('gone');$('#enjoy').classList.remove('vis','draw');
     h.innerHTML='\u201C<span id="qt"></span>\u201D<span class="vc"></span>';
     var qt=$('#qt'),vc=$('.vc',h);
     attr.textContent=S.content.attribution||'\u2014 Me';attr.classList.remove('vis');
     stageName('intro');on('intro');
     var sp=Math.max(.25,+(S.content.look||{}).quoteSpeed||1),T={};   /* quote speed from the editor: 2 = twice as fast */
     Object.keys(CFG.intro).forEach(function(k){T[k]=CFG.intro[k]/sp;});
+    if(long){var f=q.length/60;T.typing*=f;T.reading*=Math.max(1,f/3);}   /* a letter-length quote is typed at a readable pace */
+    var closing=S.content.closing==null?'':String(S.content.closing);
     var raf=0,timers=[],dismissed=false;
-    function dismiss(){
+    function dismiss(soft){
       if(dismissed)return;dismissed=true;cancelAnimationFrame(raf);timers.forEach(clearTimeout);
+      if(soft&&!RM)S.blurIn=T.blur;                               /* the slideshow comes in out of a blur */
       var o=$('#intro');o.classList.remove('vis');setTimeout(function(){o.classList.remove('on');done();},T.fade);
     }
-    $('#skip').onclick=dismiss;
+    /* after the quote: it fades away, then the closing word writes in with a heart drawn beside it */
+    function finish(){
+      if(!closing){dismiss(true);return;}
+      $('#intro .mn').classList.add('gone');
+      timers.push(setTimeout(function(){
+        var e=$('#enjoy');$('#enjoyW').textContent=closing;e.classList.add('vis');
+        timers.push(setTimeout(function(){e.classList.add('draw');},Math.min(500,T.enjoy*.2)));
+        timers.push(setTimeout(function(){dismiss(true);},T.enjoy));
+      },Math.min(700,T.fade+100)));
+    }
+    $('#skip').onclick=function(){dismiss(false);};
     timers.push(setTimeout(function(){
       var start=null;
       function step(now){
@@ -356,7 +375,7 @@ function intro(){
         if(el_<T.typing)raf=requestAnimationFrame(step);
         else{
           qt.textContent=q;vc.classList.add('pulse');
-          timers.push(setTimeout(function(){attr.classList.add('vis');timers.push(setTimeout(dismiss,T.reading));},T.attr));
+          timers.push(setTimeout(function(){attr.classList.add('vis');timers.push(setTimeout(finish,T.reading));},T.attr));
         }
       }
       raf=requestAnimationFrame(step);
@@ -378,7 +397,17 @@ function slideshow(startIdx){
     slides.forEach(function(sl,i){
       var s=el('section','sl');s.setAttribute('aria-label','Slide '+(i+1)+' of '+slides.length);
       if(sl.title)s.appendChild(el('h3',null,esc(sl.title)));
-      s.appendChild(renderItems(sl.items||[],stage,sl.layout==='pages'?'pages':'','slide'));   /* pages: a deck, one full-width page under the next */
+      if(sl.caption)s.appendChild(el('p','scap',esc(sl.caption)));
+      var g=renderItems(sl.items||[],stage,sl.layout==='pages'?'pages':'','slide');   /* pages: a deck, one full-width page under the next */
+      s.appendChild(g);
+      if(!(sl.items||[]).length)g.appendChild(el('div','sempty','More coming soon'));   /* a slide that is waiting for its videos */
+      if(sl.layout==='pages'&&(sl.items||[]).length>1){   /* a sign that there is more below, gone once the last page is reached */
+        var hint=el('button','morehint','<span>Scroll for more</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+        hint.type='button';hint.setAttribute('aria-label','Scroll to the next page');
+        hint.addEventListener('click',function(){var k=g.firstElementChild,step=k?k.getBoundingClientRect().height+14:g.clientHeight;g.scrollBy({top:step,behavior:RM?'auto':'smooth'});});
+        g.addEventListener('scroll',function(){hint.classList.toggle('done',g.scrollTop+g.clientHeight>=g.scrollHeight-8);},{passive:true});
+        s.appendChild(hint);
+      }
       track.appendChild(s);slideEls.push(s);
       var d=el('button','dot','<i></i>');d.type='button';d.setAttribute('aria-label','Go to slide '+(i+1));
       d.addEventListener('click',function(){go(i);});caps.appendChild(d);
@@ -419,6 +448,9 @@ function slideshow(startIdx){
     var sx=null;
     stage.onpointerdown=function(e){sx=e.clientX;};
     stage.onpointerup=function(e){if(sx===null)return;var dx=e.clientX-sx;sx=null;if(Math.abs(dx)>60&&!viewerOpen)go(idx+(dx<0?1:-1));};
+    /* coming out of a blur: only the slide box is blurred (the whole layer is too heavy to blur smoothly) */
+    if(S.blurIn){var bt=S.blurIn;S.blurIn=0;stage.style.willChange='filter';stage.style.transition='none';stage.style.filter='blur(8px)';void stage.offsetWidth;
+      requestAnimationFrame(function(){requestAnimationFrame(function(){stage.style.transition='filter '+bt+'ms cubic-bezier(.2,.7,.2,1)';stage.style.filter='blur(0px)';setTimeout(function(){stage.style.filter='';stage.style.transition='';stage.style.willChange='';},bt+80);});});}
     stageName('slides');setPP();on('show');update();setTimeout(fit,60);
     window.__fy.slide=function(i){go(i);};
     window.__fy.slideCount=slides.length;
@@ -553,6 +585,8 @@ function foldersScene(){
     var cv=$('#fx'),ctx=cv.getContext('2d'),host=$('#fgrid'),dpr=Math.min(2,devicePixelRatio||1);
     var W=0,H=0,cell=0,size=0,R=0,g=0,slots=[],T=[],G={w:0,h:0};
     var data=(S.content.folders||[]).slice(0,64),NF=data.length,cols=Math.max(1,Math.ceil(Math.sqrt(NF))),rows=Math.max(1,Math.ceil(NF/cols));
+    var TT=!!(S.content.look||{}).folderTitles,RS=TT?1.3:1;   /* with titles under the folders: rows sit further apart, and phones get at most 3 columns */
+    if(TT&&window.innerWidth<600&&cols>3){cols=3;rows=Math.ceil(NF/cols);}
     var owner=false;try{owner=localStorage.getItem('jj_fy_owner')==='1';}catch(e){}
     var planets=[{kind:'ring',spawned:false,off:false,x:0,y:0,vx:0,vy:0,tx:0,ty:0,r:20,a:0,ph:rnd(0,6.28)},{kind:'earth',spawned:false,off:false,x:0,y:0,vx:0,vy:0,tx:0,ty:0,r:18,a:0,ph:rnd(0,6.28)}];
     var paused=false,bodies=[],isReady=false,t=0,last=0,raf=0,STAR_CAP=CFG.fold.stars,CIRC_CAP=CFG.fold.circles;
@@ -561,10 +595,10 @@ function foldersScene(){
     function layout(){
       W=window.innerWidth;H=window.innerHeight;
       cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-      cell=Math.min(W*.88/cols,H*.84/rows,W*.88/4*1.25);size=cell*.82;R=size*.43;g=Math.max(cols,rows)*cell;var gw=cols*cell,gh=rows*cell;
-      for(var i=0;i<NF;i++){var r_=(i/cols)|0,inRow=Math.min(cols,NF-r_*cols);slots[i]={x:W/2+((i%cols)-(inRow-1)/2)*cell,y:H/2+(r_-(rows-1)/2)*cell};}
+      cell=Math.min(W*.88/cols,H*.84/(rows*RS),W*.88/4*1.25);size=cell*.82;R=size*.43;g=Math.max(cols,rows)*cell;var gw=cols*cell,gh=rows*cell*RS;
+      for(var i=0;i<NF;i++){var r_=(i/cols)|0,inRow=Math.min(cols,NF-r_*cols);slots[i]={x:W/2+((i%cols)-(inRow-1)/2)*cell,y:H/2+(r_-(rows-1)/2)*cell*RS-(RS-1)*cell*.25};}
       G.w=gw;G.h=gh;
-      bodies.forEach(function(b){b.r=R;b.el.style.width=size+'px';b.el.style.height=size*.8+'px';});
+      bodies.forEach(function(b){b.r=R;b.el.style.width=size+'px';b.el.style.height=size*.8+'px';b.el.style.setProperty('--cw',(cell*.96)+'px');});
       makeTargets();
     }
     function makeTargets(){
@@ -616,7 +650,9 @@ function foldersScene(){
     data.forEach(function(f,i){
       var b=el('button','fld','<svg viewBox="0 0 120 96" aria-hidden="true"><path d="M6 20a8 8 0 0 1 8-8h26l10 10h56a8 8 0 0 1 8 8v54a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" fill="#a9d3f6"/><path d="M6 34a8 8 0 0 1 8-8h92a8 8 0 0 1 8 8v48a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" fill="url(#fgrad)"/></svg>');
       b.type='button';b.setAttribute('aria-label','Open folder '+(i+1));b.tabIndex=-1;
-      if(owner&&f.name)b.appendChild(el('span','flabel',esc(f.name)));
+      var showT=!!(S.content.look||{}).folderTitles;   /* titles under every folder, or only the owner's private labels */
+      if(showT&&(f.title||f.name))b.appendChild(el('span','ftitle',esc(f.title||f.name)));
+      else if(owner&&f.name)b.appendChild(el('span','flabel',esc(f.name)));
       b.addEventListener('click',function(){if(isReady)openBubble(f,b);});
       if(f.name)b.dataset.name=f.name;
       host.appendChild(b);

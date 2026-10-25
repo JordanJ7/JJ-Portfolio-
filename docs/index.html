@@ -71,14 +71,19 @@
 
   <div class="chips" id="chips" role="group" aria-label="Choose a project"></div>
   <div class="hint">Swipe the case or use the arrow keys.</div>
-  <a class="moreh" id="moreh" href="#work" aria-label="Scroll down to selected work"><span>More</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+  <a class="moreh" id="moreh" href="#work" aria-label="Scroll down to my works"><span>More</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
 </header>
 
 <main>
   <section class="work" id="work">
-    <h2>Selected work.</h2>
-    <p class="note">The four newest. Everything else is on the CD above and in the Work menu.</p>
-    <div id="tiles"></div>
+    <h2>My Works.</h2>
+    <p class="note">Newest first, four at a time. Use the arrows for the rest, or pick one from the CD above.</p>
+    <div class="wcar" id="wcar" role="region" aria-roledescription="carousel" aria-label="My works">
+      <div class="wview"><div id="tiles"></div></div>
+      <button class="wnav prev" type="button" id="wprev" aria-label="Previous works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="wnav next" type="button" id="wnext" aria-label="More works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="wpager" id="wpager" role="group" aria-label="Choose a page of works"></div>
+    </div>
   </section>
 
   <section class="about" id="about">

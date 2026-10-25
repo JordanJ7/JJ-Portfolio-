@@ -61,7 +61,7 @@ with sync_playwright() as p:
     check('ending video set and vertical',M['finale'] and M['finale']['h']>M['finale']['w'],str({k:M['finale'][k] for k in ('w','h','dur')} if M['finale'] else None))
     check('barrage count set',M['count']==20)
     # folders: count and a text item with a date
-    pg.click('.edTab[data-tab=folders]'); pg.locator('.edCard').first.locator('input[type=number]').fill('9'); pg.get_by_text('Apply').click(); pg.wait_for_timeout(300)
+    pg.click('.edTab[data-tab=folders]'); pg.locator('.edCard:has(input[type=number])').first.locator('input[type=number]').fill('9'); pg.get_by_text('Apply').click(); pg.wait_for_timeout(300)
     check('folder count changed to 9',len(pg.evaluate("FyEditor._test.state().c.folders"))==9)
     # books: add a page through the scanner
     pg.click('.edTab[data-tab=books]')

@@ -276,6 +276,7 @@ function tabSlides(m){
     var c=card('Slide '+(i+1),[btn(ICON.up,function(){move(E.c.slides,i,-1);changed();render();},'sq'),btn(ICON.down,function(){move(E.c.slides,i,1);changed();render();},'sq'),
       btn('Delete',function(){if(confirm('Delete slide '+(i+1)+' and everything on it?')){E.c.slides.splice(i,1);changed();render();}},'bad')]);
     c.appendChild(field('Title (optional)',sl.title,function(v){sl.title=v;}));
+    c.appendChild(field('Caption under the title (optional)',sl.caption,function(v){if(v)sl.caption=v;else delete sl.caption;}));
     var lay=el('label','edCheck'),cb=el('input');cb.type='checkbox';cb.checked=sl.layout==='pages';cb.onchange=function(){if(cb.checked)sl.layout='pages';else delete sl.layout;changed();};
     lay.appendChild(cb);lay.appendChild(el('span',null,'Show as pages, one under the next (for a slideshow or PDF made into pictures)'));c.appendChild(lay);
     sl.items=sl.items||[];c.appendChild(itemsEditor(sl.items,{date:true}));m.appendChild(c);
@@ -299,6 +300,7 @@ function tabQuotes(m){
   m.appendChild(c);
   var c2=card('Signature and speed');
   c2.appendChild(field('Signed as',E.c.attribution,function(v){E.c.attribution=v;}));
+  c2.appendChild(field('Closing word (shown with a heart after the quote; leave empty for none)',E.c.closing,function(v){E.c.closing=v;}));
   var sp=+E.c.look.quoteSpeed||1,w=el('label','edField'),r=el('input'),out=el('span','edNote');
   r.type='range';r.min=.4;r.max=2.5;r.step=.1;r.value=sp;w.appendChild(el('span','edLab','Quote animation speed'));w.appendChild(r);w.appendChild(out);
   function lab(){out.textContent=(+r.value).toFixed(1)+'× '+(+r.value>1.05?'(faster)':+r.value<.95?'(slower)':'(normal)');}
@@ -341,6 +343,9 @@ function tabBarrage(m){
 function tabFolders(m){
   var F=E.c.folders;
   intro(m,'Folders float into a grid at the end. The title only shows once a folder is opened. Inside, you can put long text, photos and videos; videos can have a caption and a message, and anything can have a date (it only shows when you type one).');
+  var tc=card('Folder titles'),tl=el('label','edCheck'),tb=el('input');tb.type='checkbox';tb.checked=!!E.c.look.folderTitles;
+  tb.onchange=function(){if(tb.checked)E.c.look.folderTitles=true;else delete E.c.look.folderTitles;changed();};
+  tl.appendChild(tb);tl.appendChild(el('span',null,'Show each folder\u2019s title under it (otherwise titles only show inside)'));tc.appendChild(tl);m.appendChild(tc);
   var c=card('How many folders');
   var r=el('div','edRow'),n=el('input');n.type='number';n.min=1;n.max=64;n.value=F.length;
   var apply=btn('Apply',function(){
@@ -448,7 +453,7 @@ function tabAccess(m){
     var r=el('div','edRow');
     r.appendChild(field('Prompt (typed above the line)',q.prompt,function(v){q.prompt=v;},{placeholder:i===0?'nothing: just the blinking line':''}));
     r.appendChild(field('Hint (after 2 wrong tries)',q.hint,function(v){q.hint=v;}));
-    var kw=el('label','edField'),sel=el('select');sel.innerHTML='<option value="digits">Numbers (leading zeros ignored)</option><option value="date">Date (only the digits count)</option><option value="text">Words</option>';sel.value=q.kind||'text';
+    var kw=el('label','edField'),sel=el('select');sel.innerHTML='<option value="digits">Numbers or a date (dashes, slashes, month names and leading zeros ignored)</option><option value="date">Date (only the digits count)</option><option value="text">Words</option>';sel.value=q.kind||'text';
     sel.onchange=function(){toast('To switch between numbers and words, change the answers too (so they are saved the new way).');sel.value=q.kind||'text';};
     kw.appendChild(el('span','edLab','Kind of answer'));kw.appendChild(sel);r.appendChild(kw);
     c.appendChild(r);
