@@ -110,7 +110,7 @@ nav .links>a:hover,.dd>button:hover,.dd.open>button,.dd:focus-within>button,.dd>
 .work>h2,.about h2{margin:0 0 22px 8px;font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
 /* My Works carousel (like Apple's highlights): the current page sits in the content column, the next one runs off the
    screen edge, dimmed and blurred until it slides over; each page is a 2x2 grid */
-.wcar{position:relative;--wg:20px;--vw:100vw;--cw:1216px;--pw:min(var(--cw),calc(var(--vw) - 2 * var(--peek)));--peek:72px}
+.wcar{position:relative}
 .wview{position:relative;width:var(--vw);margin-left:calc(50% - var(--vw) / 2);overflow:hidden;padding:4px 0}
 #tiles{display:flex;gap:var(--wg);padding-left:calc((var(--vw) - var(--pw)) / 2);transition:transform .7s cubic-bezier(.65,0,.25,1);will-change:transform}
 .wpage{flex:0 0 var(--pw);width:var(--pw);display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:12px;transition:opacity .5s ease;opacity:.35;filter:blur(4px);will-change:transform,opacity;cursor:pointer}   /* the blur is not animated: one repaint per turn, then the page just slides */
@@ -125,6 +125,21 @@ nav .links>a:hover,.dd>button:hover,.dd.open>button,.dd:focus-within>button,.dd>
 .wdot{width:9px;height:9px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.4);cursor:pointer;transition:width .4s cubic-bezier(.65,0,.25,1),background .3s}
 .wdot.act{width:36px;background:var(--pink)}
 .wcar.single .wctl{display:none}
+/* fit the whole section on one screen: wider on big monitors, rows sized from the window height */
+.work{max-width:min(1640px,100%);scroll-margin-top:52px;padding-top:28px;padding-bottom:28px;--peek:72px;--wg:20px;--vw:100vw;--cw:1216px;--pw:min(var(--cw),calc(var(--vw) - 2 * var(--peek)))}
+/* the heading lines up with the first card */
+section.work>h2{margin:0 0 10px calc((var(--cw) - var(--pw)) / 2 + 8px)}
+section.work>.note{margin:0 0 16px calc((var(--cw) - var(--pw)) / 2 + 8px)}
+.wpage{grid-template-rows:repeat(2,clamp(200px,calc((100svh - 300px) / 2),320px));grid-auto-rows:auto}
+.wpage .tile{min-height:0;padding:clamp(18px,2vw,28px)}
+.wpage .tile .copy{max-width:min(46ch,64%)}
+.wpage .tile h3{font-size:clamp(22px,2.1vw,30px)}
+.wpage .tile p.b{font-size:clamp(14px,1.15vw,16px);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.wpage .tile .tools{font-size:14px;margin-top:8px}
+.wpage .tile .more{margin-top:12px;padding:8px 18px;font-size:14px}
+.wpage .tile .big{width:auto;height:74%;right:-3%;bottom:-16%}
+.wctl{margin-top:16px}
+@media (max-height:780px) and (min-width:761px){.wpage .tile .tools{display:none}.wpage .tile p.b{-webkit-line-clamp:2}.wpage .tile .more{margin-top:10px}}
 @media (prefers-reduced-motion:reduce){#tiles,.wpage,.wdot{transition:none}}
 .tile{position:relative;overflow:hidden;border-radius:28px;margin:0;background:var(--panel);color:#fff;border:1px solid var(--line);min-height:300px;padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;justify-content:flex-start}
 .tile .copy{position:relative;z-index:2;max-width:26ch}
@@ -139,13 +154,15 @@ nav .links>a:hover,.dd>button:hover,.dd.open>button,.dd:focus-within>button,.dd>
 .tile .big::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,rgba(255,255,255,0),rgba(255,255,255,.4) 8%,rgba(255,255,255,0) 18%,rgba(255,150,205,.3) 30%,rgba(255,255,255,0) 40%,rgba(255,255,255,.2) 58%,rgba(255,255,255,0) 68%,rgba(255,255,255,.35) 82%,rgba(255,255,255,0))}
 @media(max-width:760px){.stage{width:calc(var(--s)*1.75)}.tile{min-height:290px}.tile .big{width:170px;right:-10%;bottom:-16%}
   /* still 2x2 on a phone: compact tiles, the longer words wait on the project page */
-  .wcar{--peek:22px;--wg:10px}.wpage{gap:8px}
+  .work{--peek:22px;--wg:10px}.wpage{gap:8px}
+  .wpage{grid-template-rows:none}
   .wpage .tile{min-height:0;aspect-ratio:3/4;padding:14px;border-radius:20px}
+  .wpage .tile .copy{max-width:none}
   .wpage .tile .b,.wpage .tile .tools{display:none}
   .wpage .tile .kind{font-size:12px;margin:0 0 6px}.wpage .tile .date{font-size:11px}
   .wpage .tile h3{font-size:18px;letter-spacing:-.03em}
   .wpage .tile .more{margin-top:10px;padding:7px 13px;font-size:13px}
-  .wpage .tile .big{width:62%;right:-16%;bottom:-14%}
+  .wpage .tile .big{width:62%;height:auto;right:-16%;bottom:-14%}
   .wnav{width:44px;height:44px}.wnav svg{width:18px;height:18px}.wpager{height:44px}}
 
 /* about + contact */

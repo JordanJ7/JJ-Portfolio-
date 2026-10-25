@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN} from './data.js?v=20261025b';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN} from './data.js?v=20261025c';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -82,7 +82,7 @@ $('tiles').innerHTML=tiles;
   track.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)go(at+(dx<0?1:-1));},{passive:true});
   if(NPG<2)$('wcar').classList.add('single');
   /* the carousel runs to the screen edges; the real visible width (without a scrollbar) keeps it exact */
-  function vw(){var c=$('wcar');c.style.setProperty('--vw',document.documentElement.clientWidth+'px');c.style.setProperty('--cw',c.clientWidth+'px');}
+  function vw(){var c=$('wcar'),w=$('work');w.style.setProperty('--vw',document.documentElement.clientWidth+'px');w.style.setProperty('--cw',c.clientWidth+'px');}
   vw();addEventListener('resize',vw);
   go(0);
 })();
