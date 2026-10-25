@@ -1200,6 +1200,9 @@ function showBooks(){
           b.style.setProperty('--bk','rgb('+r+','+g+','+bb+')');b.style.setProperty('--bkd','rgb('+(r*.7|0)+','+(g*.7|0)+','+(bb*.7|0)+')');b.style.setProperty('--ar',(im.naturalWidth/im.naturalHeight).toFixed(3));}catch(e){}
       };im.src=m.url;
     }).catch(function(){});
+    /* real back and spine photos, when the book has them */
+    if(bk.back)media(bk.back.id,bk.back.mime).then(function(m){$('.bkback',b).style.background='url("'+m.url+'") center/cover';}).catch(function(){});
+    if(bk.spine)media(bk.spine.id,bk.spine.mime).then(function(m){$('.bkspine',b).style.background='url("'+m.url+'") center/100% 100%';}).catch(function(){});
     b.addEventListener('click',function(){openReader(bk);});
     shelf.appendChild(b);
   });
