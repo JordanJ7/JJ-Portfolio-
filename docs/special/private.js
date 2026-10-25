@@ -509,22 +509,28 @@ async function montage(){
   D.body.classList.add('dark');on('mont');
   if(!RM)await sleep(1250);                                    /* let the screen settle into the dark before photos start */
   shuffle(srcs);
+  /* the chosen last photo is kept out of the random pops and comes in last, big and centred, then stays behind the ending video */
+  var lastX=null;
+  if(M.lastId){for(var li=0;li<srcs.length;li++)if(srcs[li].it.id===M.lastId){lastX=srcs.splice(li,1)[0];break;}if(lastX&&!srcs.length){srcs.push(lastX);lastX=null;}}
+  var lastCard=null;
   var C=CFG.mont,N=srcs.length?Math.max(1,+M.count||C.frames):0,t0=+M.startMs||C.start,t1=+M.endMs||C.end,base=Math.min(w,h),cells=[],live=[];
   function nextCell(){if(!cells.length){for(var i=0;i<9;i++)cells.push(i);shuffle(cells);}return cells.pop();}
   var due=performance.now();                                   /* absolute schedule: a slow frame never pushes the rest back */
   for(var i=0;i<N;i++){
     await until(due);
-    var x=srcs[i%srcs.length],ar=x.ar||1.4,L=base*rnd(C.size[0],C.size[1]);
+    var isLast=lastX&&i===N-1,x=isLast?lastX:srcs[i%srcs.length],ar=x.ar||1.4,L=base*rnd(C.size[0],C.size[1]);
     var dw=ar>=1?L:L*ar,dh=ar>=1?L/ar:L,cap=Math.min(1,C.maxFill*w/dw,C.maxFill*h/dh);dw*=cap;dh*=cap;
     var c=nextCell(),cx=(c%3+.5)/3*w+rnd(-.1,.1)*w,cy=(((c/3)|0)+.5)/3*h+rnd(-.1,.1)*h;
     cx=Math.max(dw*.42,Math.min(w-dw*.42,cx));cy=Math.max(dh*.42,Math.min(h-dh*.42,cy));
+    if(isLast){dh=h*.94;dw=dh*ar;if(dw>w*.96){dw=w*.96;dh=dw/ar;}cx=w/2;cy=h/2;}
     var card=el('div','mcard'),node;
     var fresh=x.el&&!x.el.parentNode;                           /* first time: the preloaded element; repeats get a copy */
     if(x.it.kind==='video'){node=fresh?x.el:D.createElement('video');node.muted=true;node.loop=true;node.playsInline=true;node.autoplay=true;if(!fresh)node.src=x.url;live.push(node);var pr=node.play();if(pr&&pr.catch)pr.catch(function(){});
       if(live.length>3)live.shift().pause();}                  /* only the newest few videos keep playing */
     else{node=fresh?x.el:x.el.cloneNode();}
     card.appendChild(node);
-    card.style.cssText='width:'+dw+'px;height:'+dh+'px;left:'+(cx-dw/2)+'px;top:'+(cy-dh/2)+'px;--r:'+rnd(-C.tilt,C.tilt).toFixed(2)+'deg';
+    card.style.cssText='width:'+dw+'px;height:'+dh+'px;left:'+(cx-dw/2)+'px;top:'+(cy-dh/2)+'px;--r:'+(isLast?'-1.5':rnd(-C.tilt,C.tilt).toFixed(2))+'deg';
+    if(isLast){card.classList.add('mlast');lastCard=card;}
     st.appendChild(card);
     due+=t0+(t1-t0)*(i/Math.max(1,N-1));
   }
@@ -533,11 +539,27 @@ async function montage(){
   live.forEach(function(v){v.pause();});
   if(fin){
     var shade=el('div','mshade');st.appendChild(shade);
-    var fc=el('div','mcard mfinale'),fv=D.createElement('video');fv.playsInline=true;fv.preload='auto';fv.src=fin.url;fc.appendChild(fv);st.appendChild(fc);
+    if(lastCard)st.appendChild(lastCard);                       /* the last photo stays bright, above the dimming, behind the video */
+    var fc=el('div','mcard mfinale'+(lastCard?' withback':'')),fv=D.createElement('video');fv.playsInline=true;fv.preload='auto';fv.src=fin.url;fc.appendChild(fv);st.appendChild(fc);
     window.__fy.finale=fv;
     /* wait until it can actually play (or give up after a few seconds), then show it and play it to the end */
     var playable=await new Promise(function(r){if(fv.readyState>=3){r(true);return;}fv.oncanplay=function(){r(true);};fv.onerror=function(){r(false);};setTimeout(function(){r(fv.readyState>=2);},6000);});
     if(playable&&fv.videoWidth&&fv.videoHeight)fc.style.aspectRatio=fv.videoWidth+'/'+fv.videoHeight;
+    if(lastCard){
+      /* the last photo gets the screen to itself for a moment, then the video comes in beside it (or over it on a tall phone screen) */
+      void shade.offsetWidth;shade.classList.add('on');
+      await sleep(RM?0:1400);
+      var vh=Math.min(h*.8,1000),var_=(fv.videoWidth&&fv.videoHeight)?fv.videoWidth/fv.videoHeight:9/16,vw_=vh*var_;
+      var lr=lastCard.getBoundingClientRect(),gap=w*.03;
+      if(w>h*1.05&&lr.width+vw_+gap<w*.96){
+        var tot=lr.width+gap+vw_,x0=(w-tot)/2;
+        lastCard.style.transition='left .8s cubic-bezier(.2,.9,.2,1)';lastCard.style.left=x0+'px';
+        fc.style.left=(x0+lr.width+gap+vw_/2)+'px';
+      }else{   /* tall screen: a smaller video on the right half, so the photo still shows on the left */
+        var ow_=Math.min(w*.56,h*.62*var_),oh_=ow_/var_;
+        fc.classList.add('overlay');fc.style.height=oh_+'px';fc.style.left=(w-ow_/2-w*.02)+'px';fc.style.top=(h*.56)+'px';
+      }
+    }
     void fc.offsetWidth;shade.classList.add('on');fc.classList.add('on');
     if(playable){
       await new Promise(function(done){

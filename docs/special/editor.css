@@ -111,3 +111,6 @@ body.editing{overflow:hidden}
 .edSec{display:flex;gap:8px;align-items:center;width:100%}
 .edSec input[type=text]{flex:1;min-width:0;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--e-line);background:#fbfcfd}
 .edSec input[type=color]{width:40px;height:34px;padding:2px;border-radius:8px;border:1px solid var(--e-line);flex:none}
+
+.edMini .edLast{left:6px;right:auto;top:6px;bottom:auto;background:var(--e-acc,#4f7eb1);color:#fff}
+.edMini>.edBtn:not(.bad){top:auto;bottom:6px;right:auto;left:6px;width:auto;padding:0 9px}

@@ -316,7 +316,11 @@ function tabBarrage(m){
   M.items.forEach(function(it,i){
     var t=el('div','edMini'),img=el('img');img.alt='';thumbInto(img,it.thumb||it.poster||it);t.appendChild(img);
     if(it.kind==='video')t.appendChild(el('span','edKind','▶'));
-    t.appendChild(btn(ICON.x,function(){M.items.splice(i,1);changed();render();},'sq bad'));g.appendChild(t);
+    else{   /* one photo can be the last pop, staying behind the ending video */
+      var isL=M.lastId===it.id;if(isL)t.appendChild(el('span','edKind edLast','last'));
+      var lb=btn(isL?'Not last':'Last',function(){if(isL)delete M.lastId;else M.lastId=it.id;changed();render();},'sq');lb.title=isL?'Let this photo pop in at random again':'Show this photo last, behind the ending video';t.appendChild(lb);
+    }
+    t.appendChild(btn(ICON.x,function(){if(M.lastId===it.id)delete M.lastId;M.items.splice(i,1);changed();render();},'sq bad'));g.appendChild(t);
   });
   c.appendChild(g);
   c.appendChild(btn('+ Photos / videos',async function(){var f=await pick('image/*,video/*',true);if(!f||!f.length)return;(await addFiles(f)).forEach(function(x){M.items.push(x);});render();}));

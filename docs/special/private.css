@@ -150,6 +150,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mshade.on{background:rgba(10,14,22,.62)}
 .mfinale{left:50%;top:50%;height:min(88vh,1100px);width:auto;aspect-ratio:9/16;max-width:92vw;transform:translate(-50%,-50%) scale(.9);opacity:0;transition:transform .7s cubic-bezier(.2,.9,.2,1),opacity .6s ease;animation:none;z-index:2}
 .mfinale.on{transform:translate(-50%,-50%) scale(1);opacity:1}
+.mfinale.withback{height:min(80vh,1000px);box-shadow:0 24px 70px rgba(0,0,0,.7);transition:transform .7s cubic-bezier(.2,.9,.2,1),opacity .6s ease,left .8s cubic-bezier(.2,.9,.2,1)}
+.mfinale.withback.overlay{max-width:none}
+.mcard.mlast{z-index:1}
 .mfinale video{object-fit:contain;background:#000}
 
 /* ---------- folders ---------- */
