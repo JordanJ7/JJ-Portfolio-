@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=20261025b">
 </head>
 <body>
 <nav aria-label="Main">
@@ -80,9 +80,11 @@
     <p class="note">Newest first, four at a time. Use the arrows for the rest, or pick one from the CD above.</p>
     <div class="wcar" id="wcar" role="region" aria-roledescription="carousel" aria-label="My works">
       <div class="wview"><div id="tiles"></div></div>
-      <button class="wnav prev" type="button" id="wprev" aria-label="Previous works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <button class="wnav next" type="button" id="wnext" aria-label="More works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
-      <div class="wpager" id="wpager" role="group" aria-label="Choose a page of works"></div>
+      <div class="wctl">
+        <button class="wnav prev" type="button" id="wprev" aria-label="Previous works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="wpager" id="wpager" role="group" aria-label="Choose a page of works"></div>
+        <button class="wnav next" type="button" id="wnext" aria-label="More works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
     </div>
   </section>
 
@@ -126,7 +128,7 @@
 <div id="lb" role="dialog" aria-label="Image viewer"><img alt=""></div>
 <footer>&copy; Jordan James</footer>
 <noscript><p style="padding:24px;color:#fff">This site needs JavaScript. You can find me on <a href="https://www.linkedin.com/in/jordan-james07" style="color:#ff4fa3">LinkedIn</a>.</p></noscript>
-<script src="js/covers.js"></script>
-<script type="module" src="js/main.js"></script>
+<script src="js/covers.js?v=20261025b"></script>
+<script type="module" src="js/main.js?v=20261025b"></script>
 </body>
 </html>

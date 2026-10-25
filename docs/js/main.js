@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN} from './data.js';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN} from './data.js?v=20261025b';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -67,7 +67,7 @@ $('tiles').innerHTML=tiles;
   wp.innerHTML=dots;
   function go(i){
     at=Math.max(0,Math.min(NPG-1,i));
-    track.style.transform='translateX(calc('+(-at)+' * (var(--pw) + var(--wg))))';
+    track.style.transform='translateX(calc('+(-at)+' * (var(--pw) + var(--wg))))';   /* --pw is one page's width, set in CSS */
     Array.prototype.forEach.call(pages,function(p,k){var on=k===at;p.classList.toggle('act',on);p.toggleAttribute('inert',!on);p.setAttribute('aria-hidden',on?'false':'true');});
     Array.prototype.forEach.call(wp.children,function(d,k){d.classList.toggle('act',k===at);d.setAttribute('aria-current',k===at?'true':'false');});
     prev.classList.toggle('gone',at===0);next.classList.toggle('gone',at===NPG-1);
@@ -81,6 +81,9 @@ $('tiles').innerHTML=tiles;
   track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
   track.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)go(at+(dx<0?1:-1));},{passive:true});
   if(NPG<2)$('wcar').classList.add('single');
+  /* the carousel runs to the screen edges; the real visible width (without a scrollbar) keeps it exact */
+  function vw(){var c=$('wcar');c.style.setProperty('--vw',document.documentElement.clientWidth+'px');c.style.setProperty('--cw',c.clientWidth+'px');}
+  vw();addEventListener('resize',vw);
   go(0);
 })();
 
