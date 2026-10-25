@@ -1387,7 +1387,7 @@ function openReader(bk){
     if(!pages.length){view.appendChild(el('div','rempty',secs.length?'No pages yet. The sections are in the glossary.':'No pages yet.'));prev.classList.add('gone');next.classList.add('gone');foot.textContent='';return;}
     var p=pages[i],ent=el('article','rentry'),pic=el('div','rpic'),txt=el('div','rtext');
     if(p.id){
-      var f=el('div','rpage');pic.appendChild(f);
+      var f=el('div','rpage fit');pic.appendChild(f);if(p.w&&p.h&&p.w>p.h*1.1)ent.classList.add('wide');
       media(p.id,p.mime).then(function(m){var im=new Image();im.alt=p.prompt||'';im.decoding='async';im.src=m.url;f.appendChild(im);}).catch(function(){f.classList.add('blank');});
       f.addEventListener('click',function(){f.classList.toggle('zoom');});
     }else{
