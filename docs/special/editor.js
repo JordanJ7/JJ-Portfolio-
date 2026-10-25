@@ -377,6 +377,9 @@ function tabFolders(m){
 function tabBooks(m){
   var B=E.c.books;
   intro(m,'Books sit on the map after the Earth trip. Add photos of the pages: each one is found in the photo, straightened and cleaned up like a scan. If a scan looks wrong, switch that page back to the original photo before publishing.');
+  var qc=card('Quote above the heart');
+  qc.appendChild(field('Typed out in cursive once the heart is drawn, before the books (leave empty for none)',E.c.mapQuote,function(v){if(v&&v.trim())E.c.mapQuote=v;else delete E.c.mapQuote;},{area:true,rows:2,wide:true}));
+  m.appendChild(qc);
   B.forEach(function(bk,i){
     bk.pages=bk.pages||[];
     var c=card(bk.title||'Book '+(i+1),[btn(ICON.up,function(){move(B,i,-1);changed();render();},'sq'),btn(ICON.down,function(){move(B,i,1);changed();render();},'sq'),

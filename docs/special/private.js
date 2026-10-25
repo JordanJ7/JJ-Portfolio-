@@ -22,6 +22,7 @@ var CFG=merge({
   returnSkips:true,                                 /* after the Back button, skip typing, montage and the folder animation */
   mont:{frames:64,start:150,end:60,size:[.38,.8],maxFill:.78,tilt:7},   /* ms per frame ramping from start to end; size = long side as a share of the shorter screen side; maxFill = no photo is ever bigger than this share of the screen width or height; tilt = random degrees */
   tv:1300,
+  mapq:{perChar:45,hold:2600},   /* the quote typed above the heart once it is drawn: ms per letter, then a pause before the books */
   fold:{settle:9500,stars:26,circles:26,perImpact:3,delay:2000},   /* delay = ms of stillness before the folders start flying in */
   start:'login'
 },window.PRIVATE_CONFIG||{});
@@ -1247,6 +1248,7 @@ function drawMap(M){
   return new Promise(function(done){
     var box=$('#mapbox');box.innerHTML='';
     $('#mapcoords').textContent=fmtLat(TARGET.lat)+'  ·  '+fmtLon(TARGET.lon);
+    var mq=String(S.content.mapQuote||'').trim();$('#mapqt').textContent='';$('#mapquote').classList.toggle('has',!!mq);$('#mapquote').classList.remove('typing','done');
     if(!M){box.appendChild(el('div','empty','Map not found.'));showBooks();done();return;}
     var svg=sv('svg',{viewBox:'0 0 '+M.w+' '+M.h,role:'img','aria-label':'Heart-shaped map'});
     var gR=sv('g',{fill:'none',stroke:'#26262e','stroke-width':M.roadW,'stroke-linecap':'round','stroke-linejoin':'round'});
@@ -1284,7 +1286,15 @@ function drawMap(M){
     tilt(true);
     WORLD.timers.push(setTimeout(function(){
       stageName('map-drawn');
-      WORLD.timers.push(setTimeout(function(){showBooks();done();},RM?0:4000));   /* a 4 second pause, then the books */
+      if(!mq){WORLD.timers.push(setTimeout(function(){showBooks();done();},RM?0:4000));return;}   /* a 4 second pause, then the books */
+      /* the quote types out above the heart, holds, then the books */
+      var qt=$('#mapqt'),qp=$('#mapquote'),T=RM?0:CFG.mapq.perChar*mq.length,t0=null,run=WORLD.timers;qp.classList.add('typing');   /* run: leaving the world swaps WORLD.timers, which stops the typing */
+      (function step(now){
+        if(WORLD.timers!==run)return;
+        if(t0===null)t0=now;var n=T?Math.min(mq.length,Math.floor(mq.length*(now-t0)/T)):mq.length;qt.textContent=mq.slice(0,n);
+        if(n<mq.length)requestAnimationFrame(step);
+        else{qp.classList.remove('typing');qp.classList.add('done');stageName('map-quoted');WORLD.timers.push(setTimeout(function(){showBooks();done();},RM?0:CFG.mapq.hold));}
+      })(performance.now());
     },total));
   });
 }
