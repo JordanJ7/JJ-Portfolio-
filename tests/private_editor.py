@@ -66,7 +66,7 @@ with sync_playwright() as p:
     # books: add a page through the scanner
     pg.click('.edTab[data-tab=books]')
     before=len(pg.evaluate("FyEditor._test.state().c.books[0].pages"))
-    with pg.expect_file_chooser() as fc: pg.locator('.edCard').first.get_by_text('+ Add pages').click()
+    with pg.expect_file_chooser() as fc: pg.locator('.edCard:has-text("+ Add pages")').first.get_by_text('+ Add pages').click()
     t0=time.time(); fc.value.set_files(F+'/page.jpg'); pg.wait_for_function("!document.getElementById('edBusy').classList.contains('on')",timeout=60000); pg.wait_for_timeout(300)
     bk=pg.evaluate("FyEditor._test.state().c.books[0]"); sc=pg.evaluate("Object.values(FyEditor._test.state().scans)[0]")
     newp=max(bk['pages'],key=lambda q:q.get('num') or 0)
