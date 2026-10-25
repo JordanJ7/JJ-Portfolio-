@@ -19,6 +19,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ---------- login ---------- */
 #login{display:none;cursor:text}
 #login.on{display:flex;align-items:center;justify-content:center}
+#bestview{position:absolute;left:0;right:0;bottom:max(26px,calc(env(safe-area-inset-bottom) + 18px));margin:0;display:flex;align-items:center;justify-content:center;gap:9px;font:500 12px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue-d);opacity:0;animation:bvin 1.2s ease .6s forwards;pointer-events:none}
+#bestview svg{width:18px;height:18px;flex:none}
+@keyframes bvin{to{opacity:.8}}
+@media (max-width:640px){#bestview{font-size:11px;letter-spacing:.12em;padding:0 20px;text-align:center}}
+@media (prefers-reduced-motion:reduce){#bestview{animation:none;opacity:.8}}
 .logbox{position:relative;width:min(760px,90vw);height:120px;display:flex;align-items:center;justify-content:center}
 #hint{position:absolute;left:0;right:0;top:-26px;text-align:center;font-size:clamp(14px,2.2vw,18px);letter-spacing:.18em;text-transform:lowercase;color:var(--blue);opacity:0;transition:opacity 1s ease}
 #hint.vis{opacity:.9}
@@ -326,7 +331,9 @@ body.hidem #mareep{opacity:0;pointer-events:none}
 #egate .etyped:empty::before{content:"\200b"}
 #egate .caret{background:#bcd8f5}
 #egate .eline.wiggle{animation:wig .38s ease}
-#egate .efield{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0;top:0}
+#egate .efield{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:auto;font-size:16px;color:transparent;caret-color:transparent;background:transparent;border:0;outline:0;cursor:text}   /* the real input sits over the line, so a tap lands on it (and 16px stops iPhone zooming in) */
+#egate .etap{position:absolute;left:0;right:0;bottom:-34px;text-align:center;font:500 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#bcd8f5;opacity:0;transition:opacity .6s ease;pointer-events:none}
+#egate .etap.vis{opacity:.75;animation:pulse 1.6s ease-in-out infinite}
 #egate .ex{position:absolute;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));width:40px;height:40px;border-radius:50%;border:1px solid rgba(188,216,245,.3);background:rgba(188,216,245,.08);color:#cfe6fb;display:grid;place-items:center;cursor:pointer}
 #egate .ex:hover{background:rgba(188,216,245,.18)}
 #egate .ex svg{width:16px;height:16px}

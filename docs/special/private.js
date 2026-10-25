@@ -26,6 +26,7 @@ var CFG=merge({
   fold:{settle:9500,stars:26,circles:26,perImpact:3,delay:2000},   /* delay = ms of stillness before the folders start flying in */
   start:'login'
 },window.PRIVATE_CONFIG||{});
+var TOUCH=!!(window.matchMedia&&matchMedia('(pointer: coarse)').matches);
 var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 var embed=window.PRIVATE_EMBED||null;
 var S={vault:null,sec:[],key:null,ckRaw:null,content:null,pending:{}};   /* pending: media added in the editor, not published yet */
@@ -542,16 +543,20 @@ async function montage(){
   if(fin){
     var shade=el('div','mshade');st.appendChild(shade);
     if(lastCard)st.appendChild(lastCard);                       /* the last photo stays bright, above the dimming, behind the video */
-    var fc=el('div','mcard mfinale'+(lastCard?' withback':'')),fv=D.createElement('video');fv.playsInline=true;fv.preload='auto';fv.src=fin.url;fc.appendChild(fv);st.appendChild(fc);
+    var fc=el('div','mcard mfinale'+(lastCard?' withback':'')),fv=D.createElement('video');
+    fv.playsInline=true;fv.setAttribute('playsinline','');fv.setAttribute('webkit-playsinline','');fv.preload='auto';
     window.__fy.finale=fv;
-    /* wait until it can actually play (or give up after a few seconds), then show it and play it to the end */
-    var playable=await new Promise(function(r){if(fv.readyState>=3){r(true);return;}fv.oncanplay=function(){r(true);};fv.onerror=function(){r(false);};setTimeout(function(){r(fv.readyState>=2);},6000);});
-    if(playable&&fv.videoWidth&&fv.videoHeight)fc.style.aspectRatio=fv.videoWidth+'/'+fv.videoHeight;
+    /* its still frame shows straight away, so there is never an empty card while the video gets going (iPhone only loads a video once it is told to play) */
+    var M2=S.content.montage||{},pst=M2.finale&&(M2.finale.poster||M2.finale.thumb),par=9/16;
+    if(pst){try{var pm=await media(pst.id,pst.mime);fv.poster=pm.url;await new Promise(function(r){var im=new Image();im.onload=function(){if(im.naturalWidth&&im.naturalHeight)par=im.naturalWidth/im.naturalHeight;r();};im.onerror=r;im.src=pm.url;setTimeout(r,1500);});}catch(e){}}
+    fv.src=fin.url;fc.appendChild(fv);st.appendChild(fc);fc.style.aspectRatio=String(par);
+    await new Promise(function(r){if(fv.readyState>=1){r();return;}fv.onloadedmetadata=r;fv.onerror=r;setTimeout(r,1200);});
+    var var_=(fv.videoWidth&&fv.videoHeight)?fv.videoWidth/fv.videoHeight:par;fc.style.aspectRatio=String(var_);
     if(lastCard){
       /* the last photo gets the screen to itself for a moment, then the video comes in beside it (or over it on a tall phone screen) */
       void shade.offsetWidth;shade.classList.add('on');
       await sleep(RM?0:1400);
-      var vh=Math.min(h*.8,1000),var_=(fv.videoWidth&&fv.videoHeight)?fv.videoWidth/fv.videoHeight:9/16,vw_=vh*var_;
+      var vh=Math.min(h*.8,1000),vw_=vh*var_;
       var lr=lastCard.getBoundingClientRect(),gap=w*.03;
       if(w>h*1.05&&lr.width+vw_+gap<w*.96){
         var tot=lr.width+gap+vw_,x0=(w-tot)/2;
@@ -563,19 +568,15 @@ async function montage(){
       }
     }
     void fc.offsetWidth;shade.classList.add('on');fc.classList.add('on');
-    if(playable){
-      await new Promise(function(done){
-        var ended=false;function end(){if(ended)return;ended=true;done();}
-        fv.onended=end;fv.onerror=end;
-        var p1=fv.play();
-        if(p1&&p1.catch)p1.catch(function(){fv.muted=true;var p2=fv.play();if(p2&&p2.catch)p2.catch(end);});
-        setTimeout(end,((isFinite(fv.duration)?fv.duration:120)+8)*1000);   /* never get stuck */
-      });
-    }else{   /* this browser cannot play the file: show its still frame instead */
-      fv.remove();var M2=S.content.montage||{},pst=M2.finale&&(M2.finale.poster||M2.finale.thumb);
-      if(pst){try{var pm=await media(pst.id,pst.mime),im=new Image();im.src=pm.url;fc.appendChild(im);}catch(e){}}
-      await sleep(2500);
-    }
+    /* play as soon as it is on screen (with sound if the browser allows, muted if not) and wait for the end */
+    await new Promise(function(done){
+      var ended=false,started=false;function end(){if(ended)return;ended=true;done();}
+      fv.onended=end;fv.onerror=end;fv.onplaying=function(){started=true;window.__fy.finalePlaying=true;};
+      function go(muted){fv.muted=muted;var pr=fv.play();return pr&&pr.then?pr:Promise.resolve();}
+      go(false).catch(function(){return go(true);}).catch(function(){setTimeout(end,2500);});   /* cannot play at all: the still frame stays for a moment */
+      setTimeout(function(){if(!started)end();},9000);
+      setTimeout(end,((isFinite(fv.duration)&&fv.duration>0?fv.duration:120)+8)*1000);   /* never get stuck */
+    });
   }
   /* always a pause before the TV switches off */
   await sleep(RM?0:(+M.holdMs||3000));
@@ -975,9 +976,12 @@ function earthGate(){
       EG.fails++;fd.value='';sync();ln.classList.remove('wiggle');void ln.offsetWidth;ln.classList.add('wiggle');
       if(EG.fails>=CFG.hintAfter&&q.hint)hi.classList.add('vis');
     }
-    fd.oninput=sync;
+    fd.oninput=function(){sync();$('.etap',g).classList.remove('vis');};
+    fd.onfocus=function(){$('.etap',g).classList.remove('vis');};
     fd.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();submit();}else if(e.key==='Escape'){e.preventDefault();close(false);}};
-    g.onpointerdown=function(e){if(e.target.closest('.ex'))return;if(!fd.disabled)setTimeout(function(){fd.focus();},0);};
+    /* focus inside the tap itself: iPhone Safari only opens the keyboard then (a delayed focus is ignored) */
+    function tapFocus(e){if(e.target.closest('.ex'))return;if(!fd.disabled){try{fd.focus({preventScroll:true});}catch(x){fd.focus();}}}
+    g.onpointerdown=tapFocus;g.onclick=tapFocus;g.ontouchend=tapFocus;
     $('.ex',g).onclick=function(){close(false);};
     /* the same prompt animation as the questions at the start */
     var P=CFG.prompt;
@@ -986,7 +990,7 @@ function earthGate(){
       pr.style.transition='opacity '+P.fadeIn+'ms ease,transform '+P.fadeIn+'ms ease';pr.style.opacity=1;pr.style.setProperty('--py','0px');
       setTimeout(function(){
         pr.style.transition='opacity '+P.fadeOut+'ms ease,transform '+P.fadeOut+'ms cubic-bezier(.3,.6,.3,1)';pr.style.opacity=0;pr.style.setProperty('--py',(-P.rise)+'px');
-        setTimeout(function(){ca.classList.remove('hide');fd.disabled=false;try{fd.focus();}catch(e){}stageName('earth-lock-ready');},Math.round(P.fadeOut*.45));
+        setTimeout(function(){ca.classList.remove('hide');fd.disabled=false;try{fd.focus();}catch(e){}if(TOUCH)$('.etap',g).classList.add('vis');stageName('earth-lock-ready');},Math.round(P.fadeOut*.45));
       },P.fadeIn+P.hold);
     },RM?0:350);
   });
