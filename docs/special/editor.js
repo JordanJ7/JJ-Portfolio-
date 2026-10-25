@@ -277,8 +277,9 @@ function tabSlides(m){
       btn('Delete',function(){if(confirm('Delete slide '+(i+1)+' and everything on it?')){E.c.slides.splice(i,1);changed();render();}},'bad')]);
     c.appendChild(field('Title (optional)',sl.title,function(v){sl.title=v;}));
     c.appendChild(field('Caption under the title (optional)',sl.caption,function(v){if(v)sl.caption=v;else delete sl.caption;}));
-    var lay=el('label','edCheck'),cb=el('input');cb.type='checkbox';cb.checked=sl.layout==='pages';cb.onchange=function(){if(cb.checked)sl.layout='pages';else delete sl.layout;changed();};
-    lay.appendChild(cb);lay.appendChild(el('span',null,'Show as pages, one under the next (for a slideshow or PDF made into pictures)'));c.appendChild(lay);
+    var lay=el('label','edField'),ls=el('select');lay.appendChild(el('span','edLab','Layout'));
+    [['','Automatic (by how many items)'],['pages','Pages, one under the next (a slideshow or PDF made into pictures)'],['gallery','Gallery of tall tiles (phone screenshots and videos)']].forEach(function(o){var op=el('option',null,esc(o[1]));op.value=o[0];if((sl.layout||'')===o[0])op.selected=true;ls.appendChild(op);});
+    ls.onchange=function(){if(ls.value)sl.layout=ls.value;else delete sl.layout;changed();};lay.appendChild(ls);c.appendChild(lay);
     sl.items=sl.items||[];c.appendChild(itemsEditor(sl.items,{date:true}));m.appendChild(c);
   });
   m.appendChild(btn('+ Add a slide',function(){E.c.slides.push({title:'',items:[]});changed();render();},'pri'));
@@ -387,6 +388,14 @@ function tabBooks(m){
     var row=el('div','edRow'),cov=el('div','edCover'),img=el('img');img.alt='';cov.appendChild(img);thumbInto(img,bk.cover);
     cov.appendChild(btn('Change cover',async function(){var f=await pick('image/*',false);if(!f||!f.length)return;busy('Adding cover');try{var it=await addPhoto(f[0]);bk.cover={id:it.id,mime:it.mime};}catch(e){toast(e.message,true);}busy(null);changed();render();}));
     row.appendChild(cov);row.appendChild(field('Title',bk.title,function(v){bk.title=v;}));c.appendChild(row);
+    /* a book that is not finished: blur it and keep it closed */
+    var r2=el('div','edRow');
+    r2.appendChild(field('Note under the title (optional)',bk.note,function(v){if(v)bk.note=v;else delete bk.note;},{placeholder:'e.g. To be added'}));
+    var bw=el('label','edField'),bs=el('select');bw.appendChild(el('span','edLab','Blur the cover'));
+    [['','No blur'],['light','A little (still recognisable)'],['heavy','Fully (cannot be made out)']].forEach(function(o){var op=el('option',null,esc(o[1]));op.value=o[0];if((bk.blur||'')===o[0])op.selected=true;bs.appendChild(op);});
+    bs.onchange=function(){if(bs.value)bk.blur=bs.value;else delete bk.blur;changed();};bw.appendChild(bs);r2.appendChild(bw);
+    var sl2=el('label','edCheck'),sc2=el('input');sc2.type='checkbox';sc2.checked=!!bk.soon;sc2.onchange=function(){if(sc2.checked)bk.soon=true;else delete bk.soon;changed();};
+    sl2.appendChild(sc2);sl2.appendChild(el('span',null,'Not ready yet (it cannot be opened)'));r2.appendChild(sl2);c.appendChild(r2);
     /* colour-coded sections: they make the book's glossary and each page can belong to one */
     if(bk.sections){
       var sb=el('div','edSecs');sb.appendChild(el('div','edLab','Sections (the glossary jumps to each one)'));
@@ -405,8 +414,8 @@ function tabBooks(m){
       c.appendChild(sb);
     }else c.appendChild(btn('Use colour-coded sections',function(){bk.sections=[];changed();render();},'ghost'));
     /* each page: its scan (or none yet), page number, prompt and the words that go with it */
-    if(bk.sections)bk.pages.sort(function(x,y){return ((x.section==null?999:x.section)-(y.section==null?999:y.section))||((x.num||0)-(y.num||0));});
-    else bk.pages.sort(function(x,y){return (x.num||0)-(y.num||0);});
+    if(bk.sections)bk.pages.sort(function(x,y){return ((x.section==null?999:x.section)-(y.section==null?999:y.section))||((x.ord!=null?x.ord:(x.num||0))-(y.ord!=null?y.ord:(y.num||0)));});
+    else bk.pages.sort(function(x,y){return (x.ord!=null?x.ord:(x.num||0))-(y.ord!=null?y.ord:(y.num||0));});
     var det=el('details','edDet');det.open=!!(E.openBooks&&E.openBooks[i]);det.ontoggle=function(){E.openBooks=E.openBooks||{};E.openBooks[i]=det.open;};
     det.appendChild(el('summary',null,bk.pages.length+' page'+(bk.pages.length===1?'':'s')+(bk.pages.some(function(p){return !p.id;})?' · '+bk.pages.filter(function(p){return !p.id;}).length+' still need a scan':'')));
     var list=el('div','edPages');
@@ -443,7 +452,8 @@ function tabBooks(m){
     c.appendChild(btn('+ Add pages',async function(){
       var f=await pick('image/*',true);if(!f||!f.length)return;var list=Array.prototype.slice.call(f);
       var nextNum=bk.pages.reduce(function(a,p){return Math.max(a,p.num||0);},0)+1;
-      for(var k=0;k<list.length;k++){busy('Scanning page '+(k+1)+' of '+list.length);try{var pg=await scanPage(list[k]);pg.num=nextNum++;pg.prompt='';pg.caption='';bk.pages.push(pg);}catch(e){toast(list[k].name+': '+(e.message||e),true);}await sleep(10);}
+      var nextOrd=bk.pages.some(function(p){return p.ord!=null;})?bk.pages.reduce(function(a,p){return Math.max(a,p.ord||0);},0)+1:null;
+      for(var k=0;k<list.length;k++){busy('Scanning page '+(k+1)+' of '+list.length);try{var pg=await scanPage(list[k]);pg.num=nextNum++;if(nextOrd!=null)pg.ord=nextOrd++;pg.prompt='';pg.caption='';bk.pages.push(pg);}catch(e){toast(list[k].name+': '+(e.message||e),true);}await sleep(10);}
       busy(null);changed();render();
     },'pri'));
     m.appendChild(c);

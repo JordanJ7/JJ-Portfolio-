@@ -277,7 +277,7 @@ function buildItem(it,host,where){
 }
 function renderItems(items,host,cls,where){
   var n=items.length;
-  var g=el('div','items '+(cls==='mixed'||cls==='pages'?'':(n>=5?'scroll':'n'+Math.max(1,Math.min(4,n))))+(cls?' '+cls:''));
+  var g=el('div','items '+(cls==='mixed'||cls==='pages'||cls==='gallery'?'':(n>=5?'scroll':'n'+Math.max(1,Math.min(4,n))))+(cls?' '+cls:''));
   items.forEach(function(it){var x=buildItem(it,host,where);if(cls==='pages'&&it.w&&it.h)x.style.aspectRatio=it.w+'/'+it.h;g.appendChild(x);});
   return g;
 }
@@ -399,10 +399,11 @@ function slideshow(startIdx){
       var s=el('section','sl');s.setAttribute('aria-label','Slide '+(i+1)+' of '+slides.length);
       if(sl.title)s.appendChild(el('h3',null,esc(sl.title)));
       if(sl.caption)s.appendChild(el('p','scap',esc(sl.caption)));
-      var g=renderItems(sl.items||[],stage,sl.layout==='pages'?'pages':'','slide');   /* pages: a deck, one full-width page under the next */
+      var LAY=sl.layout==='pages'||sl.layout==='gallery'?sl.layout:'';
+      var g=renderItems(sl.items||[],stage,LAY,'slide');   /* pages: a deck, one full-width page under the next; gallery: rows of tall tiles for phone screenshots */
       s.appendChild(g);
       if(!(sl.items||[]).length)g.appendChild(el('div','sempty','More coming soon'));   /* a slide that is waiting for its videos */
-      if(sl.layout==='pages'&&(sl.items||[]).length>1){   /* a sign that there is more below, gone once the last page is reached */
+      if(LAY&&(sl.items||[]).length>(LAY==='gallery'?6:1)){   /* a sign that there is more below, gone once the last page is reached */
         var hint=el('button','morehint','<span>Scroll for more</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
         hint.type='button';hint.setAttribute('aria-label','Scroll to the next page');
         hint.addEventListener('click',function(){var k=g.firstElementChild,step=k?k.getBoundingClientRect().height+14:g.clientHeight;g.scrollBy({top:step,behavior:RM?'auto':'smooth'});});
@@ -1312,7 +1313,9 @@ function showBooks(){
   var shelf=$('#shelf');shelf.innerHTML='';shelf.style.setProperty('--n',Math.max(1,(S.content.books||[]).length));
   (S.content.books||[]).forEach(function(bk,i){
     var b=el('button','book');b.type='button';b.setAttribute('aria-label','Open '+(bk.title||'book '+(i+1)));
-    b.innerHTML='<span class="bk3"><span class="bkfront"></span><span class="bkspine"></span><span class="bkpages"></span><span class="bkback"></span></span>'+(bk.title?'<span class="bktitle">'+esc(bk.title)+'</span>':'');
+    b.innerHTML='<span class="bk3"><span class="bkfront"></span><span class="bkspine"></span><span class="bkpages"></span><span class="bkback"></span></span>'+(bk.title||bk.note?'<span class="bktitle">'+esc(bk.title||'')+(bk.note?'<span class="bknote">'+esc(bk.note)+'</span>':'')+'</span>':'');
+    if(bk.blur)b.classList.add('blur-'+bk.blur);   /* light: still recognisable; heavy: cannot be made out */
+    if(bk.soon){b.classList.add('soon');b.setAttribute('aria-disabled','true');b.setAttribute('aria-label',(bk.title||'This book')+(bk.note?', '+bk.note:'')+', not ready yet');}
     if(bk.cover)media(bk.cover.id,bk.cover.mime).then(function(m){
       $('.bkfront',b).style.backgroundImage='url("'+m.url+'")';
       var im=new Image();im.onload=function(){   /* spine and back take the cover's own colour */
@@ -1323,7 +1326,7 @@ function showBooks(){
     /* real back and spine photos, when the book has them */
     if(bk.back)media(bk.back.id,bk.back.mime).then(function(m){$('.bkback',b).style.background='url("'+m.url+'") center/cover';}).catch(function(){});
     if(bk.spine)media(bk.spine.id,bk.spine.mime).then(function(m){$('.bkspine',b).style.background='url("'+m.url+'") center/100% 100%';}).catch(function(){});
-    b.addEventListener('click',function(){openReader(bk);});
+    b.addEventListener('click',function(){if(bk.soon){b.classList.remove('nudge');void b.offsetWidth;b.classList.add('nudge');return;}openReader(bk);});
     shelf.appendChild(b);
   });
   $('#world').classList.add('books');WORLD.booksShown=true;syncBooksBtn();
@@ -1343,9 +1346,11 @@ $('#worldBack').addEventListener('click',async function(){
 var RD=null;
 function openReader(bk){
   closeReader();
-  var pages=(bk.pages||[]).slice().sort(function(x,y){return (x.num||0)-(y.num||0);}),r=$('#reader');r.innerHTML='';
+  /* order: a page's own place (ord) when it has one, else its number; unnumbered pages keep their place in the book */
+  function pk(p){return p.ord!=null?p.ord:(p.num||0);}
+  var pages=(bk.pages||[]).slice().sort(function(x,y){return pk(x)-pk(y);}),r=$('#reader');r.innerHTML='';
   var secs=bk.sections||[];
-  if(secs.length)pages=(bk.pages||[]).slice().sort(function(x,y){return ((x.section==null?999:x.section)-(y.section==null?999:y.section))||((x.num||0)-(y.num||0));});
+  if(secs.length)pages=(bk.pages||[]).slice().sort(function(x,y){return ((x.section==null?999:x.section)-(y.section==null?999:y.section))||(pk(x)-pk(y));});
   var head=el('div','rhead'),title=el('div','rtitle',esc(bk.title||'')),gl=el('button','rglos','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Glossary</span>'),x=el('button','vbtn',ICON.x);
   gl.type='button';gl.setAttribute('aria-expanded','false');x.type='button';x.setAttribute('aria-label','Close book');
   head.appendChild(title);if(pages.length||secs.length)head.appendChild(gl);head.appendChild(x);

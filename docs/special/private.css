@@ -85,6 +85,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 .morehint.done{opacity:0;pointer-events:none;animation:none;transform:translate(-50%,8px)}
 @keyframes hintbob{50%{transform:translate(-50%,4px)}}
 @media (prefers-reduced-motion:reduce){.morehint{animation:none}}
+.items.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(104px,15vw,170px),1fr));grid-auto-rows:max-content;gap:12px;overflow-y:auto;align-content:start;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--blue) transparent;overscroll-behavior:contain}
+.items.gallery .it{display:block;width:100%;height:auto;border-radius:14px;background:rgba(255,255,255,.18)}
+.items.gallery .it::before{content:"";display:block;padding-top:177.78%}   /* real height for the grid row (aspect-ratio alone lets the rows collapse) */
+.items.gallery .it img,.items.gallery .it video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.items.gallery .it .play{left:50%;top:50%;transform:translate(-50%,-50%);z-index:1}
+.items.gallery .it.video:hover .play{transform:translate(-50%,-50%) scale(1.08)}
+.items.gallery .it.video img,.items.gallery .it.video video{object-position:center}
+@media (max-width:640px){.items.gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.items.gallery .it{border-radius:10px}.items.gallery .it .play{width:40px;height:40px}}
 .items.pages{display:flex;flex-direction:column;align-items:center;container-type:size;scroll-snap-type:y mandatory;overflow-y:auto;align-content:start;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--blue) transparent;overscroll-behavior:contain}
 .items.pages .it{flex:none;width:min(100%,calc(100cqh*16/9));aspect-ratio:16/9;scroll-snap-align:center;background:#fff;border-radius:14px}
 .items.pages .it img{object-fit:contain}
@@ -350,6 +358,16 @@ body.hidem #mareep{opacity:0;pointer-events:none}
 .book:hover .bk3,.book:focus-visible .bk3{transform:rotateY(-8deg) rotateX(2deg) translateY(-12px) scale(1.05)}
 .book:hover,.book:focus-visible{filter:drop-shadow(0 30px 30px rgba(40,30,20,.4)) drop-shadow(0 0 22px rgba(255,214,120,.8))}
 .book:focus-visible{outline:none}
+/* the blur goes on each face, not the 3D book: a filter on the book itself would flatten it and show the back cover in front */
+.book.blur-light .bk3>span{filter:blur(2.6px) saturate(.85)}
+.book.blur-heavy .bk3>span{filter:blur(16px) saturate(.6) brightness(1.08)}
+.book.soon{cursor:default}
+.book.soon:hover .bk3,.book.soon:focus-visible .bk3{transform:none}
+.book.soon:hover,.book.soon:focus-visible{filter:drop-shadow(0 22px 26px rgba(40,30,20,.35))}
+.bknote{display:block;margin-top:3px;font:italic 500 clamp(10px,1.15vw,13px) var(--sans);letter-spacing:.02em;color:#8a7d70}
+.book.nudge .bk3{animation:bknudge .45s ease}
+@keyframes bknudge{25%{translate:-6px 0}50%{translate:5px 0}75%{translate:-3px 0}}
+@media (prefers-reduced-motion:reduce){.book.nudge .bk3{animation:none}}
 #booksBtn,#worldBack{position:absolute;z-index:5;font:600 14px var(--sans);letter-spacing:.02em;padding:10px 18px;border-radius:999px;border:1px solid rgba(70,55,40,.2);background:rgba(255,255,255,.75);color:#3d342c;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .6s ease,background .2s}
 #booksBtn{right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom))}
 #worldBack{left:calc(max(14px,env(safe-area-inset-left)) + 50px);top:max(15px,calc(env(safe-area-inset-top) + 3px));display:flex;align-items:center;gap:6px;padding-left:12px}
