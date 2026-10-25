@@ -18,7 +18,7 @@ var CFG=merge({
   prompt:{pre:553,fadeIn:612,hold:1496,fadeOut:1020,rise:56},   /* waits before the prompts for questions 2 and 3, ms (15% quicker than the last version); pre = pause while the old line fades out; rise = px the prompt floats up while fading */
   intro:{typing:1800,delay:180,attr:200,reading:2100,fade:600},   /* same timings as Journal-101 */
   slide:{autoplay:false,ms:7000},
-  more:{type:3757,hold:3000},                      /* typed "There's More", ms (was 6000, 5400, 4320; now 15% faster again) */
+  more:{type:2757,hold:2000},                      /* typed "There's More", ms (was 6000, 5400, 4320, 3757+3000; now 2s quicker overall) */
   returnSkips:true,                                 /* after the Back button, skip typing, montage and the folder animation */
   mont:{frames:64,start:150,end:60,size:[.38,.8],maxFill:.78,tilt:7},   /* ms per frame ramping from start to end; size = long side as a share of the shorter screen side; maxFill = no photo is ever bigger than this share of the screen width or height; tilt = random degrees */
   tv:1300,
@@ -271,8 +271,8 @@ function buildItem(it,host,where){
 }
 function renderItems(items,host,cls,where){
   var n=items.length;
-  var g=el('div','items '+(cls==='mixed'?'':(n>=5?'scroll':'n'+Math.max(1,Math.min(4,n))))+(cls?' '+cls:''));
-  items.forEach(function(it){g.appendChild(buildItem(it,host,where));});
+  var g=el('div','items '+(cls==='mixed'||cls==='pages'?'':(n>=5?'scroll':'n'+Math.max(1,Math.min(4,n))))+(cls?' '+cls:''));
+  items.forEach(function(it){var x=buildItem(it,host,where);if(cls==='pages'&&it.w&&it.h)x.style.aspectRatio=it.w+'/'+it.h;g.appendChild(x);});
   return g;
 }
 /* pictures load when they come near the screen, so big folders and slides stay quick */
@@ -378,7 +378,7 @@ function slideshow(startIdx){
     slides.forEach(function(sl,i){
       var s=el('section','sl');s.setAttribute('aria-label','Slide '+(i+1)+' of '+slides.length);
       if(sl.title)s.appendChild(el('h3',null,esc(sl.title)));
-      s.appendChild(renderItems(sl.items||[],stage,'','slide'));
+      s.appendChild(renderItems(sl.items||[],stage,sl.layout==='pages'?'pages':'','slide'));   /* pages: a deck, one full-width page under the next */
       track.appendChild(s);slideEls.push(s);
       var d=el('button','dot','<i></i>');d.type='button';d.setAttribute('aria-label','Go to slide '+(i+1));
       d.addEventListener('click',function(){go(i);});caps.appendChild(d);
@@ -465,13 +465,15 @@ async function montage(){
   /* everything is fetched, decrypted and decoded before the screen goes dark, so the pops never stall */
   var srcs=(await Promise.all(list.map(function(it){return media(it.id,it.mime).then(function(m){return {it:it,url:m.url};}).catch(function(){return null;});}))).filter(Boolean);
   await Promise.all(srcs.map(function(x){
-    if(x.it.kind==='video'){return new Promise(function(r){var v=D.createElement('video');v.muted=true;v.preload='auto';v.playsInline=true;v.onloadedmetadata=function(){x.ar=(v.videoWidth/v.videoHeight)||1.6;r();};v.onerror=function(){x.ar=1.6;r();};v.src=x.url;setTimeout(r,4000);});}
-    var im=new Image();im.src=x.url;return (im.decode?im.decode():Promise.resolve()).then(function(){x.ar=(im.naturalWidth/im.naturalHeight)||1.4;}).catch(function(){x.ar=1.4;});
+    /* the decoded element itself goes on screen later, so nothing is decoded again mid-barrage (Safari would) */
+    if(x.it.kind==='video'){return new Promise(function(r){var v=D.createElement('video');v.muted=true;v.loop=true;v.preload='auto';v.playsInline=true;x.el=v;v.onloadeddata=function(){x.ar=(v.videoWidth/v.videoHeight)||1.6;r();};v.onerror=function(){x.ar=1.6;r();};v.src=x.url;setTimeout(r,4000);});}
+    var im=new Image();im.alt='';im.decoding='sync';im.src=x.url;x.el=im;return (im.decode?im.decode():Promise.resolve()).then(function(){x.ar=(im.naturalWidth/im.naturalHeight)||1.4;}).catch(function(){x.ar=1.4;});
   }));
   var fin=null;
   if(M.finale&&M.finale.id){try{fin=await media(M.finale.id,M.finale.mime);}catch(e){fin=null;}}
   var wrap=$('#mwrap'),st=$('#mstage'),w=window.innerWidth,h=window.innerHeight;
   st.innerHTML='';wrap.style.transform='';wrap.style.opacity='';$('#mwhite').style.opacity=0;
+  await new Promise(function(r){requestAnimationFrame(function(){requestAnimationFrame(r);});});   /* let the preload's leftovers clear before the fade starts */
   D.body.classList.add('dark');on('mont');
   if(!RM)await sleep(1250);                                    /* let the screen settle into the dark before photos start */
   shuffle(srcs);
@@ -485,9 +487,10 @@ async function montage(){
     var c=nextCell(),cx=(c%3+.5)/3*w+rnd(-.1,.1)*w,cy=(((c/3)|0)+.5)/3*h+rnd(-.1,.1)*h;
     cx=Math.max(dw*.42,Math.min(w-dw*.42,cx));cy=Math.max(dh*.42,Math.min(h-dh*.42,cy));
     var card=el('div','mcard'),node;
-    if(x.it.kind==='video'){node=D.createElement('video');node.muted=true;node.loop=true;node.playsInline=true;node.autoplay=true;node.src=x.url;live.push(node);var pr=node.play();if(pr&&pr.catch)pr.catch(function(){});
+    var fresh=x.el&&!x.el.parentNode;                           /* first time: the preloaded element; repeats get a copy */
+    if(x.it.kind==='video'){node=fresh?x.el:D.createElement('video');node.muted=true;node.loop=true;node.playsInline=true;node.autoplay=true;if(!fresh)node.src=x.url;live.push(node);var pr=node.play();if(pr&&pr.catch)pr.catch(function(){});
       if(live.length>3)live.shift().pause();}                  /* only the newest few videos keep playing */
-    else{node=new Image();node.alt='';node.src=x.url;}
+    else{node=fresh?x.el:x.el.cloneNode();}
     card.appendChild(node);
     card.style.cssText='width:'+dw+'px;height:'+dh+'px;left:'+(cx-dw/2)+'px;top:'+(cy-dh/2)+'px;--r:'+rnd(-C.tilt,C.tilt).toFixed(2)+'deg';
     st.appendChild(card);

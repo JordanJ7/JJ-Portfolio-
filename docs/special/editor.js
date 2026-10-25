@@ -276,6 +276,8 @@ function tabSlides(m){
     var c=card('Slide '+(i+1),[btn(ICON.up,function(){move(E.c.slides,i,-1);changed();render();},'sq'),btn(ICON.down,function(){move(E.c.slides,i,1);changed();render();},'sq'),
       btn('Delete',function(){if(confirm('Delete slide '+(i+1)+' and everything on it?')){E.c.slides.splice(i,1);changed();render();}},'bad')]);
     c.appendChild(field('Title (optional)',sl.title,function(v){sl.title=v;}));
+    var lay=el('label','edCheck'),cb=el('input');cb.type='checkbox';cb.checked=sl.layout==='pages';cb.onchange=function(){if(cb.checked)sl.layout='pages';else delete sl.layout;changed();};
+    lay.appendChild(cb);lay.appendChild(el('span',null,'Show as pages, one under the next (for a slideshow or PDF made into pictures)'));c.appendChild(lay);
     sl.items=sl.items||[];c.appendChild(itemsEditor(sl.items,{date:true}));m.appendChild(c);
   });
   m.appendChild(btn('+ Add a slide',function(){E.c.slides.push({title:'',items:[]});changed();render();},'pri'));
