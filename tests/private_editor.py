@@ -65,11 +65,13 @@ with sync_playwright() as p:
     check('folder count changed to 9',len(pg.evaluate("FyEditor._test.state().c.folders"))==9)
     # books: add a page through the scanner
     pg.click('.edTab[data-tab=books]')
+    before=len(pg.evaluate("FyEditor._test.state().c.books[0].pages"))
     with pg.expect_file_chooser() as fc: pg.locator('.edCard').first.get_by_text('+ Add pages').click()
     t0=time.time(); fc.value.set_files(F+'/page.jpg'); pg.wait_for_function("!document.getElementById('edBusy').classList.contains('on')",timeout=60000); pg.wait_for_timeout(300)
     bk=pg.evaluate("FyEditor._test.state().c.books[0]"); sc=pg.evaluate("Object.values(FyEditor._test.state().scans)[0]")
-    check('page scanned and added',len(bk['pages'])==1,'took %.1fs, page %dx%d, edges found %s'%(time.time()-t0,bk['pages'][0]['w'],bk['pages'][0]['h'],sc['found']))
-    pid=bk['pages'][0]['id']
+    newp=max(bk['pages'],key=lambda q:q.get('num') or 0)
+    check('page scanned and added',len(bk['pages'])==before+1 and newp.get('id'),'took %.1fs, page %dx%d, edges found %s'%(time.time()-t0,newp['w'],newp['h'],sc['found']))
+    pid=newp['id']
     data=pg.evaluate("async id=>{const m=await __fy.api.media(id,'image/webp');const b=await m.blob.arrayBuffer();const u=new Uint8Array(b);let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s);}",pid)
     open(S+'/scanned_page.webp','wb').write(base64.b64decode(data))
     pg.screenshot(path=S+'/ed_books.png')

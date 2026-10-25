@@ -67,6 +67,13 @@ body.editing{overflow:hidden}
 .edCover{display:flex;flex-direction:column;gap:8px;align-items:flex-start;flex:none}
 .edCover img{width:110px;height:auto;max-height:160px;object-fit:contain;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);background:#e9edf2;min-height:60px}
 .edDet{margin-top:6px}
+.edPages{display:flex;flex-direction:column;gap:12px;margin:8px 0 12px}
+.edPage{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start;border:1px solid var(--e-line);border-radius:14px;padding:10px;background:#fbfcfd}
+.edPage .edMini.page{width:120px}
+.edPageFields{min-width:0}
+.edPageFields .edField{margin-bottom:6px}
+.edNoScan{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:8px;font:600 12px inherit;font-family:inherit;color:var(--e-soft)}
+@media (max-width:520px){.edPage{grid-template-columns:84px minmax(0,1fr)}.edPage .edMini.page{width:84px}}
 .edDet summary{cursor:pointer;font-weight:600;color:var(--e-pri);padding:6px 0}
 .edDet ol{margin:6px 0 10px;padding-left:20px;color:var(--e-soft);font-size:14px}
 #edBusy{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;background:#1f2a37;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -99,3 +106,8 @@ body.editing{overflow:hidden}
   .edCard{padding:14px 12px;border-radius:14px}
   .edItems{grid-template-columns:1fr}
 }
+
+.edSecs{margin:6px 0 12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.edSec{display:flex;gap:8px;align-items:center;width:100%}
+.edSec input[type=text]{flex:1;min-width:0;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--e-line);background:#fbfcfd}
+.edSec input[type=color]{width:40px;height:34px;padding:2px;border-radius:8px;border:1px solid var(--e-line);flex:none}

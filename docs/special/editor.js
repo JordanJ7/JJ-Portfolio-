@@ -367,27 +367,63 @@ function tabBooks(m){
     var row=el('div','edRow'),cov=el('div','edCover'),img=el('img');img.alt='';cov.appendChild(img);thumbInto(img,bk.cover);
     cov.appendChild(btn('Change cover',async function(){var f=await pick('image/*',false);if(!f||!f.length)return;busy('Adding cover');try{var it=await addPhoto(f[0]);bk.cover={id:it.id,mime:it.mime};}catch(e){toast(e.message,true);}busy(null);changed();render();}));
     row.appendChild(cov);row.appendChild(field('Title',bk.title,function(v){bk.title=v;}));c.appendChild(row);
-    var g=el('div','edGrid pages');
+    /* colour-coded sections: they make the book's glossary and each page can belong to one */
+    if(bk.sections){
+      var sb=el('div','edSecs');sb.appendChild(el('div','edLab','Sections (the glossary jumps to each one)'));
+      var COLORS=['#e57373','#f0a35e','#f2d16b','#8fcf8a','#6fb7e0','#9b8be0','#e58fc4','#b9a07a'];
+      bk.sections.forEach(function(sc,k){
+        var r=el('div','edSec'),col=el('input');col.type='color';col.value=sc.color||COLORS[k%COLORS.length];col.title='Label colour';
+        col.oninput=function(){sc.color=col.value;changed();};r.appendChild(col);
+        var t=el('input');t.type='text';t.value=sc.title||'';t.placeholder='Section name';t.oninput=function(){sc.title=t.value;changed();};r.appendChild(t);
+        r.appendChild(btn(ICON.up,function(){move(bk.sections,k,-1);bk.pages.forEach(function(p){if(p.section===k)p.section=k-1;else if(p.section===k-1)p.section=k;});changed();render();},'sq'));
+        r.appendChild(btn(ICON.down,function(){if(k>=bk.sections.length-1)return;move(bk.sections,k,1);bk.pages.forEach(function(p){if(p.section===k)p.section=k+1;else if(p.section===k+1)p.section=k;});changed();render();},'sq'));
+        r.appendChild(btn(ICON.x,function(){var n=bk.pages.filter(function(p){return p.section===k;}).length;if(n&&!confirm('Remove this section? Its '+n+' pages stay in the book without a section.'))return;
+          bk.sections.splice(k,1);bk.pages.forEach(function(p){if(p.section===k)delete p.section;else if(p.section>k)p.section--;});changed();render();},'sq bad'));
+        sb.appendChild(r);
+      });
+      sb.appendChild(btn('+ Add a section',function(){bk.sections.push({title:'',color:COLORS[bk.sections.length%COLORS.length]});changed();render();}));
+      c.appendChild(sb);
+    }else c.appendChild(btn('Use colour-coded sections',function(){bk.sections=[];changed();render();},'ghost'));
+    /* each page: its scan (or none yet), page number, prompt and the words that go with it */
+    if(bk.sections)bk.pages.sort(function(x,y){return ((x.section==null?999:x.section)-(y.section==null?999:y.section))||((x.num||0)-(y.num||0));});
+    else bk.pages.sort(function(x,y){return (x.num||0)-(y.num||0);});
+    var det=el('details','edDet');det.open=!!(E.openBooks&&E.openBooks[i]);det.ontoggle=function(){E.openBooks=E.openBooks||{};E.openBooks[i]=det.open;};
+    det.appendChild(el('summary',null,bk.pages.length+' page'+(bk.pages.length===1?'':'s')+(bk.pages.some(function(p){return !p.id;})?' · '+bk.pages.filter(function(p){return !p.id;}).length+' still need a scan':'')));
+    var list=el('div','edPages');
     bk.pages.forEach(function(p,j){
-      var t=el('div','edMini page'),im=el('img');im.alt='';t.appendChild(im);thumbInto(im,p.thumb||p);
-      t.appendChild(el('span','edKind',String(j+1)));
-      var tl=el('div','edMiniTools');
-      tl.appendChild(btn(ICON.left,function(){move(bk.pages,j,-1);changed();render();},'sq'));
-      tl.appendChild(btn(ICON.right,function(){move(bk.pages,j,1);changed();render();},'sq'));
+      var row=el('div','edPage'),fig=el('div','edMini page');
+      if(p.id){var im=el('img');im.alt='';fig.appendChild(im);thumbInto(im,p.thumb||p);}else fig.appendChild(el('span','edNoScan','no scan yet'));
       var sc=E.scans[p.id];
+      if(sc&&!sc.found)fig.appendChild(el('span','edFlag','page edges not found: cleaned only'));
+      row.appendChild(fig);
+      var fl=el('div','edPageFields'),r1=el('div','edRow');
+      if(bk.sections&&bk.sections.length){
+        var sw=el('label','edField'),ss=el('select');ss.innerHTML='<option value="">No section</option>'+bk.sections.map(function(sc,k){return '<option value="'+k+'">'+esc(sc.title||('Section '+(k+1)))+'</option>';}).join('');
+        ss.value=p.section==null?'':String(p.section);ss.onchange=function(){if(ss.value==='')delete p.section;else p.section=+ss.value;changed();render();};
+        sw.appendChild(el('span','edLab','Section'));sw.appendChild(ss);r1.appendChild(sw);
+      }
+      r1.appendChild(field(bk.sections?'Order':'Page',p.num,function(v){p.num=v|0;},{type:'number',min:1}));
+      r1.appendChild(field('Prompt',p.prompt,function(v){p.prompt=v;},{placeholder:'Read Me When…'}));
+      fl.appendChild(r1);
+      fl.appendChild(field('Caption',p.caption,function(v){p.caption=v;},{area:true,rows:3,wide:true,placeholder:'what you wrote about this page'}));
+      var tl=el('div','edItemTools');
+      tl.appendChild(btn(p.id?'Replace scan':'+ Add scan',async function(){
+        var f=await pick('image/*',false);if(!f||!f.length)return;busy('Scanning page '+(p.num||''));
+        try{var pg=await scanPage(f[0]);['id','mime','w','h','thumb'].forEach(function(k){p[k]=pg[k];});}catch(err){toast(err.message||String(err),true);}
+        busy(null);changed();render();
+      }));
       if(sc)tl.appendChild(btn(sc.using==='scan'?'Use original':'Use scan',async function(){
         sc.using=sc.using==='scan'?'orig':'scan';var v=sc[sc.using];S.pending[p.id].enc=await sealCK(v.u8);S.pending[p.id].mime=v.mime;S.pending[p.id].size=v.u8.length;p.mime=v.mime;
         delete API.cache[p.id];changed();render();
       }));
-      tl.appendChild(btn(ICON.x,function(){bk.pages.splice(j,1);changed();render();},'sq bad'));
-      t.appendChild(tl);
-      if(sc&&!sc.found)t.appendChild(el('span','edFlag','page edges not found: cleaned only'));
-      g.appendChild(t);
+      tl.appendChild(btn(ICON.x,function(){if(confirm('Remove this page?')){bk.pages.splice(j,1);changed();render();}},'sq bad'));
+      fl.appendChild(tl);row.appendChild(fl);list.appendChild(row);
     });
-    c.appendChild(g);
+    det.appendChild(list);c.appendChild(det);
     c.appendChild(btn('+ Add pages',async function(){
       var f=await pick('image/*',true);if(!f||!f.length)return;var list=Array.prototype.slice.call(f);
-      for(var k=0;k<list.length;k++){busy('Scanning page '+(k+1)+' of '+list.length);try{var pg=await scanPage(list[k]);bk.pages.push(pg);}catch(e){toast(list[k].name+': '+(e.message||e),true);}await sleep(10);}
+      var nextNum=bk.pages.reduce(function(a,p){return Math.max(a,p.num||0);},0)+1;
+      for(var k=0;k<list.length;k++){busy('Scanning page '+(k+1)+' of '+list.length);try{var pg=await scanPage(list[k]);pg.num=nextNum++;pg.prompt='';pg.caption='';bk.pages.push(pg);}catch(e){toast(list[k].name+': '+(e.message||e),true);}await sleep(10);}
       busy(null);changed();render();
     },'pri'));
     m.appendChild(c);
