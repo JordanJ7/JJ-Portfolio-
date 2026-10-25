@@ -370,6 +370,11 @@ function tabFolders(m){
     rr.appendChild(field('Title (shown inside)',f.title,function(v){f.title=v;}));
     rr.appendChild(field('My label (only for me)',f.name,function(v){f.name=v;}));
     cc.appendChild(rr);
+    var r3=el('div','edRow'),fw=el('label','edField'),fs=el('select');fw.appendChild(el('span','edLab','Blur the folder'));
+    [['','No blur'],['light','A little'],['heavy','Fully']].forEach(function(o){var op=el('option',null,esc(o[1]));op.value=o[0];if((f.blur||'')===o[0])op.selected=true;fs.appendChild(op);});
+    fs.onchange=function(){if(fs.value)f.blur=fs.value;else delete f.blur;changed();};fw.appendChild(fs);r3.appendChild(fw);
+    var sl3=el('label','edCheck'),sc3=el('input');sc3.type='checkbox';sc3.checked=!!f.soon;sc3.onchange=function(){if(sc3.checked)f.soon=true;else delete f.soon;changed();};
+    sl3.appendChild(sc3);sl3.appendChild(el('span',null,'Not ready yet (it cannot be opened)'));r3.appendChild(sl3);cc.appendChild(r3);
     var det=el('details','edDet');det.open=!!E.openFolders&&E.openFolders[i];det.ontoggle=function(){E.openFolders=E.openFolders||{};E.openFolders[i]=det.open;};
     det.appendChild(el('summary',null,f.items.length?f.items.length+' item'+(f.items.length>1?'s':''):'Empty'));
     det.appendChild(itemsEditor(f.items,{folder:true}));cc.appendChild(det);m.appendChild(cc);

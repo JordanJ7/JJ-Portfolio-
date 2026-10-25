@@ -676,9 +676,11 @@ function foldersScene(){
       b.type='button';b.setAttribute('aria-label','Open folder '+(i+1));b.tabIndex=-1;
       var showT=!!(S.content.look||{}).folderTitles;   /* titles under every folder, or only the owner's private labels */
       if(showT&&(f.title||f.name))b.appendChild(el('span','ftitle',esc(f.title||f.name)));
-      else if(owner&&f.name)b.appendChild(el('span','flabel',esc(f.name)));
-      b.addEventListener('click',function(){if(isReady)openBubble(f,b);});
-      if(f.name)b.dataset.name=f.name;
+      else if(owner&&f.name&&!f.soon)b.appendChild(el('span','flabel',esc(f.name)));
+      if(f.blur)b.classList.add('blur-'+f.blur);   /* a folder that is not ready yet: blurred like the unfinished books */
+      if(f.soon){b.classList.add('soon');b.setAttribute('aria-disabled','true');b.setAttribute('aria-label',(f.title||'Folder '+(i+1))+', not ready yet');}
+      b.addEventListener('click',function(){if(!isReady)return;if(f.soon){b.classList.remove('nudge');void b.offsetWidth;b.classList.add('nudge');return;}openBubble(f,b);});
+      if(f.name&&!f.soon)b.dataset.name=f.name;
       host.appendChild(b);
       bodies.push({i:i,el:b,x:-999,y:-999,vx:0,vy:0,r:0,spawned:false,entered:false,at:0,born:0});
     });
