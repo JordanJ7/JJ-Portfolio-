@@ -789,26 +789,30 @@ function foldersScene(){
       /* the sign sits off toward the middle of the screen (where there is room), and the arrow runs from it to the planet */
       var aw=arrow.offsetWidth||200,ah=arrow.offsetHeight||64;
       if(jamAt&&(jamAt.tx!==p.tx||jamAt.ty!==p.ty)){jamAt=null;arrow.style.width='';}   /* the planet has a new resting place (e.g. after coming back): pick a new spot */
-      if(!jamAt){   /* try spots around the planet: on screen, clear of the folders and the other planet; shrink the sign if nothing fits */
-        var gx0=W/2-G.w/2-10,gx1=W/2+G.w/2+10,gy0=H/2-G.h/2-10,gy1=H/2+G.h/2+10,o=planets[0],best=null,px0=p.tx,py0=p.ty,full=Math.min(220,Math.max(150,W*.2));
-        [1,.82,.68,.56].some(function(f){
-          var bw=full*f,bh=bw*78/250;best=null;
-          for(var dd=0;dd<7;dd++)for(var k=0;k<24;k++){
-            var ang=k/24*Math.PI*2,dist=r+70+dd*36+Math.hypot(bw,bh)/2,cx=px0+Math.cos(ang)*dist,cy=py0+Math.sin(ang)*dist*.8;
+      if(!jamAt){   /* the closest open spot to the planet, measured from what is really on screen (folders and their titles, Back, Mareep, the other planet) */
+        var px0=p.tx,py0=p.ty,o=planets[0],full=Math.min(220,Math.max(150,W*.2)),best=null,solid=[];
+        bodies.forEach(function(b){var q=b.el.getBoundingClientRect(),t=b.el.querySelector('.ftitle,.flabel');if(t){var u=t.getBoundingClientRect();q={left:Math.min(q.left,u.left),right:Math.max(q.right,u.right),top:q.top,bottom:Math.max(q.bottom,u.bottom)};}solid.push([q.left-12,q.top-12,q.right+12,q.bottom+12]);});
+        ['#backBtn','#mareep'].forEach(function(sel){var e=$(sel);if(e){var q=e.getBoundingClientRect();if(q.width)solid.push([q.left-8,q.top-8,q.right+8,q.bottom+8]);}});
+        solid.push([0,0,Math.max(190,0),64]);
+        [1,.82,.68,.56,.46].forEach(function(f){
+          var bw=full*f,bh=bw*78/250;
+          for(var cy=bh/2+12;cy<=H-bh/2-12;cy+=12)for(var cx=bw/2+12;cx<=W-bw/2-12;cx+=12){
             var l=cx-bw/2,t0=cy-bh/2,rr=cx+bw/2,b0=cy+bh/2;
-            if(l<8||rr>W-8||t0<56||b0>H-8)continue;
-            var hitG=!(rr<gx0||l>gx1||b0<gy0||t0>gy1),hitO=o&&!o.off&&Math.hypot(cx-o.x,cy-o.y)<o.r*2.4+bw/2;
-            if(hitG||hitO)continue;
-            var sc=dist+(Math.sin(ang)>.3?40:0);
+            if(solid.some(function(q){return !(rr<q[0]||l>q[2]||b0<q[1]||t0>q[3]);}))continue;
+            var dpl=Math.hypot(cx-px0,cy-py0);
+            if(dpl<r+Math.hypot(bw,bh)/2+64)continue;   /* room for a clear arrow */
+            if(o&&!o.off&&Math.hypot(cx-o.tx,cy-o.ty)<o.r*1.6+bw/2)continue;
+            var sc=dpl+(cy>py0+r?30:0)+(1-f)*140;   /* nearer the planet wins over bigger; a far-away sign makes a confusing arrow */
             if(!best||sc<best.s)best={s:sc,x:cx,y:cy,w:bw};
           }
-          return !!best;
         });
-        if(!best)best={x:Math.max(full*.28+8,Math.min(W-full*.28-8,px0)),y:Math.max(56+full*.1,py0-r-80),w:full*.56};
+        if(!best){var fw=Math.max(100,full*.5);best={x:Math.max(fw/2+8,Math.min(W-fw/2-8,px0>W/2?px0-r-40-fw/2:px0+r+40+fw/2)),y:Math.max(64+fw*.16,Math.min(H-fw*.16-8,py0)),w:fw};}
         arrow.style.width=best.w+'px';aw=best.w;ah=aw*78/250;
         jamAt={dx:best.x-px0,dy:best.y-py0,tx:p.tx,ty:p.ty};   /* kept relative to the planet, so the whole sign travels with it */
       }else{aw=arrow.offsetWidth;ah=arrow.offsetHeight;}
-      var sx=p.x+jamAt.dx,sy=p.y+jamAt.dy;
+      /* the sign travels with the planet when it really moves (e.g. coming back), but stays put while the planet only drifts around its spot */
+      var ox=p.x-jamAt.tx,oy=p.y-jamAt.ty,od=Math.hypot(ox,oy),k=Math.min(1,od/90);
+      var sx=jamAt.tx+jamAt.dx+ox*k,sy=jamAt.ty+jamAt.dy+oy*k;
       arrow.style.left=(sx-aw/2)+'px';arrow.style.top=(sy-ah/2)+'px';
       /* start just outside the sign, on the side facing the planet; end just short of the planet */
       var vx=ex-sx,vy=ey-sy,vl=Math.hypot(vx,vy)||1,nx=vx/vl,ny=vy/vl;
@@ -973,14 +977,19 @@ function earthGate(){
       if(busy||fd.disabled||!fd.value.trim())return;busy=true;
       var sec=await unwrapAnswer(q,fd.value);busy=false;
       if(sec){EG.ok=true;close(true);return;}
-      EG.fails++;fd.value='';sync();ln.classList.remove('wiggle');void ln.offsetWidth;ln.classList.add('wiggle');
+      EG.fails++;fd.value='';sync();$('.ego',g).classList.remove('vis');ln.classList.remove('wiggle');void ln.offsetWidth;ln.classList.add('wiggle');
       if(EG.fails>=CFG.hintAfter&&q.hint)hi.classList.add('vis');
     }
-    fd.oninput=function(){sync();$('.etap',g).classList.remove('vis');};
+    fd.oninput=function(){sync();$('.etap',g).classList.remove('vis');$('.ego',g).classList.toggle('vis',!!fd.value.trim());};
+    /* the iPhone number pad has no Enter key: its Done button just closes the keyboard, so that counts as Enter too, and there is an arrow button */
+    fd.onblur=function(){if(EG.open&&fd.value.trim())submit();};
+    $('.ego',g).onpointerdown=function(e){e.preventDefault();e.stopPropagation();};   /* keeps the keyboard up */
+    $('.ego',g).onpointerup=function(e){e.stopPropagation();submit();};
+    $('.ego',g).onclick=function(e){e.stopPropagation();submit();};   /* keyboard and mouse users; submit ignores a second call while busy */
     fd.onfocus=function(){$('.etap',g).classList.remove('vis');};
     fd.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();submit();}else if(e.key==='Escape'){e.preventDefault();close(false);}};
     /* focus inside the tap itself: iPhone Safari only opens the keyboard then (a delayed focus is ignored) */
-    function tapFocus(e){if(e.target.closest('.ex'))return;if(!fd.disabled){try{fd.focus({preventScroll:true});}catch(x){fd.focus();}}}
+    function tapFocus(e){if(e.target.closest('.ex')||e.target.closest('.ego'))return;if(!fd.disabled){try{fd.focus({preventScroll:true});}catch(x){fd.focus();}}}
     g.onpointerdown=tapFocus;g.onclick=tapFocus;g.ontouchend=tapFocus;
     $('.ex',g).onclick=function(){close(false);};
     /* the same prompt animation as the questions at the start */

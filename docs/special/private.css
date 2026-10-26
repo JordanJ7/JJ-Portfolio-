@@ -333,6 +333,10 @@ body.hidem #mareep{opacity:0;pointer-events:none}
 #egate .eline.wiggle{animation:wig .38s ease}
 #egate .efield{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:auto;font-size:16px;color:transparent;caret-color:transparent;background:transparent;border:0;outline:0;cursor:text}   /* the real input sits over the line, so a tap lands on it (and 16px stops iPhone zooming in) */
 #egate .etap{position:absolute;left:0;right:0;bottom:-34px;text-align:center;font:500 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#bcd8f5;opacity:0;transition:opacity .6s ease;pointer-events:none}
+#egate .ego{position:absolute;left:50%;bottom:-92px;z-index:2;width:56px;height:56px;margin-left:-28px;border-radius:50%;border:1px solid rgba(188,216,245,.45);background:rgba(188,216,245,.16);color:#e4f0fc;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .2s}
+#egate .ego.vis{opacity:1;pointer-events:auto}
+#egate .ego:active{transform:scale(.92)}
+#egate .ego svg{width:24px;height:24px}
 #egate .etap.vis{opacity:.75;animation:pulse 1.6s ease-in-out infinite}
 #egate .ex{position:absolute;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));width:40px;height:40px;border-radius:50%;border:1px solid rgba(188,216,245,.3);background:rgba(188,216,245,.08);color:#cfe6fb;display:grid;place-items:center;cursor:pointer}
 #egate .ex:hover{background:rgba(188,216,245,.18)}
