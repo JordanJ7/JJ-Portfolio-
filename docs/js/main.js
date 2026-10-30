@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN} from './data.js?v=20261025c';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN,COURSES} from './data.js?v=20261029b';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -409,9 +409,28 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
     o+='<div class="cert"><b>This Is Animation</b><span class="d">Sony Pictures Animation on Yellowbrick, issued Jun 23, 2025</span><a href="#/this-is-animation">View certificate</a></div>';
     o+='</div><p class="sub" style="margin-top:22px">More on <a href="https://www.linkedin.com/in/jordan-james07" target="_blank" rel="noopener">LinkedIn</a>.</p></div>';
     return o;}
+  function pageCourses(){
+    var sems=[];COURSES.forEach(function(c){if(sems.indexOf(c.sem)<0)sems.push(c.sem);});
+    var o='<div class="pg"><h1>Coursework.</h1><p class="sub">The '+COURSES.length+' courses I took at Penn State Behrend for my BA in Digital Media, Arts &amp; Technology, with a minor in Game Development. Open a course for the full description.</p>';
+    o+='<div class="semnav" role="group" aria-label="Jump to a semester">'+sems.slice().reverse().map(function(sm){return '<button type="button" data-sem="sem-'+sm.replace(/\s+/g,'-').toLowerCase()+'">'+sm+'</button>';}).join('')+'</div>';
+    sems.slice().reverse().forEach(function(sm){
+      o+='<h2 id="sem-'+sm.replace(/\s+/g,'-').toLowerCase()+'">'+sm+'</h2><div class="courses">';
+      COURSES.filter(function(c){return c.sem===sm;}).forEach(function(c){
+        var dept=c.code.split(' ')[0].toLowerCase();
+        o+='<details class="course d-'+dept+'"><summary><span class="code">'+c.code+'</span><b>'+c.title+'</b><span class="short">'+c.short+'</span><span class="more">Read the full description</span></summary>'+
+          '<p class="full">'+c.full+'</p>'+(c.link?'<a class="clink" href="'+c.link.h+'"'+(c.link.h.charAt(0)==='#'?'':' target="_blank" rel="noopener"')+'>'+c.link.l+(c.link.h.charAt(0)==='#'?'':' &#8599;')+'</a>':'')+'</details>';
+      });
+      o+='</div>';
+    });
+    o+='<p class="sub" style="margin-top:22px">See the work from these classes on the CD above, and my <a href="#/certifications">certifications</a>.</p></div>';
+    return o;}
+  function initCourses(){   /* the jump buttons scroll, so the #/courses address stays put */
+    var n=document.querySelector('.semnav');if(!n)return;
+    n.addEventListener('click',function(e){var b=e.target.closest('button[data-sem]');if(!b)return;var h=document.getElementById(b.dataset.sem);if(h)h.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+  }
   function job(org,dates,role,bul){return '<div class="job"><div class="row"><b>'+org+'</b><span>'+dates+'</span></div>'+(role?'<div class="role">'+role+'</div>':'')+'<ul>'+bul.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';}
   function pageResume(){
-    return '<div class="pg"><div class="btns"><a href="assets/Jordan-James-Resume.pdf" download>Download PDF</a><button type="button" onclick="window.print()">Print</button><a href="#/certifications">See certifications</a></div>'+
+    return '<div class="pg"><div class="btns"><a href="assets/Jordan-James-Resume.pdf" download>Download PDF</a><button type="button" onclick="window.print()">Print</button><a href="#/certifications">See certifications</a><a href="#/courses">See coursework</a></div>'+
     '<div class="paper"><h1>Jordan James</h1><p class="contactline">Erie, PA &middot; <a href="mailto:saojmj123456@gmail.com">saojmj123456@gmail.com</a> &middot; <a href="https://www.linkedin.com/in/jordan-james07/" target="_blank" rel="noopener">linkedin.com/in/jordan-james07</a> &middot; <a href="#/flx-edits">Edits</a></p>'+
     '<h2>Summary</h2><ul><li>IT support technician with nearly three years of help desk experience, resolving 40+ tickets weekly in ServiceNow.</li><li>Trained in computer networking, with hands-on hardware repair, network installation, and customer service skills.</li></ul>'+
     '<h2>Education</h2>'+
@@ -646,7 +665,7 @@ function initLog(preset){
   q.addEventListener('input',function(){S.q=q.value.trim().toLowerCase();S.n=STEP;draw();});
   draw();
 }
-var PAGES={'certifications':[pageCerts,'Certifications'],'resume':[pageResume,'Resume'],'intern-blog':[pageBlog,'Intern blog'],'culture-log':[pageCulture,'Culture Log',initCulture],'culture/games':[function(){return pageCat('game');},'Games',function(){initCat('game');}],'culture/movies':[function(){return pageCat('movie');},'Movies',function(){initCat('movie');}],'culture/tv':[function(){return pageCat('tv');},'TV shows',function(){initCat('tv');}],'culture/music':[function(){return pageCat('music');},'Music',function(){initCat('music');}]};
+var PAGES={'certifications':[pageCerts,'Certifications'],'courses':[pageCourses,'Coursework',initCourses],'resume':[pageResume,'Resume'],'intern-blog':[pageBlog,'Intern blog'],'culture-log':[pageCulture,'Culture Log',initCulture],'culture/games':[function(){return pageCat('game');},'Games',function(){initCat('game');}],'culture/movies':[function(){return pageCat('movie');},'Movies',function(){initCat('movie');}],'culture/tv':[function(){return pageCat('tv');},'TV shows',function(){initCat('tv');}],'culture/music':[function(){return pageCat('music');},'Music',function(){initCat('music');}]};
 
 /* ---------- routing ---------- */
 var detail=$('detail'),homeY=0;

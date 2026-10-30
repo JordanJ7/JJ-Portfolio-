@@ -226,3 +226,131 @@ export const CERTS=[
     ['Google AI Essentials','May 2026','specialization/LGQ6O8RDVKYL'],
     ['Use AI Responsibly','May 2026','records/5VR2JDYOGILZ']
   ];
+
+/* Penn State Behrend courses (from the old site's classestaken pages), oldest semester first. link = related work. */
+export const COURSES=[
+ {
+  "sem": "Fall 2022",
+  "code": "INART 50Z",
+  "title": "The Science of Music",
+  "short": "The physics of sound and music: waves, hearing, scales, instruments and room acoustics, ending with audio technology and sonification.",
+  "full": "Waves, physics of sound, hearing, musical scales, musical instruments, and room acoustics. INART 50Z The Science of Music explores the physical and acoustical bases of sound and music. The physics include a study of vibrating systems and simple harmonic motion, wave propagation, reflection and refraction, superposition, resonant frequencies, harmonics, phase, the relationship of speed and velocity, and spectra. The acoustics portion applies these physical properties to hearing, sound and music, covering the nature of the human auditory system, and correlations of pitch to frequency, loudness to amplitude/power/intensity, timbre to spectra and envelope. An overview of perceptual psychological studies of Gestalt organizational principles and auditory streaming explores how the auditory system organizes sound on a primitive, unlearned level. With physical and physiological groundwork laid, the subject matter moves to purely musical areas: the construction of musical scales, the nature of consonance, dissonance, and harmony. Twelve-tone equal temperament, the basis of Western common practice music, is not an absolute, but a decision made to facilitate certain musical choices, and a compromise in terms of optimal consonance. The nature of the different instruments is then discussed - strings, winds, brass, percussion, and voice. Different instruments naturally produce different scale types and different types of spectra. Students will learn to appreciate the inherent differences in different instrument types. The course then returns to acoustics, exploring the role that performance spaces play in the propagation and reception of sound. The shape and materials of a room determine its characteristic sound. Students learn about how sound in large auditoriums is characterized by the balance of direct and reflected sound, the distinction between specular and diffuse reflections, the absorptive properties of different building materials, and the nature of reverberation. Smaller performance spaces are subject to standing waves, flutter echo, and comb filtering. Taking steps to avoid undesirable characteristics is often an easy matter once the nature of these characteristics is understood. The final weeks cover audio technology and the distinctions between analog and digital formats. The course ends with a unit on auditory display and sonification, wherein scientific data may be presented through musical sound."
+ },
+ {
+  "sem": "Fall 2022",
+  "code": "ART 168",
+  "title": "The Digital Medium",
+  "short": "Computing as an artistic medium rather than a tool, ending in a final project that combines at least four techniques from the class.",
+  "full": "This course will provide a much needed introductory technological/digital component wherein computing will be discussed as a media, rather than a tool. Students will be engaged in the creation of artistic manifestations of individual interpretations surrounding themes and concepts introduced in class. Each unit of the course will build upon the next resulting in a knowledge base of the possibilities of what the digital medium includes. Students will be asked to demonstrate their knowledge of the medium with a culminating final project that uses at least four of the techniques demonstrated in class. The final project will be determined by the student, manifestations may include a web site, short film, installation, projects, or performance.",
+  "link": {
+   "l": "See my ART 168 videos",
+   "h": "gallery.html"
+  }
+ },
+ {
+  "sem": "Spring 2023",
+  "code": "INART 258A",
+  "title": "Fundamentals of Digital Audio",
+  "short": "How digital audio is stored, processed and produced, with hands-on work in Pro Tools and a final original piece of music.",
+  "full": "A thorough introduction to digital music production technologies, covering the fundamentals of how musical information is stored and transmitted in digital devices. This course is meant for people who are passionate about working with sound, and who are willing to take on new technical and creative challenges in audio production. Students complete a series of low-stakes audio exercises on fundamental operations, a series of written responses to questions on the underlying theory of digital audio, and a small number of extended creative projects.The software used is at the level of professional audio production workstations. Students complete the course with a set of vocational skills in computer music and audio. For the final course project students are tasked to make a piece of music using Pro Tools Software"
+ },
+ {
+  "sem": "Spring 2023",
+  "code": "DIGIT 210",
+  "title": "Text Analysis",
+  "short": "Programmatic and algorithmic tools for accessing and analyzing unstructured text.",
+  "full": "Course teaches students programmatic and algorithmic techniques and tools for accessing and analyzing unstructured text."
+ },
+ {
+  "sem": "Spring 2023",
+  "code": "DIGIT 297",
+  "title": "Special Topics",
+  "short": "A focused special-topics course in motion and 3D work using Adobe Premiere Pro, After Effects and Blender.",
+  "full": "Formal courses given infrequently to explore, in depth, a comparatively narrow subject which may be topical or of special interest. Course uses Adobe Suite products such as Premiere Pro, After Effects and Blender."
+ },
+ {
+  "sem": "Spring 2023",
+  "code": "GAME 220",
+  "title": "Introduction to Game Design",
+  "short": "Designing games as aesthetic objects and cultural artifacts, from video games to board, card and role-playing games.",
+  "full": "Design of games as aesthetic objects and cultural artifacts that people find meaningful and entertaining. In his 2007 book Persuasive Games, Professor Ian Bogost writes about the power of digital games in social, political, artistic, and psychological meaning-making through what he calls 'procedural rhetoric'. 'Procedural rhetoric entails persuasion - to change opinion or action - to convey ideas effectively.' Procedural rhetoric is a subdomain of procedural authorship; its arguments are made not through the construction of worlds or images, but through the authorship of rules and behavior, the construction of dynamic models.' (Bogost 2007, 29). As games become cultural objects with artistic value, achieving orchestral performances in the opera houses of the world, permanent exhibits in the Smithsonian, and having numerous charitable organizations entirely devoted to the appreciation of games, their art, and their rhetoric it behooves educators to enable the next generation of students to become literate in this new and emerging form of expression. This course will provide students with an introduction to game design. It will focus on the design of games as aesthetic objects, both inasmuch as video games have significant aesthetic properties (lighting, narrative, animation, sound design) but also, more generally, inasmuch as games are cultural artifacts that people find meaningful and entertaining. Because GAME 220 takes this broad perspective, students will learn design principles that are used not only in video game design but in traditional \"pen-and-paper\" games, such as board games, card games, role playing games, and so forth. The course will teach students how to design artful, creative games in general.",
+  "link": {
+   "l": "Read my GAME 220 game logs",
+   "h": "Game220Logs.html"
+  }
+ },
+ {
+  "sem": "Fall 2023",
+  "code": "COMM 150N",
+  "title": "The Art of the Cinema",
+  "short": "An introduction to film studies: reading films as visual language, from silent cinema to modern blockbusters.",
+  "full": "COMM 150 is an introduction to cinema studies which aims to provide students with media literacy for a world in which communication is increasingly visual and cinematic in its form. The course assumes that films tell stories and make arguments as communicative forms by drawing on a visual language that can be learned. As such, films can be interpreted and analyzed to reveal something about the cultural conditions that produced them. The course seeks to familiarize students with examples of films that speak to both the forms that they follow and the cultural context in which they were produced. Movies, from early silent films to contemporary blockbusters, are examined as formal constructs, market commodities, and cultural artifacts that aim to represent a world for the viewer. Topics include the emergence of the cinema as a communications technology, business industry and cultural institution; the global dominance of classical Hollywood cinema; American film industry organization (production, distribution, exhibition, vertical integration, the studio system, the star system); analysis of film styles national cinemas, historical movements); analysis of film genres (e.g., silent film melodrama, film noir, comedy, the war film, the western); consideration of film audiences (reception, spectatorship, criticism); introduction to film aesthetics (film art and appreciation); and alternative cinemas (independent, documentary and experimental cinemas). COMM 150 emphasizes media literacy and seeks to help students develop critical thinking, reading and viewing skills while providing them with a historical context for the media that they consume on a regular basis. All sections integrate lectures and readings with viewing feature films during the weekly practicum period. Many sections also incorporate slides and film or video clips during the lecture periods to allow students to exercise their critical viewing skills regarding certain teaching points. Students prepare for film screenings by reading, listening to lectures, and analyzing examples of relevant works. Introductory lectures seek to provide a critical and historical context for each week's screening; follow-up lectures offer critical analysis and examinations reward close viewing. The core purpose of the course, therefore, is to make film viewing a conscious, critical and analytic activity."
+ },
+ {
+  "sem": "Fall 2023",
+  "code": "DIGIT 110",
+  "title": "Text Encoding",
+  "short": "Standardized encoding techniques for creating, storing and analyzing archival-quality data.",
+  "full": "DIGIT 110 teaches students standardized encoding techniques for archival quality data creation, storage, and analysis."
+ },
+ {
+  "sem": "Fall 2023",
+  "code": "GAME 180N",
+  "title": "Art and Science of Virtual World Building",
+  "short": "A team-based course on designing virtual worlds, mixing interactive storytelling with the physics behind movement and light.",
+  "full": "GAME 180N is a multidisciplinary course which introduces students to the theories, concepts, and technologies behind virtual worlds. This course will focus on the myriad ways that narrative arts and physical sciences relate to the development of technologically mediated virtual worlds. Designing the physical and narrative voyages of avatars through virtual worlds is necessarily a team-centered undertaking requiring recursive editing from a macroscopic and microscopic point of view to refocus project goals and deliverables. Besides learning the requisite computing and technical skills involved in virtual world development, students enrolled in this course will produce a world design proposal, and storyboards, interactive fiction graphics, or world maps for their virtual world; in this way, they will explore some of the ways that creative writing, particularly interactive fiction and storytelling techniques drawn from non-VR and VR gaming contribute to the planning, design, and execution of virtual worlds. Students will also learn about the basic science behind virtual world concepts such as the physical environment, physical processes (e.g. kinematics, motion), and light; ultimately, they will produce an immersive time-space experience in their proposed world and reflect on the complexity of integrating design elements in a way that creates a satisfying immersive experience. The objectives of the course include: (1) students will work in teams to design a proposed virtual world using world making principles found in interactive fiction narratology and physical principles that embody the avatar and allow it to move in a virtual world environment; (2) students will work in teams to construct a virtual scene, movement in time/space, from that world using computer software tools and mediated through virtual reality hardware; (3) students will be able to discuss developing immersive technology and applications of virtual worlds in business, society, and academia; (4) students will analyze and critique the virtual world designs of other student teams; (5) students will demonstrate comprehension of interactive fiction scene and level structures and world maps as they relate to designing the voyage of the avatar in a virtual world; and (6) students will demonstrate comprehension of physical principles (e.g. kinematics, light) as they apply to virtual worlds. In addition to directed readings, discussions, and quizzes in computing, narrative arts, and physics (related to concepts inherent in virtual worlds), the course will incorporate hands-on lab exercises and online discussions. A semester-long team project will be the primary means of student evaluation. During this semester-long team project students will design and create their own virtual environment(s) and character(s) using software tools and accepted world design principles. Students will apply a variety of computing concepts in the world creation, including some combination of programming, 360-degree video, and digital imagery. The course will culminate in the oral and visual presentation of their creative and technological works. The semester-long team project will be heavily integrated into the in-class experience and assessed using rubrics that draw on examples and assignment descriptions provided to students."
+ },
+ {
+  "sem": "Spring 2024",
+  "code": "COMM 100N",
+  "title": "Mass Media and Society",
+  "short": "How newspapers, television, radio, books and film shape society, and the forces that shape the media in turn.",
+  "full": "Mass communications in the United States: organization, role, content, and effects of newspapers, magazines, television, radio, books, and films. The Mass Media and Society is an overview of the interaction between mass media and society. By drawing from selected topics, the course pays particular attention to the social influences (e.g., economics, politics, technology, law and culture) that shape media messages. Among others, the course examines the nature of media controllers as well as the character of users and consumers of media products. By so doing, students are informed about the overall structure and scope of the mass media and led to understand the power and influences associated with media messages and practices. By the end of the semester, each student should have a better understanding of the dynamic nature of the mass media in an information society."
+ },
+ {
+  "sem": "Spring 2024",
+  "code": "DIGIT 409",
+  "title": "Advanced Digital Creations",
+  "short": "Problem-based 3D digital art: sculpting, modeling, animation and painting, building on ART 168.",
+  "full": "Students will develop 3d digital creation skills in relation to their field(s) of study. DIGIT 409: Advanced Digital Creations is a problem-based learning class that uses the digital media concepts and tools introduced in Art 168 to develop an in-depth understanding of 3d digital art. They will enhance their creative and philosophical sensibilities in the technology, software, and media relevant to the field(s) of study they are pursuing. Through a series of learning problems, students will synthesize advanced skills and knowledge needed to accomplish techniques used in the creation of digital 3d imagery. They will integrate 3d sculpting, modeling, animation, and/or painting practices with computer-based image processing for creative, and professionally oriented results. They will develop critical and conceptual sensibilities needed to discuss and evaluate their work and the work of others using these methods. Students will identify, research, and analyze effective professional and creative practices in the field of digital creativity with emphasis on developing skillful digital processing techniques. These practices include creating mockups of concepts, art-making practices for enhanced digital workflow, and choosing the 3d processing techniques most appropriate for the end-use of the work. The digital medium has a relatively short history, however, as the advancement of digital technology continues these techniques have entered the popular mainstream. This shift has raised challenges in graphic-reliant fields such as the arts, engineering, advertising, simulation, and gaming. This course will give students of these fields the opportunity to develop their artistic skills further than possible in Art 168. Students will analyze and assess the factors related to their fields in order to make sound design decisions."
+ },
+ {
+  "sem": "Spring 2024",
+  "code": "GAME 250",
+  "title": "Technical Game Development",
+  "short": "The tools and techniques for building games: modeling, interaction, lighting, particles and game logic, ending in a playable prototype.",
+  "full": "Introduction to the tools and techniques required to implement games in a virtual environment. GAME 250 / CMPSC 208 Technical Game Development. First, students learn about game and player elements by creating characters and objects and the means of user interactivity. Both orthographic and perspective views are introduced to assist in character design. Objects and characters are created using fundamental geometric primitives like scale, rotation, translation and extrusion. The set operations, union, intersection, and subtraction, are applied to create compound objects. Bezier and NURB curves are introduced to create objects with irregular contours. Students also learn to design graphical user interfaces (GUIs) and handle mouse and keyboard events to support user interactions. Second, students are introduced to methods of storytelling and guide them to build narratives for games. Methods of proximity and collision detection in the environment are studied for both static and dynamic objects. Dynamic objects are programmed to move and behave in a deterministic, random, or probabilistically under a variety of lighting methods including ambient, directional, point and diffuse lights are introduced. A number of particle systems are developed with different considerations of randomness, vector direction and velocity. The concept of linear interpolation is illustrated and applied to texture mapping to improve the look and feel of objects. Third, students are introduced to functions, propositional logic, loops, and randomness to model game behavior. Students will learn to combine a series of primitive actions into a function for control and reuse. Propositional logic will guide students to define conditions and develop game rules. Loops are introduced to simplify the implementation of repeated game behavior. Randomness enables the simulation of many life-like object movements. Students will learn and practice how to write concurrent, event drive and sequential processing algorithms for game objects. Fourth, students are introduced to the game development process of pre-production, production and post-condition phases and have them apply it to their own project. The topic of maintenance will be introduced with an emphasis on refactoring techniques, critical to improving the quality of game and providing flexibility for future updates. This course has a significant applied element. Game engine tools are used to develop prototypes of games and playtest them. Lab assignments are given throughout the semester and a final project requires students to demonstrate mastery of all aspects of the course."
+ },
+ {
+  "sem": "Spring 2024",
+  "code": "GAME 460",
+  "title": "Video Game Literature Studies",
+  "short": "Video games as cultural artifacts, from Pong to online role-playing, through narrative theory and game studies.",
+  "full": "A comparative look at the nature and history of video games as cultural artifacts, from Pong to online role-playing. The video game industry is larger than the film industry, and yet the academic study of video games has only just begun. This course is a comparative introduction to the nature and history of video games as cultural artifacts, from Pong to online role-playing. It introduces students to academic discussion on and creative work in new digital forms including hypertexts, video games, cell phone novels, machinima, and more. Students will learn basic narrative theory, and study its impact on game studies and game production. They will survey major debates over the meaning and value of video games, and review its history from Pong to contemporary games, including online world-based games. The course extends students' skills in literary interpretation to a variety of new objects, and makes them aware of the role medium plays in aesthetic development and production. Students will leave with a far sharper understanding of how the interpretive tools used in the humanities can be extended to include new media, and with a sense of the historical role video games have played and will continue to play in global cultural production."
+ },
+ {
+  "sem": "Fall 2024",
+  "code": "ART 20",
+  "title": "Introduction to Drawing",
+  "short": "A studio survey of drawing with pencil, charcoal, conte, ink and pastel.",
+  "full": "ART 20 is intended as a general survey of the art of drawing for non-majors. As a studio offering, emphasis is placed on hands-on studio activities, which promote visual literacy and on the various conventions used in drawing. Students will be given the opportunity to briefly explore many of the traditional materials of drawing, including pencil, charcoal, conte, ink and ink wash, pastel, as well as experimental tools. Slide presentations, studio visits and museum critiques will augment studio exercises to facilitate a greater awareness of the cultural context in which drawing functions. As a general appreciation offering, emphasis is placed on active learning processes that involve students in basic studio materials and techniques. Since the School of Visual Arts now requires a portfolio review for Visual Arts majors to enroll in studio courses, ART 20 provides an opportunity for non-art majors to do studio work in conjunction with an exploration of art concepts."
+ },
+ {
+  "sem": "Fall 2024",
+  "code": "DIGIT 400",
+  "title": "Digital Project Design",
+  "short": "The tools and resources for designing and building a digital project from start to finish.",
+  "full": "This course will introduce students to the tools and resources available to design and implement digital projects.",
+  "link": {
+   "l": "See my DIGIT 400 project",
+   "h": "#/solar-system"
+  }
+ },
+ {
+  "sem": "Fall 2024",
+  "code": "GAME 480",
+  "title": "Game Development Project",
+  "short": "A semester-long team project taking a game from concept to a published release.",
+  "full": "A team of students manages the production of a game from concept to implementation. In this course students take the entire semester creating a game that will be published. Students are assembled into teams and will be expected to create a game from conception to publication in a very short period of time. What will result from the completion of this course is a demonstration of the knowledge accumulated in previous GAME courses and in important components of your portfolio to enable you to obtain a job in the industry."
+ }
+];

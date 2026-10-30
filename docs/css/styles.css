@@ -220,6 +220,25 @@ footer{background:#0a0a0a;color:rgba(255,255,255,.55);text-align:center;font-siz
 .pg .sub{margin:0 0 28px;font-size:clamp(16px,1.8vw,19px);line-height:1.45;opacity:.8;max-width:56ch}
 .pg h2{margin:34px 0 12px;font-size:clamp(20px,2.4vw,26px);font-weight:700;letter-spacing:-.03em}
 .pg .note{margin-top:22px;font-size:14px;opacity:.7;font-style:italic}
+.semnav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.semnav button{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.semnav button:hover{border-color:var(--pink);color:var(--pink)}
+.pg h2[id^="sem-"]{scroll-margin-top:84px}
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px;align-items:start}
+.course{--dc:var(--pink);position:relative;border-radius:22px;background:var(--panel);border:1px solid var(--line);overflow:hidden}
+.course::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--dc)}
+.course.d-game{--dc:#ff4fa3}.course.d-digit{--dc:#7cc4ff}.course.d-inart{--dc:#ffd166}.course.d-art{--dc:#b38cff}.course.d-comm{--dc:#5ee0b0}
+.course summary{list-style:none;cursor:pointer;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.course summary::-webkit-details-marker{display:none}
+.course .code{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--dc)}
+.course b{font-size:18px;font-weight:650;letter-spacing:-.01em;line-height:1.25}
+.course .short{font-size:15px;line-height:1.45;opacity:.82}
+.course .more{margin-top:6px;font-size:13px;font-weight:600;color:var(--dc)}
+.course .more::after{content:" +"}
+.course[open] .more::after{content:" \2212"}
+.course summary:focus-visible{outline:3px solid var(--pink);outline-offset:-3px;border-radius:20px}
+.course .full{margin:0;padding:0 20px 18px;font-size:14.5px;line-height:1.6;opacity:.85}
+.course .clink{display:inline-block;margin:0 20px 18px;padding:8px 16px;border-radius:999px;background:var(--dc);color:#000;font-weight:600;font-size:14px;text-decoration:none}
 .certs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cert{border-radius:22px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;gap:4px}
 .cert b{font-size:17px;font-weight:600;letter-spacing:-.01em}

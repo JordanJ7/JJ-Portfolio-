@@ -41,7 +41,7 @@ with sync_playwright() as p:
         ctx.close()
     # 4 anchors
     pg=b.new_page(viewport={'width':1280,'height':800}); pg.goto(URL); pg.wait_for_timeout(500)
-    bad=pg.evaluate("""(()=>{const out=[];const routes=new Set(['certifications','resume','intern-blog','culture-log','culture/music','culture/games','culture/movies','culture/tv']);
+    bad=pg.evaluate("""(()=>{const out=[];const routes=new Set(['certifications','courses','resume','intern-blog','culture-log','culture/music','culture/games','culture/movies','culture/tv']);
       const ids=new Set(window.__ids||[]);
       document.querySelectorAll('a[href^="#"]').forEach(a=>{const h=a.getAttribute('href');if(h==='#')return;
         if(h.startsWith('#/')){const k=h.slice(2);if(!routes.has(k)&&!document.getElementById('p-'+k)&&!/^(journal-101|flx-edits|this-is-animation|insurance-experience|generative-art|solar-system|matter-monsters|erie-events-branding)$/.test(k))out.push(h);}
