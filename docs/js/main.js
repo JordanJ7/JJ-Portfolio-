@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN,COURSES} from './data.js?v=20261029b';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN,COURSES} from './data.js?v=20261104a';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -9,19 +9,19 @@ var BYID={};P.forEach(function(p,i){p.i=i;BYID[p.id]=p;});
 var ART={
   journal:function(){
     var o='<rect width="200" height="200" fill="#f5f5f5"/>',i;
-    for(i=1;i<15;i++)o+='<line x1="0" x2="200" y1="'+i*14+'" y2="'+i*14+'" stroke="#ffb3d6"/>';
-    return o+'<line x1="52" x2="52" y1="0" y2="200" stroke="#ff4fa3" stroke-opacity=".8"/><path d="M70 70q12-18 24 0t24 0t24 0M70 98q10-14 20 0t20 0t20 0t20 0" stroke="#0a0a0a" stroke-width="2.2" fill="none" stroke-linecap="round"/><rect x="150" width="14" height="40" fill="#ff4fa3"/>';},
+    for(i=1;i<15;i++)o+='<line x1="0" x2="200" y1="'+i*14+'" y2="'+i*14+'" style="stroke:var(--soft)"/>';
+    return o+'<line x1="52" x2="52" y1="0" y2="200" style="stroke:var(--pink)" stroke-opacity=".8"/><path d="M70 70q12-18 24 0t24 0t24 0M70 98q10-14 20 0t20 0t20 0t20 0" stroke="#0a0a0a" stroke-width="2.2" fill="none" stroke-linecap="round"/><rect x="150" width="14" height="40" style="fill:var(--pink)"/>';},
   edits:function(){
     var o='<rect width="200" height="200" fill="#0a0a0a"/>',k;
-    for(k=0;k<18;k++)o+='<rect x="'+(k*12-6)+'" y="10" width="7" height="9" rx="1.5" fill="#ff4fa3" fill-opacity=".9"/><rect x="'+(k*12-6)+'" y="181" width="7" height="9" rx="1.5" fill="#ff4fa3" fill-opacity=".9"/>';
-    return o+'<text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="34" fill="#ff4fa3">FLX</text><text x="100" y="152" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="24" fill="#ff4fa3">__EDITS</text>';},
+    for(k=0;k<18;k++)o+='<rect x="'+(k*12-6)+'" y="10" width="7" height="9" rx="1.5" style="fill:var(--pink)" fill-opacity=".9"/><rect x="'+(k*12-6)+'" y="181" width="7" height="9" rx="1.5" style="fill:var(--pink)" fill-opacity=".9"/>';
+    return o+'<text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="34" style="fill:var(--pink)">FLX</text><text x="100" y="152" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="24" style="fill:var(--pink)">__EDITS</text>';},
   sony:function(){
-    var o='<rect width="200" height="200" fill="#ff4fa3"/>',k;
-    for(k=0;k<10;k++)o+='<g transform="rotate('+k*36+' 100 100)"><rect x="86" y="14" width="28" height="22" rx="3" fill="#0a0a0a"/><path d="M91 30L98 21L104 27L109 22" stroke="#ff4fa3" stroke-width="1.6" fill="none"/></g>';
+    var o='<rect width="200" height="200" style="fill:var(--pink)"/>',k;
+    for(k=0;k<10;k++)o+='<g transform="rotate('+k*36+' 100 100)"><rect x="86" y="14" width="28" height="22" rx="3" fill="#0a0a0a"/><path d="M91 30L98 21L104 27L109 22" style="stroke:var(--pink)" stroke-width="1.6" fill="none"/></g>';
     return o+'<circle cx="100" cy="100" r="56" fill="none" stroke="#0a0a0a" stroke-opacity=".3" stroke-width="2"/>';},
   erie:function(){
     var o='<rect width="200" height="200" fill="#f5f5f5"/>',k,s,x;
-    for(k=0;k<7;k++){s=150-k*17;x=100-s/2;o+='<rect x="'+x+'" y="'+x+'" width="'+s+'" height="'+s+'" rx="'+(6+k*7)+'" fill="none" stroke="#ff4fa3" stroke-opacity="'+(.3+k*.1).toFixed(2)+'" stroke-width="2.4" transform="rotate('+k*14+' 100 100)"/>';}
+    for(k=0;k<7;k++){s=150-k*17;x=100-s/2;o+='<rect x="'+x+'" y="'+x+'" width="'+s+'" height="'+s+'" rx="'+(6+k*7)+'" fill="none" style="stroke:var(--pink)" stroke-opacity="'+(.3+k*.1).toFixed(2)+'" stroke-width="2.4" transform="rotate('+k*14+' 100 100)"/>';}
     return o+'<circle cx="100" cy="100" r="8" fill="#0a0a0a"/>';}
 };
 
@@ -128,6 +128,29 @@ stage.addEventListener('pointerup',function(e){
 stage.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!box.classList.contains('open'));}});
 $('prev').addEventListener('click',function(){step(-1);});
 $('next').addEventListener('click',function(){step(1);});
+
+/* ---------- colour palettes: [id, name, swatches, page colour for the browser bar] ---------- */
+var PALETTES=[
+  ['espresso','Espresso',['#3f2622','#f3c9d5','#f5f1e6'],'#1d1210'],
+  ['lavender','Lavender & Coral',['#8e93cb','#f8769c','#fedced'],'#16152b'],
+  ['crimson','Crimson & Periwinkle',['#470b25','#b5bedd','#ffeed6'],'#1c0610'],
+  ['nox','Nox & Amethyst',['#141414','#7e49b3','#cfcfcf'],'#141414'],
+  ['obsidian','Obsidian & Guava',['#4c1413','#ea6b7e','#fedced'],'#1f0808'],
+  ['classic','Classic pink',['#0a0a0a','#ff4fa3','#ffb3d6'],'#0a0a0a']
+];
+function swatch(c){return c.map(function(x){return '<i style="background:'+x+'"></i>';}).join('');}
+function setPalette(id,save){
+  var p=PALETTES.filter(function(q){return q[0]===id;})[0]||PALETTES[0];
+  if(p[0]==='espresso')document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme',p[0]);
+  document.querySelector('meta[name="theme-color"]').setAttribute('content',p[3]);
+  $('palSw').innerHTML=swatch(p[2]);
+  Array.prototype.forEach.call($('palMenu').querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',b.dataset.pal===p[0]?'true':'false');});
+  if(save)try{localStorage.setItem('palette',p[0]);}catch(e){}
+}
+$('palMenu').innerHTML='<div class="palh">Colour palette</div>'+PALETTES.map(function(p){return '<button type="button" data-pal="'+p[0]+'" aria-pressed="false"><span class="sw">'+swatch(p[2])+'</span>'+p[1]+'</button>';}).join('');
+$('palMenu').addEventListener('click',function(e){var b=e.target.closest('button[data-pal]');if(b)setPalette(b.dataset.pal,true);});
+setPalette(document.documentElement.getAttribute('data-theme')||'espresso',false);
 
 /* ---------- dropdowns ---------- */
 var dds=document.querySelectorAll('.dd');
