@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115b';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115c';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -700,6 +700,65 @@ var PAGES={'certifications':[pageCerts,'Certifications'],'courses':[pageCourses,
 
 /* ---------- routing ---------- */
 var detail=$('detail'),homeY=0;
+/* ---------- Journal-101: the app's intro, played by scrolling, then a tour of the four screens ---------- */
+var JQ='One honest line a day is enough.';
+var TOUR=[['week','Week','The week','Every entry lands under today, with a bar for each day you wrote and the next session counting down beside it.'],
+  ['topics','Topics','Topics','Folders for the things that keep coming back: books to read, places to go, small wins.'],
+  ['session','Session','Session prep','Everything tagged \u201cFor session\u201d gathers into one sheet before the appointment, ready to print.'],
+  ['media','Media','Media','Links, photos and videos from every week, collected in one grid.']];
+function journalIntro(){
+  return '<section class="jin" id="jin" aria-label="The Journal-101 intro. Scroll to play it."><div class="jin-stage"><a class="back jin-back" href="#work">&larr; All projects</a>'+
+    '<div class="jin-lay"><svg class="jin-mark" viewBox="16 8 76 86" aria-hidden="true"><path class="jin-rail" d="M30 18 V70 a12 12 0 0 0 12 12 H80"/><circle class="jin-now" cx="30" cy="34" r="8"/><circle class="jin-dest" cx="74" cy="82" r="10"/></svg>'+
+    '<div class="jin-q"><p class="jin-quote"><span class="vh">\u201c'+JQ+'\u201d</span><span aria-hidden="true">\u201c<span class="jin-typed"></span>\u201d<i class="jin-caret"></i></span></p><p class="jin-attr">Me &middot; Saturday, November 14</p></div></div>'+
+    '<p class="jin-hint" aria-hidden="true">Scroll to play the intro</p><div class="jin-bar" aria-hidden="true"><i></i></div></div></section>';
+}
+function journalTour(){
+  return '<section class="jtour" id="jtour" aria-label="A tour of the app, one screen at a time"><div class="jt-stage"><div class="jt-copy"><p class="jt-eyebrow">Explore the app <span class="jt-count">1 of '+TOUR.length+'</span></p><ol class="jt-steps">'+
+    TOUR.map(function(t,i){return '<li data-i="'+i+'"><span class="n">0'+(i+1)+'</span><div><b>'+t[2]+'</b><p>'+t[3]+'</p></div></li>';}).join('')+'</ol></div><div class="jt-shots">'+
+    TOUR.map(function(t,i){return '<picture class="jt-shot" data-i="'+i+'"><source media="(max-width:760px)" srcset="assets/media/j101_tour_'+t[0]+'_m.webp" width="693" height="1500"><img src="assets/media/j101_tour_'+t[0]+'_d.webp" width="1800" height="1125" alt="The '+t[1]+' screen of Journal-101, filled with sample entries" decoding="async"'+(i?' loading="lazy"':'')+'></picture>';}).join('')+'</div></div></section>';
+}
+function initJournal(){
+  var sec=$('jin'),tour=$('jtour');if(!sec)return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rail=sec.querySelector('.jin-rail'),now=sec.querySelector('.jin-now'),dest=sec.querySelector('.jin-dest'),typed=sec.querySelector('.jin-typed'),
+      attr=sec.querySelector('.jin-attr'),hint=sec.querySelector('.jin-hint'),bar=sec.querySelector('.jin-bar i'),
+      lis=tour.querySelectorAll('.jt-steps li'),shots=tour.querySelectorAll('.jt-shot'),count=tour.querySelector('.jt-count'),raf=0,lastP=-1,lastI=-1;
+  function seg(p,a,b){return Math.min(1,Math.max(0,(p-a)/(b-a)));}
+  function out(t){return 1-Math.pow(1-t,3);}
+  function pop(t){if(t<=0)return 0;var c=1.6;t-=1;return 1+t*t*((c+1)*t+c);}   /* a small overshoot, like the app's dots */
+  function prog(el){var r=el.getBoundingClientRect(),span=r.height-innerHeight;return span>0?Math.min(1,Math.max(0,-r.top/span)):1;}
+  function frame(){
+    raf=0;
+    if(!sec.isConnected){removeEventListener('scroll',ask);removeEventListener('resize',ask);return;}
+    /* the intro is tied to the scroll position: it plays while you scroll and holds still when you stop */
+    var p=reduce?1:prog(sec);
+    if(p!==lastP){
+      lastP=p;
+      rail.style.strokeDashoffset=(130*(1-out(seg(p,.06,.32)))).toFixed(1);
+      now.style.transform='scale('+pop(seg(p,0,.08)).toFixed(3)+')';
+      dest.style.transform='scale('+pop(seg(p,.30,.40)).toFixed(3)+')';
+      typed.textContent=JQ.slice(0,Math.round(JQ.length*seg(p,.40,.78)));
+      var a=seg(p,.80,.88);attr.style.opacity=a;attr.style.transform='translateY('+(8*(1-a)).toFixed(1)+'px)';
+      hint.style.opacity=1-seg(p,0,.05);
+      bar.style.transform='scaleX('+p.toFixed(4)+')';
+      sec.classList.toggle('done',p>=.78);
+    }
+    var i=reduce?-1:Math.min(TOUR.length-1,Math.floor(prog(tour)*TOUR.length));
+    if(reduce)i=lastI<0?0:lastI;
+    if(i!==lastI){lastI=i;
+      Array.prototype.forEach.call(lis,function(l,k){l.classList.toggle('on',k===i);l.setAttribute('aria-current',k===i?'step':'false');});
+      Array.prototype.forEach.call(shots,function(s,k){s.classList.toggle('on',k===i);});
+      count.textContent=(i+1)+' of '+TOUR.length;
+    }
+  }
+  function ask(){if(!raf)raf=requestAnimationFrame(frame);}
+  /* a step can be picked directly: scroll to the middle of its stretch */
+  Array.prototype.forEach.call(lis,function(l,k){l.addEventListener('click',function(){
+    var r=tour.getBoundingClientRect(),span=r.height-innerHeight,top=window.scrollY+r.top+span*(k+.5)/TOUR.length;
+    if(reduce){Array.prototype.forEach.call(lis,function(x,j){x.classList.toggle('on',j===k);});Array.prototype.forEach.call(shots,function(x,j){x.classList.toggle('on',j===k);});count.textContent=(k+1)+' of '+TOUR.length;return;}
+    window.scrollTo({top:top,behavior:'smooth'});});});
+  addEventListener('scroll',ask,{passive:true});addEventListener('resize',ask);frame();
+}
 function projectHTML(p){
   var gal='',acts='',pv=P[(p.i+P.length-1)%P.length],nx=P[(p.i+1)%P.length];
   if(p.gallery.length){
@@ -708,9 +767,10 @@ function projectHTML(p){
       if(m.cap)gal=gal.replace(/(<(?:img|video)[^>]*>(?:<\/video>)?)$/,'<figure class="'+(m.h>m.w?'tall':'wide')+'">$1<figcaption>'+m.cap+'</figcaption></figure>');});
   }else gal='<div class="frame">Add image</div><div class="frame">Add image</div><div class="frame">Add image</div>';
   (p.links||[]).forEach(function(x){acts+='<a href="'+x.h+'"'+(x.internal?'':' target="_blank" rel="noopener"')+'>'+x.l+(x.internal?'':' &#8599;')+'</a>';});
-  return '<a class="back" href="#work">&larr; All projects</a><div class="dbig">'+svg(p)+'</div>'+
+  var story=p.id==='journal-101';
+  return (story?journalIntro()+'<div class="dhead">':'<a class="back" href="#work">&larr; All projects</a>')+'<div class="dbig">'+svg(p)+'</div>'+
     '<div class="dc"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h1>'+p.title.replace(/-/g,'\u2011')+'</h1><p class="lede">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
-    (p.credit?'<div class="meta">'+p.credit+'</div>':'')+(acts?'<div class="acts">'+acts+'</div>':'')+'</div>'+
+    (p.credit?'<div class="meta">'+p.credit+'</div>':'')+(acts?'<div class="acts">'+acts+'</div>':'')+'</div>'+(story?'</div>'+journalTour()+'<h2 class="gh">More from the design</h2>':'')+
     '<div class="gal'+(p.gallery.length===1?' one':'')+(p.gallery.some(function(k){return MEDIA[k].cap;})?' capt':'')+'">'+gal+'</div>'+
     '<div class="pn"><a href="#/'+pv.id+'">&larr; '+pv.title+'</a><a href="#/'+nx.id+'">'+nx.title+' &rarr;</a></div>';
 }
@@ -726,7 +786,7 @@ function route(){
     }
     return;
   }
-  if(p){detail.innerHTML=projectHTML(p);document.title=p.title+' | '+BASE;}
+  if(p){detail.innerHTML=projectHTML(p);document.title=p.title+' | '+BASE;if(p.id==='journal-101')requestAnimationFrame(initJournal);}
   else{detail.innerHTML='<a class="back" href="#top">&larr; Home</a>'+pg[0]();document.title=pg[1]+' | '+BASE;if(pg[2])pg[2]();}
   if(!document.body.classList.contains('viewing'))homeY=window.scrollY;
   document.body.classList.add('viewing');window.scrollTo({top:0,behavior:'instant'});

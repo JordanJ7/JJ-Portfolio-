@@ -175,7 +175,60 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 
 @media(max-width:700px){.case.open{transform:rotateX(8deg) translateX(calc(var(--s)*.36)) rotateY(calc(-20deg + (var(--mx) - .5) * 16deg))}.case.open .lid{transform:translateZ(12px) rotateY(-112deg)}}
 
-.detail{background:var(--black);color:var(--ink);display:none;min-height:calc(100vh - 48px);padding:36px max(20px,5vw) 56px;position:relative;overflow:hidden}
+.detail{background:var(--black);color:var(--ink);display:none;min-height:calc(100vh - 48px);padding:36px max(20px,5vw) 56px;position:relative;overflow:hidden;overflow:clip}
+/* Journal-101 story: the app's intro tied to the scroll position, then a sticky tour of four screens.
+   overflow:clip (not hidden) on .detail keeps position:sticky working. */
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.jin{position:relative;height:300vh;margin:-36px calc(-1 * max(20px,5vw)) 44px;background:#470b25;color:#ffedd5}
+.jin-stage{position:sticky;top:48px;height:calc(100vh - 48px);height:calc(100svh - 48px);display:grid;place-items:center;overflow:hidden}
+.jin-back{position:absolute;left:max(20px,5vw);top:22px;margin:0;color:#ffedd5}
+.jin-lay{display:grid;grid-template-columns:auto minmax(0,30rem);gap:clamp(32px,6vw,88px);align-items:center;padding:0 24px}
+.jin-mark{width:clamp(108px,13vw,168px);height:auto;overflow:visible}
+.jin-rail{fill:none;stroke:#7a3552;stroke-width:7;stroke-linecap:round;stroke-dasharray:130;stroke-dashoffset:130}
+.jin-now,.jin-dest{transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.jin-now{fill:#ffedd5}.jin-dest{fill:#b5bedd}
+.jin-quote{margin:0;min-height:2.36em;font-size:clamp(28px,3.6vw,46px);line-height:1.18;font-weight:500;letter-spacing:-.015em}
+.jin-caret{display:inline-block;width:3px;height:.9em;margin-left:5px;vertical-align:-.08em;border-radius:2px;background:#b5bedd}
+.jin.done .jin-caret{animation:jblink 1.1s steps(1) infinite}
+@keyframes jblink{50%{opacity:0}}
+.jin-attr{margin:16px 0 0;font-size:15px;font-weight:600;color:#e7b9c7;opacity:0}
+.jin-hint{position:absolute;left:0;right:0;bottom:30px;margin:0;text-align:center;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:.75}
+.jin-hint::after{content:"";display:block;width:8px;height:8px;margin:10px auto 0;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);animation:morenudge 2.2s ease-in-out infinite}
+.jin-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,237,213,.1)}
+.jin-bar i{display:block;height:100%;background:#b5bedd;transform-origin:left;transform:scaleX(0)}
+.dhead{position:relative}
+.dhead .dbig{top:-10px}
+.jtour{position:relative;height:400vh;margin:56px 0 24px}
+.jt-stage{position:sticky;top:48px;height:calc(100vh - 48px);height:calc(100svh - 48px);display:grid;grid-template-columns:minmax(0,21rem) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;max-width:1240px;margin:0 auto}
+.jt-eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hi)}
+.jt-count{margin-left:8px;font-weight:600;letter-spacing:.02em;text-transform:none;opacity:.7;color:var(--ink)}
+.jt-steps{list-style:none;margin:16px 0 0;padding:0}
+.jt-steps li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:14px 0;border-top:1px solid var(--line);opacity:.42;cursor:pointer;transition:opacity .4s}
+.jt-steps li:hover{opacity:.7}
+.jt-steps li.on{opacity:1}
+.jt-steps .n{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--hi);padding-top:3px}
+.jt-steps b{font-size:clamp(19px,1.8vw,24px);letter-spacing:-.02em}
+.jt-steps p{margin:0;max-height:0;overflow:hidden;font-size:15px;line-height:1.5;opacity:.85;transition:max-height .5s ease,margin .5s ease}
+.jt-steps li.on p{max-height:8em;margin-top:6px}
+.jt-shots{position:relative;width:100%;aspect-ratio:16/10}
+.jt-shot{position:absolute;inset:0;opacity:0;transform:translateY(14px) scale(.975);transition:opacity .55s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.jt-shot.on{opacity:1;transform:none}
+.jt-shot img{display:block;width:100%;height:100%;object-fit:contain;border-radius:14px;filter:drop-shadow(0 26px 50px rgba(0,0,0,.45))}
+.detail .gh{position:relative;z-index:2;margin:24px 0 0;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.03em}
+@media(max-width:760px){
+  .jin-lay{grid-template-columns:1fr;justify-items:start;gap:28px;padding:0 max(20px,5vw)}
+  .jin-mark{width:96px}
+  .jtour{height:420vh}
+  .jt-stage{grid-template-columns:1fr;align-content:start;gap:12px;padding-top:14px}
+  .jt-steps{margin-top:8px}.jt-steps li{display:none;border-top:0;padding:4px 0}.jt-steps li.on{display:grid}
+  .jt-shots{aspect-ratio:auto;height:calc(100svh - 48px - 210px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .jin{height:auto}.jin-stage{position:relative;top:0;height:auto;min-height:70vh;padding:80px 0}
+  .jin-hint{display:none}
+  .jtour{height:auto}.jt-stage{position:relative;top:0;height:auto;min-height:80vh}
+  .jt-shot{transition:none;transform:none}.jt-steps p{transition:none}
+}
 .viewing .hero,.viewing main,.viewing footer{display:none}
 .viewing .detail{display:block}
 .detail .back{display:inline-block;font-weight:600;font-size:15px;text-decoration:none;opacity:.85;margin-bottom:28px}
