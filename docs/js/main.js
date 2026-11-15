@@ -7,10 +7,10 @@ var BYID={};P.forEach(function(p,i){p.i=i;BYID[p.id]=p;});
 
 /* drawn disc art for projects without a cover image */
 var ART={
-  journal:function(){
-    var o='<rect width="200" height="200" fill="#f5f5f5"/>',i;
-    for(i=1;i<15;i++)o+='<line x1="0" x2="200" y1="'+i*14+'" y2="'+i*14+'" style="stroke:var(--soft)"/>';
-    return o+'<line x1="52" x2="52" y1="0" y2="200" style="stroke:var(--pink)" stroke-opacity=".8"/><path d="M70 70q12-18 24 0t24 0t24 0M70 98q10-14 20 0t20 0t20 0t20 0" stroke="#0a0a0a" stroke-width="2.2" fill="none" stroke-linecap="round"/><rect x="150" width="14" height="40" style="fill:var(--pink)"/>';},
+  journal:function(){   /* the Journal-101 app icon (Crimson Violet): one line, two dots */
+    return '<rect width="200" height="200" fill="#470b25"/><g transform="translate(100 100) scale(.78) translate(-96 -100)">'+
+      '<path d="M60 36V140a24 24 0 0 0 24 24H148" fill="none" stroke="#7a3552" stroke-width="14" stroke-linecap="round"/>'+
+      '<circle cx="60" cy="68" r="16" fill="#ffedd5"/><circle cx="148" cy="164" r="20" fill="#b5bedd"/></g>';},
   edits:function(){
     var o='<rect width="200" height="200" fill="#0a0a0a"/>',k;
     for(k=0;k<18;k++)o+='<rect x="'+(k*12-6)+'" y="10" width="7" height="9" rx="1.5" style="fill:var(--pink)" fill-opacity=".9"/><rect x="'+(k*12-6)+'" y="181" width="7" height="9" rx="1.5" style="fill:var(--pink)" fill-opacity=".9"/>';
