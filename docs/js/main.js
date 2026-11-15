@@ -475,7 +475,14 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
     '<p class="skill"><b>Design &amp; 3D:</b> Blender, Unreal Engine 5, OpenToonz, Clip Studio Paint, Adobe Creative Cloud</p>'+
     '<p class="skill"><b>Development &amp; AI:</b> Python, HTML/CSS, Git/GitHub, Claude Code, Google AI Studio, Google Gemini</p>'+
     '<p class="skill"><b>Additional:</b> Trello, tennis racket stringing, DJing, cable management connoisseur</p>'+
+    /* names, roles and what each can speak to; their phone numbers and emails stay off the public page */
+    '<h2>References</h2><div class="refs">'+
+    ref('Nick Silka','Associate Director of Information Technology Services, Penn State Behrend','Former supervisor','Teamwork, technical skills, work ethic')+
+    ref('Scott Smith','Systems Administrator, Information Technology Services, Penn State Behrend','Former coworker in Behrend IT Services','Teamwork, technical skills, work ethic, passions outside of work')+
+    ref('Dr. Elisa Beshero-Bondar','Program Chair and Professor of Digital Humanities, Penn State Behrend','Former professor and program head','Passion, reliability, work ethic')+
+    '</div><p class="refnote">Contact details for each reference are available on request: <a href="mailto:saojmj123456@gmail.com?subject=Reference%20request">email me</a>.</p>'+
     '</div></div>';}
+  function ref(n,role,rel,speak){return '<div class="ref"><b>'+n+'</b><span class="role">'+role+'</span><span>'+rel+'</span><span class="sp">Can speak to: '+speak+'</span></div>';}
   function pageBlog(){
     var posts=[
       ['Week of May 13th','This starting week I got introduced to the staff across each job site, including Erie Bayfront Convention Center, Erie Insurance Arena, UPMC Ball Park, Warner Theater, and the Sheraton Hotel. I collaborated with the website manager, social media team, and production manager. We started a big project setting up around 50 cameras at the Sheraton. In downtime, I revived this website, combining school projects and cleaning up pages.'],

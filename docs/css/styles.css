@@ -273,6 +273,14 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 .job .row b{font-size:16px}
 .job .row span{font-size:14px;opacity:.7}
 .job .role{font-size:15px;font-style:italic;margin-top:1px}
+.refs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:12px}
+.ref{display:flex;flex-direction:column;gap:3px;font-size:14px;line-height:1.4}
+.ref b{font-size:16px}
+.ref .role{font-style:italic}
+.ref .sp{opacity:.75}
+.refnote{margin:14px 0 0;font-size:14px;opacity:.8}
+@media(max-width:760px){.refs{grid-template-columns:1fr}}
+@media print{.refs{grid-template-columns:repeat(3,1fr)}}
 .skill{margin:6px 0;font-size:15px;line-height:1.45}
 .plats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
 @media(min-width:1100px){.plats{grid-template-columns:repeat(5,minmax(0,1fr))}}
