@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115a';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115b';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
