@@ -195,7 +195,11 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 .detail .gal figure{border-radius:0}
 .detail .gal figure img,.detail .gal figure video{display:block;width:100%;border-radius:18px}
 .detail .gal figcaption{margin:8px 4px 6px;font-size:14px;line-height:1.4;opacity:.75}
-@media(min-width:761px){.detail .gal.capt{column-count:2}}
+/* captioned galleries: two to a row, every screen fitted into the same size frame (tap for full size) */
+.detail .gal.capt{column-count:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px;align-items:start;max-width:1100px}
+.detail .gal.capt>figure{margin:0}
+.detail .gal.capt img{height:clamp(240px,30vw,380px);width:100%;object-fit:contain;padding:14px;background:var(--panel);border:1px solid var(--line)}
+@media(max-width:760px){.detail .gal.capt{grid-template-columns:1fr}.detail .gal.capt img{height:auto;max-height:60vh}}
 .detail .meta{margin-top:10px;font-size:14px;opacity:.75}
 .detail .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .detail .acts a{padding:9px 18px;border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;background:var(--pink);color:var(--on)}
