@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,PSN,COURSES} from './data.js?v=20261104a';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115a';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -36,55 +36,21 @@ function svg(p){
 }
 function when(p){return p.date;}
 
-/* ---------- hero ---------- */
-var chips=$('chips'),disc=$('disc'),box=$('case'),stage=$('stage'),hero=$('top'),cur=0;
+/* ---------- hero: three notable projects on the CD, picked from a numbered tracklist ---------- */
+var FEAT=['journal-101','matter-monsters','flx-edits'].map(function(id){return BYID[id];});
+var tl=$('tl'),disc=$('disc'),box=$('case'),stage=$('stage'),hero=$('top'),cur=0;
+function num(i){return (i<9?'0':'')+(i+1);}
+tl.innerHTML=FEAT.map(function(p,i){return '<li><button type="button" aria-pressed="false" aria-label="'+p.title+', '+p.date+'"><span>'+num(i)+'</span>'+p.title+'</button></li>';}).join('');
+Array.prototype.forEach.call(tl.querySelectorAll('button'),function(b,i){b.addEventListener('click',function(){setOpen(true);select(i);});});
 
-P.forEach(function(p,i){
-  var b=document.createElement('button');
-  b.className='chip';b.type='button';b.title=p.title+', '+p.date;
-  b.setAttribute('aria-label',p.title+', '+p.date);b.setAttribute('aria-pressed','false');
-  b.innerHTML='<span class="mini">'+svg(p)+'</span>';
-  b.addEventListener('click',function(){select(i);});
-  chips.appendChild(b);
-});
-
-/* My Works: every project, four to a page (2x2), with the pages either side peeking in, blurred */
-var tiles='',NPG=Math.ceil(P.length/4);
-for(var pg_=0;pg_<NPG;pg_++){
-  tiles+='<div class="wpage'+(pg_?'':' act')+'" role="group" aria-roledescription="slide" aria-label="Page '+(pg_+1)+' of '+NPG+'"'+(pg_?' aria-hidden="true" inert':'')+'>';
-  P.slice(pg_*4,pg_*4+4).forEach(function(p){
-    tiles+='<article class="tile" id="p-'+p.id+'">'+
-      '<div class="copy"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h3>'+p.title+'</h3><p class="b">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
-      '<a class="more" href="#/'+p.id+'">View project</a></div>'+
-      '<div class="big">'+svg(p)+'</div></article>';
-  });
-  tiles+='</div>';
-}
-$('tiles').innerHTML=tiles;
+/* My Works: the newest project leads with its whole disc; the rest are a tracklist */
 (function(){
-  var track=$('tiles'),pages=track.children,wp=$('wpager'),prev=$('wprev'),next=$('wnext'),at=0,dots='';
-  for(var i=0;i<NPG;i++)dots+='<button type="button" class="wdot" aria-label="Page '+(i+1)+'"></button>';
-  wp.innerHTML=dots;
-  function go(i){
-    at=Math.max(0,Math.min(NPG-1,i));
-    track.style.transform='translateX(calc('+(-at)+' * (var(--pw) + var(--wg))))';   /* --pw is one page's width, set in CSS */
-    Array.prototype.forEach.call(pages,function(p,k){var on=k===at;p.classList.toggle('act',on);p.toggleAttribute('inert',!on);p.setAttribute('aria-hidden',on?'false':'true');});
-    Array.prototype.forEach.call(wp.children,function(d,k){d.classList.toggle('act',k===at);d.setAttribute('aria-current',k===at?'true':'false');});
-    prev.classList.toggle('gone',at===0);next.classList.toggle('gone',at===NPG-1);
-  }
-  prev.addEventListener('click',function(){go(at-1);});
-  next.addEventListener('click',function(){go(at+1);});
-  Array.prototype.forEach.call(wp.children,function(d,k){d.addEventListener('click',function(){go(k);});});
-  /* a peeking page can be tapped to bring it in */
-  Array.prototype.forEach.call(pages,function(p,k){p.addEventListener('click',function(e){if(k!==at){e.preventDefault();go(k);}},true);});
-  var x0=null,y0=0;
-  track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
-  track.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)go(at+(dx<0?1:-1));},{passive:true});
-  if(NPG<2)$('wcar').classList.add('single');
-  /* the carousel runs to the screen edges; the real visible width (without a scrollbar) keeps it exact */
-  function vw(){var c=$('wcar'),w=$('work');w.style.setProperty('--vw',document.documentElement.clientWidth+'px');w.style.setProperty('--cw',c.clientWidth+'px');}
-  vw();addEventListener('resize',vw);
-  go(0);
+  var f=P[0],h='<article class="feat"><div class="fc"><p class="fd">'+f.date+' &middot; '+f.kind+'</p><h3>'+f.title+'</h3><p class="fb">'+f.blurb+'</p><p class="ft">'+f.tools+'</p><a class="more" href="#/'+f.id+'">View project</a></div>'+
+    '<a class="fdisc" href="#/'+f.id+'" aria-label="'+f.title+'">'+svg(f)+'</a></article><ol class="tracks">';
+  P.slice(1).forEach(function(p,i){
+    h+='<li><a href="#/'+p.id+'"><span class="no">'+num(i+1)+'</span><span class="td">'+svg(p)+'</span><span class="tt"><b>'+p.title+'</b><small>'+p.kind+'</small></span><span class="tdt">'+p.date+'</span><span class="ar" aria-hidden="true">&rarr;</span></a></li>';
+  });
+  $('works').innerHTML=h+'</ol>';
 })();
 
 var wm='<a href="#work"><span>All work</span></a><hr>';
@@ -92,11 +58,11 @@ P.forEach(function(p){wm+='<a href="#/'+p.id+'"><span>'+p.title+'</span><small>'
 $('workMenu').innerHTML=wm;
 
 function select(i){
-  cur=(i+P.length)%P.length;var p=P[cur];
-  Array.prototype.forEach.call(chips.children,function(c,k){c.setAttribute('aria-pressed',k===cur?'true':'false');});
+  cur=(i+FEAT.length)%FEAT.length;var p=FEAT[cur];
+  Array.prototype.forEach.call(tl.querySelectorAll('button'),function(c,k){c.setAttribute('aria-pressed',k===cur?'true':'false');});
   disc.classList.remove('swap');void disc.offsetWidth;disc.classList.add('swap');
-  setTimeout(function(){$('discArt').innerHTML=svg(P[cur]);},120);
-  $('spine').textContent=p.title;
+  setTimeout(function(){$('discArt').innerHTML=svg(FEAT[cur]);},120);
+  $('spine').textContent=num(cur)+'  '+p.title;
   var info=$('info');info.classList.remove('fade');void info.offsetWidth;info.classList.add('fade');
   $('date').textContent=p.date;$('kind').textContent=p.kind;$('title').textContent=p.title;$('blurb').textContent=p.blurb;
   $('go').setAttribute('href','#/'+p.id);
@@ -401,8 +367,8 @@ var lb=$('lb'),lbi=lb.querySelector('img');
 function openLB(img){lbi.src=img.src;lbi.alt=img.alt;lb.classList.add('on');}
 function closeLB(){lb.classList.remove('on');}
 lb.addEventListener('click',closeLB);
-$('detail').addEventListener('click',function(e){var t=e.target;if(t.tagName==='IMG'&&t.closest('.gal'))openLB(t);});
-$('detail').addEventListener('keydown',function(e){var t=e.target;if((e.key==='Enter'||e.key===' ')&&t.tagName==='IMG'&&t.closest('.gal')){e.preventDefault();openLB(t);}});
+$('detail').addEventListener('click',function(e){var t=e.target;if(t.tagName==='IMG'&&t.closest('.gal,.zoom'))openLB(t);});
+$('detail').addEventListener('keydown',function(e){var t=e.target;if((e.key==='Enter'||e.key===' ')&&t.tagName==='IMG'&&t.closest('.gal,.zoom')){e.preventDefault();openLB(t);}});
 
 window.addEventListener('keydown',function(e){
   if(e.key==='Escape'){closeLB();closeDD(null);return;}
@@ -424,32 +390,58 @@ var vio='IntersectionObserver' in window?new IntersectionObserver(function(en){
   // static pages
   var CB='https://www.coursera.org/account/accomplishments/';
   function pageCerts(){
-    var o='<div class="pg"><h1>Certifications.</h1><p class="sub">Grouped by who issued them. Each Coursera card opens the official credential.</p>'+
-      '<h2>Google AI &middot; Coursera</h2><div class="certs">'+
-      '<div class="cert big"><b>Google AI Professional Certificate</b><span class="d">Google, issued Jun 2026</span><a href="'+CB+'specialization/FCZ277UI53YA" target="_blank" rel="noopener">View credential &#8599;</a></div>';
-    CERTS.forEach(function(c){o+='<div class="cert"><b>'+c[0]+'</b><span class="d">Google, issued '+c[1]+'</span><a href="'+CB+c[2]+'" target="_blank" rel="noopener">View credential &#8599;</a></div>';});
-    o+='</div><h2>Sony Pictures Animation &middot; Yellowbrick</h2><div class="certs">';
-    o+='<div class="cert"><b>This Is Animation</b><span class="d">Sony Pictures Animation on Yellowbrick, issued Jun 23, 2025</span><a href="#/this-is-animation">View certificate</a></div>';
-    o+='</div><p class="sub" style="margin-top:22px">More on <a href="https://www.linkedin.com/in/jordan-james07" target="_blank" rel="noopener">LinkedIn</a>.</p></div>';
+    /* each Coursera record has its certificate image saved as MEDIA['cert_'+record id] */
+    function pic(k){var m=MEDIA[k];return m?'<img class="cimg" src="'+m.src+'" alt="'+m.alt+'" width="'+m.w+'" height="'+m.h+'" tabindex="0" decoding="async" loading="lazy">':'';}
+    function card(title,by,link,k,ext){return '<div class="cert">'+pic(k)+'<b>'+title+'</b><span class="d">'+by+'</span><a href="'+link+'"'+(ext?' target="_blank" rel="noopener">View credential &#8599;':'>View the project')+'</a></div>';}
+    function rec(c){return 'cert_'+c[2].split('/').pop().toLowerCase();}
+    var pro=CERTS.slice(0,7),ess=CERTS.slice(7);
+    var o='<div class="pg zoom"><h1>Certifications.</h1><p class="sub">'+(CERTS.length+2)+' certificates, shown as issued. Tap one to see it full size, or open the official record.</p>'+
+      '<div class="certf">'+pic('cert_fcz277ui53ya')+'<div class="cf"><p class="date">Google &middot; Coursera &middot; Jun 30, 2026</p><h2>Google AI Professional Certificate</h2>'+
+      '<p>Seven courses on applying AI at work: brainstorming, research, writing, content, data analysis and building an app, with a portfolio of 20+ pieces made along the way.</p>'+
+      '<a href="'+CB+'professional-cert/FCZ277UI53YA" target="_blank" rel="noopener">View credential &#8599;</a></div></div>'+
+      '<h2>The seven courses</h2><div class="certs">';
+    pro.forEach(function(c){o+=card(c[0],'Google, issued '+c[1],CB+c[2],rec(c),1);});
+    o+='</div><h2>Google AI Essentials</h2><div class="certs">';
+    ess.forEach(function(c){o+=card(c[0],'Google, issued '+c[1],CB+c[2],rec(c),1);});
+    o+='</div><h2>Sony Pictures Animation &middot; Yellowbrick</h2><div class="certs">'+card('This Is Animation','Sony Pictures Animation on Yellowbrick, issued Jun 23, 2025','#/this-is-animation','sony_cert',0)+'</div>'+
+      '<p class="sub" style="margin-top:22px">More on <a href="https://www.linkedin.com/in/jordan-james07" target="_blank" rel="noopener">LinkedIn</a>.</p></div>';
     return o;}
+  var DEPT={game:'Game Development',digit:'Digital Media',inart:'Integrative Arts',art:'Art',comm:'Communications'};
+  function semId(sm){return 'sem-'+sm.replace(/\s+/g,'-').toLowerCase();}
+  function deptOf(c){return c.code.split(' ')[0].toLowerCase();}
   function pageCourses(){
-    var sems=[];COURSES.forEach(function(c){if(sems.indexOf(c.sem)<0)sems.push(c.sem);});
-    var o='<div class="pg"><h1>Coursework.</h1><p class="sub">The '+COURSES.length+' courses I took at Penn State Behrend for my BA in Digital Media, Arts &amp; Technology, with a minor in Game Development. Open a course for the full description.</p>';
-    o+='<div class="semnav" role="group" aria-label="Jump to a semester">'+sems.slice().reverse().map(function(sm){return '<button type="button" data-sem="sem-'+sm.replace(/\s+/g,'-').toLowerCase()+'">'+sm+'</button>';}).join('')+'</div>';
+    var sems=[],cnt={};
+    COURSES.forEach(function(c){if(sems.indexOf(c.sem)<0)sems.push(c.sem);cnt[deptOf(c)]=(cnt[deptOf(c)]||0)+1;});
+    var linked=COURSES.filter(function(c){return c.link;});
+    var o='<div class="pg wide crs"><h1>Coursework.</h1><p class="sub">The courses I took at Penn State Behrend for my BA in Digital Media, Arts &amp; Technology, with a minor in Game Development. Open a course for the full description.</p>'+
+      '<div class="cstats"><div><b>'+COURSES.length+'</b><span>courses</span></div><div><b>'+sems.length+'</b><span>semesters</span></div><div><b>'+Object.keys(cnt).length+'</b><span>departments</span></div><div><b>'+linked.length+'</b><span>with work to see</span></div></div>'+
+      '<div class="cfilter" role="group" aria-label="Show courses from one department"><button type="button" data-d="all" aria-pressed="true">All <span>'+COURSES.length+'</span></button>'+
+      Object.keys(DEPT).filter(function(d){return cnt[d];}).map(function(d){return '<button type="button" class="d-'+d+'" data-d="'+d+'" aria-pressed="false"><i></i>'+DEPT[d]+' <span>'+cnt[d]+'</span></button>';}).join('')+'</div>'+
+      '<h2>Work from these classes</h2><div class="cwork">'+linked.map(function(c){
+        var ext=c.link.h.charAt(0)!=='#';
+        return '<a class="d-'+deptOf(c)+'" href="'+c.link.h+'"'+(ext?' target="_blank" rel="noopener"':'')+'><span class="code">'+c.code+' &middot; '+c.sem+'</span><b>'+c.title+'</b><span class="go2">'+c.link.l+(ext?' &#8599;':' &rarr;')+'</span></a>';}).join('')+'</div>'+
+      '<div class="ctime">';
     sems.slice().reverse().forEach(function(sm){
-      o+='<h2 id="sem-'+sm.replace(/\s+/g,'-').toLowerCase()+'">'+sm+'</h2><div class="courses">';
-      COURSES.filter(function(c){return c.sem===sm;}).forEach(function(c){
-        var dept=c.code.split(' ')[0].toLowerCase();
-        o+='<details class="course d-'+dept+'"><summary><span class="code">'+c.code+'</span><b>'+c.title+'</b><span class="short">'+c.short+'</span><span class="more">Read the full description</span></summary>'+
+      var list=COURSES.filter(function(c){return c.sem===sm;});
+      o+='<section class="csem" id="'+semId(sm)+'"><h2>'+sm+'<small>'+list.length+' course'+(list.length>1?'s':'')+'</small></h2><div class="courses">';
+      list.forEach(function(c){
+        o+='<details class="course d-'+deptOf(c)+'" data-d="'+deptOf(c)+'"><summary><span class="code">'+c.code+' <em>'+DEPT[deptOf(c)]+'</em></span><b>'+c.title+'</b><span class="short">'+c.short+'</span><span class="more">Read the full description</span></summary>'+
           '<p class="full">'+c.full+'</p>'+(c.link?'<a class="clink" href="'+c.link.h+'"'+(c.link.h.charAt(0)==='#'?'':' target="_blank" rel="noopener"')+'>'+c.link.l+(c.link.h.charAt(0)==='#'?'':' &#8599;')+'</a>':'')+'</details>';
       });
-      o+='</div>';
+      o+='</div></section>';
     });
-    o+='<p class="sub" style="margin-top:22px">See the work from these classes on the CD above, and my <a href="#/certifications">certifications</a>.</p></div>';
+    o+='</div><p class="sub" style="margin-top:22px">See the projects in <a href="#work">My Works</a>, and my <a href="#/certifications">certifications</a>.</p></div>';
     return o;}
-  function initCourses(){   /* the jump buttons scroll, so the #/courses address stays put */
-    var n=document.querySelector('.semnav');if(!n)return;
-    n.addEventListener('click',function(e){var b=e.target.closest('button[data-sem]');if(!b)return;var h=document.getElementById(b.dataset.sem);if(h)h.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+  function initCourses(){   /* department filter: hides other departments' courses and any semester left empty */
+    var f=document.querySelector('.cfilter');if(!f)return;
+    f.addEventListener('click',function(e){
+      var b=e.target.closest('button[data-d]');if(!b)return;var d=b.dataset.d;
+      f.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      document.querySelectorAll('.csem').forEach(function(sec){
+        var any=false;sec.querySelectorAll('.course').forEach(function(c){var on=d==='all'||c.dataset.d===d;c.hidden=!on;if(on)any=true;});
+        sec.hidden=!any;
+      });
+    });
   }
   function job(org,dates,role,bul){return '<div class="job"><div class="row"><b>'+org+'</b><span>'+dates+'</span></div>'+(role?'<div class="role">'+role+'</div>':'')+'<ul>'+bul.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';}
   function pageResume(){
@@ -590,16 +582,24 @@ function fmtHrs(min){return fmtN(Math.round(min/60))+' hrs';}
 
 /* ---- data for the charts ---- */
 var HOURS=STEAM.map(function(g){return {name:g[0],v:g[1],cover:coverFor({t:'game',title:g[0],where:'Steam'})||'-'};}).concat([{name:'Valorant',v:66240,cover:'-'}]).sort(function(a,b){return b.v-a.v;});
-var RECENT={ /* newest first, from Queue's recent order */
-  movie:['Pok\u00e9mon: Giratina and the Sky Warrior','Obsession','Spider-Man: Brand New Day','Mallrats','The Odyssey','Supergirl','The Moment','High Fidelity','Soul','Scream'],
-  tv:['Dragon Ball DAIMA','INVINCIBLE','Lanterns','The Office','IT: Welcome to Derry','Gen V']
-};
+/* newest watched and newest reviewed, from Queue (WATCHED and REVIEWS in data.js; refresh with tools/fetch-queue.mjs) */
 function findW(t,title){for(var i=0;i<LOG.length;i++){if(LOG[i].t===t&&LOG[i].title===title)return LOG[i];}return {t:t,title:title,rate:'none',where:''};}
-function strip(t){
-  return '<div class="strip">'+RECENT[t].map(function(ti,i){
-    var e=findW(t,ti),u=coverFor(e);
-    return '<div class="pc">'+(i===0?'<span class="tag">Newest</span>':'')+'<div class="pt" aria-hidden="true">'+ti.charAt(0)+(u?'<img src="'+u+'" alt="" loading="lazy" referrerpolicy="no-referrer">':'')+'</div><div class="pn">'+ti+'</div>'+(e.rate&&e.rate!=='none'?'<span class="rk '+e.rate+'">'+RL[e.rate]+'</span>':'')+'</div>';
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtDay(d){var p=d.split('-');return MON[+p[1]-1]+' '+(+p[2])+', '+p[0];}
+function poster(t,title){var u=coverFor({t:t,title:title});return '<div class="pt" aria-hidden="true">'+title.charAt(0)+(u?'<img src="'+u+'" alt="" loading="lazy">':'')+'</div>';}
+/* rows: [title, movie|tv, rating, date] */
+function strip(rows,tagFirst,showKind){
+  return '<div class="strip">'+rows.map(function(r,i){
+    return '<div class="pc">'+(i===0&&tagFirst?'<span class="tag">'+tagFirst+'</span>':'')+poster(r[1],r[0])+'<div class="pname">'+r[0]+'</div>'+
+      '<div class="pmeta">'+(r[2]&&r[2]!=='none'?'<span class="rk '+r[2]+'">'+RL[r[2]]+'</span>':'')+(showKind?'<span class="pk">'+(r[1]==='tv'?'Show':'Movie')+'</span>':'')+'</div></div>';
   }).join('')+'</div>';
+}
+function reviewCard(kind,more){
+  var list=REVIEWS.filter(function(r){return r[1]===kind;}),r=list[0],lbl=kind==='tv'?'show':'movie';
+  if(!r)return '';
+  return '<div class="hcard rev"><h3>Newest '+lbl+' reviewed</h3><div class="rv">'+poster(kind,r[0])+'<div class="rvt"><div class="big">'+r[0]+'</div>'+
+    '<p class="rvm"><span class="rk '+r[2]+'">'+RL[r[2]]+'</span>Reviewed '+fmtDay(r[3])+'</p><blockquote>'+r[4].replace(/</g,'&lt;')+'</blockquote></div></div>'+
+    '<p class="rvh">More '+lbl+' reviews</p>'+strip(list.slice(1,9))+(more?'<a class="more" href="#/culture/'+(kind==='tv'?'tv':'movies')+'">See all '+lbl+'s &rarr;</a>':'')+'</div>';
 }
 function countBy(t){var c={love:0,like:0,meh:0,dislike:0,none:0};LOG.forEach(function(e){if(e.t===t&&e.rate)c[e.rate]++;});return c;}
 function rateBars(t){var c=countBy(t);return bars(['love','like','meh','dislike','none'].map(function(k){return {name:RL[k],v:c[k]};}),function(v){return fmtN(v);});}
@@ -622,12 +622,12 @@ function profiles(){
 /* ---- Culture Log main page: highlights only ---- */
 function pageCulture(){
   var g=HOURS[0],a=topArtists(5),s=topSongs(1)[0],nm=LOG.filter(function(e){return e.t==='movie';}).length,nt=LOG.filter(function(e){return e.t==='tv';}).length,cm=countBy('movie');
-  return '<div class="pg"><h1>Culture log.</h1><p class="sub">The highlights from the games I play, the movies and shows I watch, and the music I listen to. Each section has the full list.</p>'+subnav('culture-log')+
+  return '<div class="pg wide"><h1>Culture log.</h1><p class="sub">The highlights from the games I play, the movies and shows I watch, and the music I listen to. Each section has the full list.</p>'+subnav('culture-log')+
     '<div class="hl">'+
     '<div class="hcard"><h3>Most played game</h3><div class="big">'+g.name+'<small>'+fmtHrs(g.v)+' played</small></div>'+bars(HOURS.slice(0,5).map(function(r){return {name:r.name,v:r.v,cover:r.cover};}),fmtHrs)+'<a class="more" href="#/culture/games">See all games &rarr;</a></div>'+
     '<div class="hcard"><h3>Top artist</h3><div class="big">'+a[0].name+'<small>'+fmtN(a[0].v)+' minutes, 2018 to 2025</small></div>'+bars(a,function(v){return fmtN(v)+' min';})+'<a class="more" href="#/culture/music">See all music &rarr;</a></div>'+
-    '<div class="hcard"><h3>Newest movie watched</h3><div class="big">'+RECENT.movie[0]+'<small>'+fmtN(nm)+' movies watched, '+fmtN(cm.love)+' loved</small></div>'+strip('movie')+'<a class="more" href="#/culture/movies">See all movies &rarr;</a></div>'+
-    '<div class="hcard"><h3>Newest show watched</h3><div class="big">'+RECENT.tv[0]+'<small>'+fmtN(nt)+' shows watched</small></div>'+strip('tv')+'<a class="more" href="#/culture/tv">See all shows &rarr;</a></div>'+
+    reviewCard('movie',1)+reviewCard('tv',1)+
+    '<div class="hcard wide"><h3>Recently watched</h3><div class="big">'+WATCHED[0][0]+'<small>Watched '+fmtDay(WATCHED[0][3])+' &middot; '+fmtN(nm)+' movies and '+fmtN(nt)+' shows so far</small></div>'+strip(WATCHED.slice(0,14),'Newest',1)+'<a class="more" href="'+QLINK+'" target="_blank" rel="noopener">See it all on Queue &#8599;</a></div>'+
     '<div class="hcard wide"><h3>Most played song</h3><div class="big">'+s.name+'<small>'+fmtN(s.v)+' plays across Replay</small></div>'+bars(topSongs(5),function(v){return fmtN(v)+' plays';})+'<a class="more" href="#/culture/music">See all music &rarr;</a></div>'+
     '</div>'+profiles()+'</div>';
 }
@@ -639,7 +639,7 @@ function listMarkup(){
     '<div class="logbar"><input id="logQ" type="search" placeholder="Search titles" aria-label="Search titles"></div><div class="logs" id="logs" aria-live="polite"></div><div class="logbar more" id="logMore"></div>';
 }
 function pageCat(kind){
-  var out='<div class="pg">',n;
+  var out='<div class="pg wide">',n;
   if(kind==='game'){
     var st=LOG.filter(function(e){return e.where==='Steam';}).length,ps=LOG.filter(function(e){return /^PlayStation/.test(e.where);}).length,all=LOG.filter(function(e){return e.t==='game';}).length;
     out+='<h1>Games.</h1><p class="sub">'+all+' games logged: '+st+' on Steam, '+ps+' on PlayStation, plus Valorant and League of Legends.</p>'+subnav('culture/games')+
@@ -647,7 +647,8 @@ function pageCat(kind){
   }else if(kind==='movie'||kind==='tv'){
     var lbl=kind==='movie'?'movie':'show',c=LOG.filter(function(e){return e.t===kind;}).length;
     out+='<h1>'+(kind==='movie'?'Movies.':'TV shows.')+'</h1><p class="sub">'+fmtN(c)+' '+lbl+'s watched, each rated love, like, meh, or dislike.</p>'+subnav(kind==='movie'?'culture/movies':'culture/tv')+
-      '<div class="hl"><div class="hcard"><h3>Newest '+lbl+' watched</h3><div class="big">'+RECENT[kind][0]+'</div>'+strip(kind)+'</div><div class="hcard"><h3>How I rated them</h3>'+rateBars(kind)+'</div></div>'+listMarkup();
+      '<div class="hl">'+reviewCard(kind,0)+'<div class="hcard"><h3>How I rated them</h3>'+rateBars(kind)+'</div>'+
+        '<div class="hcard wide"><h3>Recently watched</h3>'+strip(WATCHED.filter(function(r){return r[1]===kind;}).slice(0,14),'Newest')+'</div></div>'+listMarkup();
   }else{
     out+='<h1>Music.</h1><p class="sub">From my Apple Music Replay, 2018 to 2026. Artists are ranked by minutes listened and songs by plays.</p>'+subnav('culture/music')+
       '<div class="hl"><div class="hcard"><h3>Most listened artists</h3><div class="big">'+topArtists(1)[0].name+'<small>'+fmtN(topArtists(1)[0].v)+' minutes, 2018 to 2025</small></div>'+bars(topArtists(10),function(v){return fmtN(v)+' min';})+'</div>'+
@@ -696,13 +697,14 @@ function projectHTML(p){
   var gal='',acts='',pv=P[(p.i+P.length-1)%P.length],nx=P[(p.i+1)%P.length];
   if(p.gallery.length){
     p.gallery.forEach(function(k){var m=MEDIA[k];
-      gal+=m.t==='video'?'<video src="'+m.src+'" poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="metadata" aria-label="'+m.alt+'"></video>':'<img src="'+m.src+'" alt="'+m.alt+'" width="'+m.w+'" height="'+m.h+'" tabindex="0" decoding="async" loading="lazy">';});
+      gal+=m.t==='video'?'<video src="'+m.src+'" poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="metadata" aria-label="'+m.alt+'"></video>':'<img src="'+m.src+'" alt="'+m.alt+'" width="'+m.w+'" height="'+m.h+'" tabindex="0" decoding="async" loading="lazy">';
+      if(m.cap)gal=gal.replace(/(<(?:img|video)[^>]*>(?:<\/video>)?)$/,'<figure>$1<figcaption>'+m.cap+'</figcaption></figure>');});
   }else gal='<div class="frame">Add image</div><div class="frame">Add image</div><div class="frame">Add image</div>';
   (p.links||[]).forEach(function(x){acts+='<a href="'+x.h+'"'+(x.internal?'':' target="_blank" rel="noopener"')+'>'+x.l+(x.internal?'':' &#8599;')+'</a>';});
   return '<a class="back" href="#work">&larr; All projects</a><div class="dbig">'+svg(p)+'</div>'+
-    '<div class="dc"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h1>'+p.title+'</h1><p class="lede">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
+    '<div class="dc"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h1>'+p.title.replace(/-/g,'\u2011')+'</h1><p class="lede">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
     (p.credit?'<div class="meta">'+p.credit+'</div>':'')+(acts?'<div class="acts">'+acts+'</div>':'')+'</div>'+
-    '<div class="gal'+(p.gallery.length===1?' one':'')+'">'+gal+'</div>'+
+    '<div class="gal'+(p.gallery.length===1?' one':'')+(p.gallery.some(function(k){return MEDIA[k].cap;})?' capt':'')+'">'+gal+'</div>'+
     '<div class="pn"><a href="#/'+pv.id+'">&larr; '+pv.title+'</a><a href="#/'+nx.id+'">'+nx.title+' &rarr;</a></div>';
 }
 function route(){

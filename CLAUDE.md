@@ -5,8 +5,8 @@ Project: Jordan James's personal portfolio. Static site, no build step, vanilla 
 ## Rules for working here
 - Keep it dependency-free. No frameworks, bundlers, or npm packages for the site itself.
 - Content lives in `site/js/data.js`. Behavior lives in `site/js/main.js`. Styles live in `site/css/styles.css`.
-- Palette is black and pink. Use the CSS variables (`--black`, `--panel`, `--line`, `--pink`, `--soft`). Do not reintroduce blue, yellow, or other accent colors.
-- Projects are listed newest first, each with a `date`. Keep that order. The hero, tiles, Work menu and previous/next links all derive from the order of `P`.
+- Colours come from palette variables (`--black`, `--panel`, `--line`, `--pink`, `--soft`, `--ink`, `--on`, `--hi`, `--bg2`, `--panel2`, `--line2`). Espresso is the default; the nav palette menu switches `html[data-theme]`. Use the variables, not hex values. The Coursework department colours are the one deliberate exception.
+- Projects are listed newest first, each with a `date`. Keep that order. My Works (featured newest plus a tracklist), the Work menu and previous/next links derive from the order of `P`. The hero CD shows only the notable projects in `FEAT` (`js/main.js`): Journal-101, Matter Monsters, FLX Edits.
 - Media must be optimized (`tools/optimize.sh`) and registered in `MEDIA` with `w` and `h` (and `poster` for video) so layout does not shift.
 - Do not use remote images or hotlink third-party assets. Fonts come from Google Fonts with a system fallback stack.
 - Accessibility matters: keep the CD case keyboard-operable (Enter/Space), keep `aria-label`s, keep the lightbox keyboard accessible.
@@ -17,13 +17,12 @@ Project: Jordan James's personal portfolio. Static site, no build step, vanilla 
 - Do not add personal details beyond what is already on the site (no addresses, finances, health, or family details).
 - FLX Edits uses studio film footage. Keep the clips short, and keep the credit line that says so. Prefer linking to Instagram over embedding more footage.
 - The Music section (`MUSIC` in `js/data.js`) is a snapshot of Apple Music Replay read on Oct 21, 2026: top 20 artists, 40 songs and 15 albums per year for 2018 to 2025 (Replay holds up to ~100 songs per year), and 2026 by month through September. The All view adds the yearly lists together at runtime. Refresh it each year when the new Replay appears.
-- `WATCH` in `js/data.js` holds Jordan's Queue watched list (790 titles, snapshot Oct 2026) by rating: love, like, meh, dislike, none. A `~` prefix marks a TV show. Refresh it from Queue when asked.
+- `WATCH`, `WATCHED` and `REVIEWS` in `js/data.js` come from Jordan's public Queue profile (790 titles, snapshot Nov 15, 2026): `WATCH` by rating (love, like, meh, dislike, none; `~` prefix = TV), `WATCHED` the newest 40 with dates, `REVIEWS` every written review. Refresh all three, plus posters, with `node tools/fetch-queue.mjs` (no key needed; posters are downloaded and self-hosted). The Culture Log shows review text only for the newest movie and show reviewed.
 - `PSN` in `js/data.js` is Jordan's PlayStation list (146 games with trophies, from PSNProfiles, Oct 2026). Valorant and League stats (tracker.gg, Oct 2026) are typed into the `LOG` entries in `js/main.js`. psnprofiles.com and tracker.gg block automated fetching, so refresh them in a real browser.
 - The Culture Log Steam data is a snapshot from Oct 13, 2026 (hours, last played, achievements). It was read from a screen recording and may contain small mistakes. Refresh it by editing `STEAM`.
 
 ## Open items (waiting on Jordan)
 - This Is Animation: storyboard and Sony certificate images (the old site's copies are gone).
-- Journal-101: screenshots of the app.
 - Confirm the public email, the "starting the AI Engineering master's in January" line in About, and the project dates for Generative Art and Solar System (set to Fall 2024).
 
 ## Useful commands
@@ -48,7 +47,7 @@ python3 tests/audit.py http://localhost:8000/   # checks
 
 ## Culture Log
 - Covers are self-hosted via `tools/fetch-covers.mjs` (`site/assets/covers/` and `site/js/covers.js`). Do not hotlink images other than the Steam artwork already used for games.
-- `RECENT` in `js/main.js` holds the newest-watched order from Queue. Refresh it from Queue's Watched tab when asked.
+- Movie and TV posters come from `tools/fetch-queue.mjs`; games (Steam artwork, also for PlayStation games sold on Steam) and albums/songs (iTunes) from `tools/fetch-covers.mjs`, which needs no TMDB key. Anything without a cover keeps a letter tile.
 
 ## Mareep
 - Jordan approved Mareep at 80% size (`scale:.8`). Do not change its size, motion or sprite without asking. The sprite is his own image, scaled by whole pixels.
