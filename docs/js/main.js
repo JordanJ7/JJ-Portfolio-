@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261116a';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261116c';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -701,7 +701,9 @@ var PAGES={'certifications':[pageCerts,'Certifications'],'courses':[pageCourses,
 /* ---------- routing ---------- */
 var detail=$('detail'),homeY=0;
 /* ---------- Journal-101: the app's intro, played by scrolling, then a tour of the four screens ---------- */
-var JQ='One honest line a day is enough.';
+/* Jordan's own intro quotes from the app; one is picked at random on each page load */
+var JQS=['Maybe Reading the Same book twice won\u2019t change the ending. But If Both Authors Have Grown They Can Always Make A New Chapter.','Love Is A Catalyst For Change','At The Ends of The Earth. It\u2019s Still You','To Be Seen Is To Be Loved'];
+var JQ=JQS[Math.floor(Math.random()*JQS.length)];
 var TOUR=[['week','Week','The week','Every entry lands under today, with a bar for each day you wrote and the next session counting down beside it.'],
   ['topics','Topics','Topics','Folders for the things that keep coming back: books to read, places to go, small wins.'],
   ['session','Session','Session prep','Everything tagged \u201cFor session\u201d gathers into one sheet before the appointment, ready to print.'],
@@ -709,8 +711,25 @@ var TOUR=[['week','Week','The week','Every entry lands under today, with a bar f
 function journalIntro(){
   return '<section class="jin" id="jin" aria-label="The Journal-101 intro. Scroll to play it."><div class="jin-stage"><a class="back jin-back" href="#work">&larr; All projects</a>'+
     '<div class="jin-lay"><svg class="jin-mark" viewBox="16 8 76 86" aria-hidden="true"><path class="jin-rail" d="M30 18 V70 a12 12 0 0 0 12 12 H80"/><circle class="jin-now" cx="30" cy="34" r="8"/><circle class="jin-dest" cx="74" cy="82" r="10"/></svg>'+
-    '<div class="jin-q"><p class="jin-quote"><span class="vh">\u201c'+JQ+'\u201d</span><span aria-hidden="true">\u201c<span class="jin-typed"></span>\u201d<i class="jin-caret"></i></span></p><p class="jin-attr">Me &middot; Saturday, November 14</p></div></div>'+
+    '<div class="jin-q"><p class="jin-quote'+(JQ.length>60?' long':'')+'"><span class="vh">\u201c'+JQ+'\u201d</span><span aria-hidden="true">\u201c<span class="jin-typed"></span>\u201d<i class="jin-caret"></i></span></p><p class="jin-attr">Me &middot; Saturday, November 14</p></div></div>'+
     '<p class="jin-hint" aria-hidden="true">Scroll to play the intro</p><div class="jin-bar" aria-hidden="true"><i></i></div></div></section>';
+}
+/* the live widgets film: edge to edge between the tour and the gallery, with its own pause button */
+function journalFilm(){var m=MEDIA.j101_widgets;
+  return '<section class="jfilm" aria-label="Journal-101 live widgets film"><div class="jf-frame"><video data-own src="'+m.src+'" poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="none" aria-label="'+m.alt+'"></video>'+
+    '<button class="jf-btn" type="button" aria-label="Play video"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path class="jf-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/><g class="jf-pause" fill="currentColor"><rect x="6.5" y="5" width="3.8" height="14" rx="1.2"/><rect x="13.7" y="5" width="3.8" height="14" rx="1.2"/></g></svg></button></div>'+
+    '<p class="jf-cap">'+m.cap+'</p></section>';
+}
+var filmIO=null;
+function initFilm(){
+  if(filmIO){filmIO.disconnect();filmIO=null;}
+  var v=document.querySelector('.jfilm video'),btn=document.querySelector('.jf-btn');if(!v||!btn)return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,held=reduce;   /* held: the viewer paused it (or reduced motion), so scrolling never restarts it */
+  function show(){var on=!v.paused;btn.classList.toggle('on',on);btn.setAttribute('aria-label',on?'Pause video':'Play video');}
+  function go(){var p=v.play();if(p&&p.catch)p.catch(function(){});}
+  v.addEventListener('play',show);v.addEventListener('pause',show);show();
+  btn.addEventListener('click',function(){if(v.paused){held=false;go();}else{held=true;v.pause();}});
+  if('IntersectionObserver' in window){filmIO=new IntersectionObserver(function(en){if(en[0].isIntersecting){if(!held)go();}else v.pause();},{threshold:.35});filmIO.observe(v);}
 }
 function journalTour(){
   return '<section class="jtour zoom" id="jtour" aria-label="A tour of the app, one screen at a time"><div class="jt-stage"><div class="jt-copy"><p class="jt-eyebrow">Explore the app <span class="jt-count">1 of '+TOUR.length+'</span></p><ol class="jt-steps">'+
@@ -764,13 +783,13 @@ function projectHTML(p){
   if(p.gallery.length){
     p.gallery.forEach(function(k){var m=MEDIA[k];
       gal+=m.t==='video'?'<video src="'+m.src+'" poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="metadata" aria-label="'+m.alt+'"></video>':'<img src="'+m.src+'" alt="'+m.alt+'" width="'+m.w+'" height="'+m.h+'" tabindex="0" decoding="async" loading="lazy">';
-      if(m.cap)gal=gal.replace(/(<(?:img|video)[^>]*>(?:<\/video>)?)$/,'<figure class="'+(m.h>m.w?'tall':'wide')+(m.feat?' feature':'')+'">$1<figcaption>'+m.cap+'</figcaption></figure>');});
+      if(m.cap)gal=gal.replace(/(<(?:img|video)[^>]*>(?:<\/video>)?)$/,'<figure class="'+(m.h>m.w?'tall':'wide')+'">$1<figcaption>'+m.cap+'</figcaption></figure>');});
   }else gal='<div class="frame">Add image</div><div class="frame">Add image</div><div class="frame">Add image</div>';
   (p.links||[]).forEach(function(x){acts+='<a href="'+x.h+'"'+(x.internal?'':' target="_blank" rel="noopener"')+'>'+x.l+(x.internal?'':' &#8599;')+'</a>';});
   var story=p.id==='journal-101';
   return (story?journalIntro()+'<div class="dhead">':'<a class="back" href="#work">&larr; All projects</a>')+'<div class="dbig">'+svg(p)+'</div>'+
     '<div class="dc"><p class="date">'+p.date+'</p><p class="kind">'+p.kind+'</p><h1>'+p.title.replace(/-/g,'\u2011')+'</h1><p class="lede">'+p.blurb+'</p><div class="tools">'+p.tools+'</div>'+
-    (p.credit?'<div class="meta">'+p.credit+'</div>':'')+(acts?'<div class="acts">'+acts+'</div>':'')+'</div>'+(story?'</div>'+journalTour()+'<h2 class="gh">More from the design</h2>':'')+
+    (p.credit?'<div class="meta">'+p.credit+'</div>':'')+(acts?'<div class="acts">'+acts+'</div>':'')+'</div>'+(story?'</div>'+journalTour()+journalFilm()+'<h2 class="gh">Design Architecture</h2>':'')+
     '<div class="gal'+(p.gallery.length===1?' one':'')+(p.gallery.some(function(k){return MEDIA[k].cap;})?' capt':'')+'">'+gal+'</div>'+
     '<div class="pn"><a href="#/'+pv.id+'">&larr; '+pv.title+'</a><a href="#/'+nx.id+'">'+nx.title+' &rarr;</a></div>';
 }
@@ -786,12 +805,12 @@ function route(){
     }
     return;
   }
-  if(p){detail.innerHTML=projectHTML(p);document.title=p.title+' | '+BASE;if(p.id==='journal-101')requestAnimationFrame(initJournal);}
+  if(p){detail.innerHTML=projectHTML(p);document.title=p.title+' | '+BASE;if(p.id==='journal-101'){requestAnimationFrame(initJournal);requestAnimationFrame(initFilm);}}
   else{detail.innerHTML='<a class="back" href="#top">&larr; Home</a>'+pg[0]();document.title=pg[1]+' | '+BASE;if(pg[2])pg[2]();}
   if(!document.body.classList.contains('viewing'))homeY=window.scrollY;
   document.body.classList.add('viewing');window.scrollTo({top:0,behavior:'instant'});
   var h1=detail.querySelector('h1');if(h1){h1.tabIndex=-1;h1.focus({preventScroll:true});}
-  if(vio)Array.prototype.forEach.call(detail.querySelectorAll('video'),function(v){vio.observe(v);});
+  if(vio)Array.prototype.forEach.call(detail.querySelectorAll('video:not([data-own])'),function(v){vio.observe(v);});
 }
 var RM=matchMedia('(prefers-reduced-motion: reduce)');
 function routeWithFade(){
