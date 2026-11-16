@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261116c';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261116d';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -714,9 +714,9 @@ function journalIntro(){
     '<div class="jin-q"><p class="jin-quote'+(JQ.length>60?' long':'')+'"><span class="vh">\u201c'+JQ+'\u201d</span><span aria-hidden="true">\u201c<span class="jin-typed"></span>\u201d<i class="jin-caret"></i></span></p><p class="jin-attr">Me &middot; Saturday, November 14</p></div></div>'+
     '<p class="jin-hint" aria-hidden="true">Scroll to play the intro</p><div class="jin-bar" aria-hidden="true"><i></i></div></div></section>';
 }
-/* the live widgets film: edge to edge between the tour and the gallery, with its own pause button */
+/* the live widgets film (1080p on wide screens, 720p on phones): edge to edge between the tour and the gallery, with its own pause button */
 function journalFilm(){var m=MEDIA.j101_widgets;
-  return '<section class="jfilm" aria-label="Journal-101 live widgets film"><div class="jf-frame"><video data-own src="'+m.src+'" poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="none" aria-label="'+m.alt+'"></video>'+
+  return '<section class="jfilm" aria-label="Journal-101 live widgets film"><div class="jf-frame"><video data-own poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="none" aria-label="'+m.alt+'"><source src="'+m.hi+'" type="video/mp4" media="(min-width: 900px)"><source src="'+m.src+'" type="video/mp4"></video>'+
     '<button class="jf-btn" type="button" aria-label="Play video"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path class="jf-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/><g class="jf-pause" fill="currentColor"><rect x="6.5" y="5" width="3.8" height="14" rx="1.2"/><rect x="13.7" y="5" width="3.8" height="14" rx="1.2"/></g></svg></button></div>'+
     '<p class="jf-cap">'+m.cap+'</p></section>';
 }
