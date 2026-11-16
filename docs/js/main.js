@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115d';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115e';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -713,7 +713,7 @@ function journalIntro(){
     '<p class="jin-hint" aria-hidden="true">Scroll to play the intro</p><div class="jin-bar" aria-hidden="true"><i></i></div></div></section>';
 }
 function journalTour(){
-  return '<section class="jtour" id="jtour" aria-label="A tour of the app, one screen at a time"><div class="jt-stage"><div class="jt-copy"><p class="jt-eyebrow">Explore the app <span class="jt-count">1 of '+TOUR.length+'</span></p><ol class="jt-steps">'+
+  return '<section class="jtour zoom" id="jtour" aria-label="A tour of the app, one screen at a time"><div class="jt-stage"><div class="jt-copy"><p class="jt-eyebrow">Explore the app <span class="jt-count">1 of '+TOUR.length+'</span></p><ol class="jt-steps">'+
     TOUR.map(function(t,i){return '<li data-i="'+i+'"><span class="n">0'+(i+1)+'</span><div><b>'+t[2]+'</b><p>'+t[3]+'</p></div></li>';}).join('')+'</ol></div><div class="jt-shots">'+
     TOUR.map(function(t,i){return '<picture class="jt-shot" data-i="'+i+'"><source media="(max-width:760px)" srcset="assets/media/j101_tour_'+t[0]+'_m.webp" width="693" height="1500"><img src="assets/media/j101_tour_'+t[0]+'_d.webp" width="1800" height="1125" alt="The '+t[1]+' screen of Journal-101, filled with sample entries" decoding="async"'+(i?' loading="lazy"':'')+'></picture>';}).join('')+'</div></div></section>';
 }

@@ -198,8 +198,8 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 .jin-bar i{display:block;height:100%;background:#b5bedd;transform-origin:left;transform:scaleX(0)}
 .dhead{position:relative}
 .dhead .dbig{top:-10px}
-.jtour{position:relative;height:400vh;margin:56px 0 24px}
-.jt-stage{position:sticky;top:48px;height:calc(100vh - 48px);height:calc(100svh - 48px);display:grid;grid-template-columns:minmax(0,21rem) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;max-width:1240px;margin:0 auto}
+.jtour{position:relative;height:400vh;margin:56px calc(-1 * max(20px,5vw) + 16px) 24px}
+.jt-stage{position:sticky;top:48px;height:calc(100vh - 48px);height:calc(100svh - 48px);display:grid;grid-template-columns:minmax(0,17rem) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:center;max-width:1760px;margin:0 auto}
 .jt-eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hi)}
 .jt-count{margin-left:8px;font-weight:600;letter-spacing:.02em;text-transform:none;opacity:.7;color:var(--ink)}
 .jt-steps{list-style:none;margin:16px 0 0;padding:0}
@@ -210,9 +210,11 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 .jt-steps b{font-size:clamp(19px,1.8vw,24px);letter-spacing:-.02em}
 .jt-steps p{margin:0;max-height:0;overflow:hidden;font-size:15px;line-height:1.5;opacity:.85;transition:max-height .5s ease,margin .5s ease}
 .jt-steps li.on p{max-height:8em;margin-top:6px}
-.jt-shots{position:relative;width:100%;aspect-ratio:16/10}
+.jt-shots{position:relative;width:100%;max-height:calc(100svh - 48px - 40px);aspect-ratio:16/10;margin-inline:auto}
+.jt-shot img{cursor:zoom-in}
 .jt-shot{position:absolute;inset:0;opacity:0;transform:translateY(14px) scale(.975);transition:opacity .55s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-.jt-shot.on{opacity:1;transform:none}
+.jt-shot{pointer-events:none}
+.jt-shot.on{opacity:1;transform:none;pointer-events:auto}
 .jt-shot img{display:block;width:100%;height:100%;object-fit:contain;border-radius:14px;filter:drop-shadow(0 26px 50px rgba(0,0,0,.45))}
 .detail .gh{position:relative;z-index:2;margin:24px 0 0;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.03em}
 @media(max-width:760px){
@@ -249,9 +251,10 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 .detail .gal figure img,.detail .gal figure video{display:block;width:100%;border-radius:18px}
 .detail .gal figcaption{margin:8px 4px 6px;font-size:14px;line-height:1.4;opacity:.75}
 /* captioned galleries: two to a row, every screen fitted into the same size frame (tap for full size) */
-.detail .gal.capt{column-count:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px;align-items:start;max-width:1100px}
+.detail .gal.capt{column-count:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px;align-items:start;max-width:1760px}
 .detail .gal.capt>figure{margin:0}
-.detail .gal.capt img{height:clamp(240px,30vw,380px);width:100%;object-fit:contain;padding:14px;background:var(--panel);border:1px solid var(--line)}
+.detail .gal.capt img{height:clamp(220px,22vw,360px);width:100%;object-fit:contain;padding:14px;background:var(--panel);border:1px solid var(--line)}
+@media(max-width:1000px) and (min-width:761px){.detail .gal.capt{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.detail .gal.capt{grid-template-columns:1fr}.detail .gal.capt img{height:auto;max-height:60vh}}
 .detail .meta{margin-top:10px;font-size:14px;opacity:.75}
 .detail .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
