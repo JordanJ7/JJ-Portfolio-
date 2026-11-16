@@ -1,4 +1,4 @@
-import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261115e';
+import {MEDIA,P,STEAM,CERTS,MUSIC,WATCH,WATCHED,REVIEWS,PSN,COURSES} from './data.js?v=20261116a';
 
 var $=function(id){return document.getElementById(id);};
 var BASE='Jordan James';
@@ -764,7 +764,7 @@ function projectHTML(p){
   if(p.gallery.length){
     p.gallery.forEach(function(k){var m=MEDIA[k];
       gal+=m.t==='video'?'<video src="'+m.src+'" poster="'+m.poster+'" width="'+m.w+'" height="'+m.h+'" muted loop playsinline preload="metadata" aria-label="'+m.alt+'"></video>':'<img src="'+m.src+'" alt="'+m.alt+'" width="'+m.w+'" height="'+m.h+'" tabindex="0" decoding="async" loading="lazy">';
-      if(m.cap)gal=gal.replace(/(<(?:img|video)[^>]*>(?:<\/video>)?)$/,'<figure class="'+(m.h>m.w?'tall':'wide')+'">$1<figcaption>'+m.cap+'</figcaption></figure>');});
+      if(m.cap)gal=gal.replace(/(<(?:img|video)[^>]*>(?:<\/video>)?)$/,'<figure class="'+(m.h>m.w?'tall':'wide')+(m.feat?' feature':'')+'">$1<figcaption>'+m.cap+'</figcaption></figure>');});
   }else gal='<div class="frame">Add image</div><div class="frame">Add image</div><div class="frame">Add image</div>';
   (p.links||[]).forEach(function(x){acts+='<a href="'+x.h+'"'+(x.internal?'':' target="_blank" rel="noopener"')+'>'+x.l+(x.internal?'':' &#8599;')+'</a>';});
   var story=p.id==='journal-101';

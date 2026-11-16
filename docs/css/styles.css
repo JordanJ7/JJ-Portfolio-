@@ -253,6 +253,9 @@ footer{background:var(--black);color:rgba(255,255,255,.55);text-align:center;fon
 /* captioned galleries: two to a row, every screen fitted into the same size frame (tap for full size) */
 .detail .gal.capt{column-count:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px;align-items:start;max-width:1760px}
 .detail .gal.capt>figure{margin:0}
+/* A featured piece (the Journal-101 widget video) spans the whole gallery row. */
+.detail .gal.capt>figure.feature{grid-column:1/-1;width:100%;max-width:min(960px,calc((100svh - 190px) * 4 / 3));justify-self:center}
+.detail .gal.capt>figure.feature video{border:1px solid var(--line)}
 .detail .gal.capt img{height:clamp(220px,22vw,360px);width:100%;object-fit:contain;padding:14px;background:var(--panel);border:1px solid var(--line)}
 @media(max-width:1000px) and (min-width:761px){.detail .gal.capt{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.detail .gal.capt{grid-template-columns:1fr}.detail .gal.capt img{height:auto;max-height:60vh}}
